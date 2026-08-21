@@ -62,7 +62,7 @@ export default function Home() {
               </div>
             </div>
             <div className="hero-art">
-              <Image src="/images/gpm-data-protection-hero.webp" alt="Professional placing a navy archive box on a shelf" width={1672} height={941} priority sizes="(max-width: 767px) 100vw, 52vw" />
+              <Image src="/images/gpm-data-flow-mapping-v2.webp" alt="Professional holding a paper register beside a wall of connected blank process cards" width={1536} height={1024} priority sizes="(max-width: 767px) 100vw, 52vw" />
               <div className="signal-node node-one" /><div className="signal-node node-two" />
             </div>
           </div>
@@ -94,7 +94,7 @@ export default function Home() {
         <section className="method section-pad dark-plane" id="approach" aria-labelledby="method-title">
           <div className="shell method-grid">
             <div className="method-art" data-reveal>
-              <Image src="/images/gpm-regulatory-method.webp" alt="Professional arranging four blank tiles beside red and navy markers" width={1254} height={1254} sizes="(max-width: 767px) 100vw, 45vw" />
+              <Image src="/images/gpm-privacy-impact-assessment-v2.webp" alt="Hands arranging circular icon cards depicting people, documents, storage, sharing, archiving and deletion" width={1254} height={1254} sizes="(max-width: 767px) 100vw, 45vw" />
             </div>
             <div className="method-content reveal-delay-1" data-reveal>
               <p className="eyebrow">OUR APPROACH</p>
@@ -118,7 +118,7 @@ export default function Home() {
               <a className="underlined-action" href="#contact">More about GPM Associates <Arrow /></a>
             </div>
             <div className="about-art reveal-delay-1" data-reveal>
-              <Image src="/images/gpm-independent-advice.webp" alt="Professional holding a navy folio in a stone corridor" width={1024} height={1536} sizes="(max-width: 767px) 100vw, 42vw" />
+              <Image src="/images/gpm-independent-policy-review-v2.webp" alt="Professional reviewing structured forms beside policy binders" width={1024} height={1536} sizes="(max-width: 767px) 100vw, 42vw" />
               <span>INDEPENDENT / PRACTICAL / ACCOUNTABLE</span>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function Home() {
         <section className="capacity section-pad" aria-labelledby="capacity-title">
           <div className="shell capacity-grid">
             <div className="capacity-art" data-reveal>
-              <Image src="/images/gpm-capacity-building-v2.webp" alt="Two professionals sorting coloured discs into a navy case" width={1536} height={1024} sizes="(max-width: 767px) 100vw, 50vw" />
+              <Image src="/images/gpm-privacy-capability-workshop-v3.webp" alt="Facilitator pointing to a card workflow while three professionals complete paper exercises" width={1537} height={1023} sizes="(max-width: 767px) 100vw, 50vw" />
             </div>
             <div className="capacity-copy reveal-delay-1" data-reveal>
               <p className="eyebrow">CAPACITY BUILDING</p>

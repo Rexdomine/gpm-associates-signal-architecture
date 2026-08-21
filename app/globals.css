@@ -162,7 +162,7 @@ h1 { max-width: 650px; margin-bottom: 30px; color: var(--navy); font-size: clamp
   .section-pad { padding-block: 82px; }.split-heading { grid-template-columns: 1fr; gap: 15px; margin-bottom: 46px; }.split-heading .eyebrow { margin: 0; }
   .expertise-row { grid-template-columns: 34px 1fr 22px; gap: 15px; padding-block: 28px; }.expertise-row p { font-size: 14px; }.expertise-row h3 { font-size: 25px; }
   .method-grid { gap: 50px; }.method h2 { margin-bottom: 44px; }.method-art { margin-inline: -16px; }.stage-list li { grid-template-columns: 36px 1fr; gap: 12px; }
-  .about-grid { gap: 52px; }.about-art { height: 360px; margin-inline: -16px; }.about .lead { font-size: 16px; }.evidence { padding-left: 20px; }
+  .about-grid { gap: 52px; }.about-art { height: 460px; margin-inline: -16px; }.about-art img { object-position: center 60%; }.about .lead { font-size: 16px; }.evidence { padding-left: 20px; }
   .capacity-art { min-height: 410px; }.capacity-copy { padding: 72px 16px 82px; }
   .insight-row { grid-template-columns: 30px 1fr; gap: 16px; padding-block: 26px; }.forthcoming { grid-column: 2; }.insight-row h3 { font-size: 24px; }
   .contact-cta h2, .split-heading h2, .method h2, .about h2, .capacity h2 { font-size: 40px; }.cta-grid { gap: 45px; }

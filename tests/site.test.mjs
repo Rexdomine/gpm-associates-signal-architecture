@@ -62,19 +62,65 @@ test("contact details are exact and policy items are non-navigation treatments",
 test("only approved local workflow imagery is referenced and the exact assets are present", () => {
   const assets = [...page.matchAll(/src=\"(\/images\/[^\"]+)\"/g)].map((match) => match[1]);
   const approvedAssets = {
-    "/images/gpm-capacity-building-v2.webp": "58467b720eaa780a9c56656f612f1341973348a565bddc68b351b8e118c581b0",
-    "/images/gpm-data-protection-hero.webp": "87448a39f6db181ea1d83f392789e4cfe7fa78f0ff4a6d37ac5b40c8eaab2167",
-    "/images/gpm-independent-advice.webp": "16ff313bf5e98cd9b4b42ddfddd2c8d7c4440eeefafa74e2634e8913f1842049",
-    "/images/gpm-regulatory-method.webp": "ed5e996ec5b0ef2e23f9cb78dd6e127053abc5fdf61c6e550f4559ecf917c808",
+    "/images/gpm-data-flow-mapping-v2.webp": {
+      checksum: "459fd1db818c42b6e1d7610f5d2bf3780a83a19656bee5fa252a5fcba9b98ac5",
+      alt: "Professional holding a paper register beside a wall of connected blank process cards",
+      width: 1536,
+      height: 1024,
+    },
+    "/images/gpm-independent-policy-review-v2.webp": {
+      checksum: "fdc62579c7e0fa560968f6c0f1c68c58f138643a1cc0c51ea39674a79e9d5d90",
+      alt: "Professional reviewing structured forms beside policy binders",
+      width: 1024,
+      height: 1536,
+    },
+    "/images/gpm-privacy-capability-workshop-v3.webp": {
+      checksum: "4ae9f54dd6837b3de10fd95a8989a5227bb50cf19ade76d8e12e884156c1f985",
+      alt: "Facilitator pointing to a card workflow while three professionals complete paper exercises",
+      width: 1537,
+      height: 1023,
+    },
+    "/images/gpm-privacy-impact-assessment-v2.webp": {
+      checksum: "ec431c641ef23f097c1a28eb5643fa154299ddb28e46cfd51f4050b030f62238",
+      alt: "Hands arranging circular icon cards depicting people, documents, storage, sharing, archiving and deletion",
+      width: 1254,
+      height: 1254,
+    },
   };
+  const supersededAssets = [
+    "/images/gpm-capacity-building-v2.webp",
+    "/images/gpm-data-protection-hero.webp",
+    "/images/gpm-independent-advice.webp",
+    "/images/gpm-regulatory-method.webp",
+  ];
+
   assert.deepEqual([...new Set(assets)].sort(), Object.keys(approvedAssets));
-  for (const [asset, checksum] of Object.entries(approvedAssets)) {
+  for (const [asset, contract] of Object.entries(approvedAssets)) {
+    assert.ok(
+      page.includes(`src=\"${asset}\" alt=\"${contract.alt}\" width={${contract.width}} height={${contract.height}}`),
+      `missing image contract for ${asset}`,
+    );
     const bytes = readFileSync(new URL(`../public${asset}`, import.meta.url));
-    assert.equal(createHash("sha256").update(bytes).digest("hex"), checksum, `unexpected bytes for ${asset}`);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), contract.checksum, `unexpected bytes for ${asset}`);
   }
+  for (const asset of supersededAssets) assert.equal(page.includes(asset), false, `superseded asset referenced: ${asset}`);
   for (const phrase of ["stock photo", "team portrait", "client logo", "testimonial", "trusted by", "industry-leading"]) {
     assert.equal(page.toLowerCase().includes(phrase), false, `unsupported phrase: ${phrase}`);
   }
+});
+
+test("mobile policy-review crop preserves the direct-work evidence", () => {
+  const mobileStyles = styles.match(/@media \(max-width: 600px\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(mobileStyles, "missing mobile media block");
+
+  const aboutArtRule = mobileStyles.match(/\.about-art\s*\{([^}]*)\}/)?.[1];
+  assert.ok(aboutArtRule, "missing mobile .about-art rule");
+  assert.match(aboutArtRule, /height:\s*460px/);
+  assert.match(aboutArtRule, /margin-inline:\s*-16px/);
+
+  const aboutImageRule = mobileStyles.match(/\.about-art img\s*\{([^}]*)\}/)?.[1];
+  assert.ok(aboutImageRule, "missing mobile .about-art img rule");
+  assert.match(aboutImageRule, /object-position:\s*center 60%/);
 });
 
 test("review prototype blocks indexing and crawling", () => {
