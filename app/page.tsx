@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { MobileMenu } from "./components/MobileMenu";
+import { ScrollReveal } from "./components/ScrollReveal";
 
 const expertise = [
   ["01", "Data Protection", "Privacy governance, compliance programmes, audits, impact assessments, and practical implementation support."],
@@ -34,6 +35,7 @@ function Arrow() {
 export default function Home() {
   return (
     <>
+      <ScrollReveal />
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <header className="site-header">
         <div className="shell header-inner">
@@ -75,11 +77,11 @@ export default function Home() {
 
         <section className="expertise section-pad" id="expertise" aria-labelledby="expertise-title">
           <div className="shell">
-            <div className="section-heading split-heading">
+            <div className="section-heading split-heading" data-reveal>
               <p className="eyebrow">OUR EXPERTISE</p>
               <h2 id="expertise-title">One connected regulatory intelligence system.</h2>
             </div>
-            <div className="editorial-list">
+            <div className="editorial-list reveal-delay-1" data-reveal>
               {expertise.map(([number, title, body]) => (
                 <article className="expertise-row" key={number}>
                   <span className="row-number">{number}</span><h3>{title}</h3><p>{body}</p><span className="row-mark"><Arrow /></span>
@@ -91,10 +93,10 @@ export default function Home() {
 
         <section className="method section-pad dark-plane" id="approach" aria-labelledby="method-title">
           <div className="shell method-grid">
-            <div className="method-art">
+            <div className="method-art" data-reveal>
               <Image src="/images/gpm-regulatory-method.webp" alt="Professional arranging four blank tiles beside red and navy markers" width={1254} height={1254} sizes="(max-width: 767px) 100vw, 45vw" />
             </div>
-            <div className="method-content">
+            <div className="method-content reveal-delay-1" data-reveal>
               <p className="eyebrow">OUR APPROACH</p>
               <h2 id="method-title">From obligation to operational confidence.</h2>
               <ol className="stage-list">
@@ -108,14 +110,14 @@ export default function Home() {
 
         <section className="about section-pad" id="about" aria-labelledby="about-title">
           <div className="shell about-grid">
-            <div className="about-copy">
+            <div className="about-copy" data-reveal>
               <p className="eyebrow">WHO WE ARE</p>
               <h2 id="about-title">Independent advice. Practical regulatory confidence.</h2>
               <p className="lead">GPM Associates is an independent consulting firm specialising in data protection, regulatory compliance, governance, and capacity building.</p>
               <p className="evidence">GPM Associates contributed to the drafting of the 2017 Guidelines for Data Protection and participated in the development of the draft Nigeria Data Protection Regulation (NDPR).</p>
               <a className="underlined-action" href="#contact">More about GPM Associates <Arrow /></a>
             </div>
-            <div className="about-art">
+            <div className="about-art reveal-delay-1" data-reveal>
               <Image src="/images/gpm-independent-advice.webp" alt="Professional holding a navy folio in a stone corridor" width={1024} height={1536} sizes="(max-width: 767px) 100vw, 42vw" />
               <span>INDEPENDENT / PRACTICAL / ACCOUNTABLE</span>
             </div>
@@ -124,10 +126,10 @@ export default function Home() {
 
         <section className="capacity section-pad" aria-labelledby="capacity-title">
           <div className="shell capacity-grid">
-            <div className="capacity-art">
+            <div className="capacity-art" data-reveal>
               <Image src="/images/gpm-capacity-building-v2.webp" alt="Two professionals sorting coloured discs into a navy case" width={1536} height={1024} sizes="(max-width: 767px) 100vw, 50vw" />
             </div>
-            <div className="capacity-copy">
+            <div className="capacity-copy reveal-delay-1" data-reveal>
               <p className="eyebrow">CAPACITY BUILDING</p>
               <h2 id="capacity-title">Building capability that lasts beyond compliance.</h2>
               <p>Our capacity-building programmes help boards, leadership teams, practitioners, and employees understand their responsibilities and apply them confidently.</p>
@@ -138,11 +140,11 @@ export default function Home() {
 
         <section className="insights section-pad" id="insights" aria-labelledby="insights-title">
           <div className="shell">
-            <div className="section-heading split-heading">
+            <div className="section-heading split-heading" data-reveal>
               <p className="eyebrow">INSIGHTS</p>
               <h2 id="insights-title">Regulatory perspectives for informed decisions.</h2>
             </div>
-            <div className="insight-list">
+            <div className="insight-list reveal-delay-1" data-reveal>
               {insights.map((title, index) => (
                 <article className="insight-row" key={title}>
                   <span className="row-number">0{index + 1}</span><div><p>Perspective</p><h3>{title}</h3></div>
@@ -155,8 +157,8 @@ export default function Home() {
 
         <section className="contact-cta" id="contact" aria-labelledby="contact-title">
           <div className="shell cta-grid">
-            <h2 id="contact-title">Ready to move from obligation to confident action?</h2>
-            <div><p>Start a focused conversation about your organisation’s regulatory, governance, or data protection priorities.</p>
+            <h2 id="contact-title" data-reveal>Ready to move from obligation to confident action?</h2>
+            <div className="reveal-delay-1" data-reveal><p>Start a focused conversation about your organisation’s regulatory, governance, or data protection priorities.</p>
               <a className="contact-action" href="mailto:info@gpm-associates.ng">Start a conversation <Arrow /></a>
             </div>
           </div>
