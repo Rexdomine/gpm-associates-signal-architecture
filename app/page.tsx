@@ -53,8 +53,8 @@ export default function Home() {
                 <a className="text-action" href="#contact">Start a conversation <Arrow /></a>
               </div>
             </div>
-            <div className="hero-art" aria-hidden="true">
-              <Image src="/images/higgsfield-signal-architecture-hero.png" alt="" width={2688} height={1520} priority sizes="(max-width: 767px) 100vw, 52vw" />
+            <div className="hero-art">
+              <Image src="/images/gpm-data-protection-hero.webp" alt="Professional placing a navy archive box on a shelf" width={1672} height={941} priority sizes="(max-width: 767px) 100vw, 52vw" />
               <div className="signal-node node-one" /><div className="signal-node node-two" />
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function Home() {
         <section className="method section-pad dark-plane" id="approach" aria-labelledby="method-title">
           <div className="shell method-grid">
             <div className="method-art">
-              <Image src="/images/higgsfield-signal-method.png" alt="Abstract intersecting pathways representing a structured regulatory method" width={2688} height={1520} sizes="(max-width: 767px) 100vw, 45vw" />
+              <Image src="/images/gpm-regulatory-method.webp" alt="Professional arranging four blank tiles beside red and navy markers" width={1254} height={1254} sizes="(max-width: 767px) 100vw, 45vw" />
             </div>
             <div className="method-content">
               <p className="eyebrow">OUR APPROACH</p>
@@ -109,8 +109,8 @@ export default function Home() {
               <p className="evidence">GPM Associates contributed to the drafting of the 2017 Guidelines for Data Protection and participated in the development of the draft Nigeria Data Protection Regulation (NDPR).</p>
               <a className="underlined-action" href="#contact">More about GPM Associates <Arrow /></a>
             </div>
-            <div className="about-art" aria-hidden="true">
-              <Image src="/images/higgsfield-signal-architecture-hero.png" alt="" width={2688} height={1520} sizes="(max-width: 767px) 100vw, 42vw" />
+            <div className="about-art">
+              <Image src="/images/gpm-independent-advice.webp" alt="Professional holding a navy folio in a stone corridor" width={1024} height={1536} sizes="(max-width: 767px) 100vw, 42vw" />
               <span>INDEPENDENT / PRACTICAL / ACCOUNTABLE</span>
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function Home() {
         <section className="capacity section-pad" aria-labelledby="capacity-title">
           <div className="shell capacity-grid">
             <div className="capacity-art">
-              <Image src="/images/higgsfield-signal-capacity.png" alt="Abstract modular forms representing durable organisational capability" width={2336} height={1744} sizes="(max-width: 767px) 100vw, 50vw" />
+              <Image src="/images/gpm-capacity-building-v2.webp" alt="Two professionals sorting coloured discs into a navy case" width={1536} height={1024} sizes="(max-width: 767px) 100vw, 50vw" />
             </div>
             <div className="capacity-copy">
               <p className="eyebrow">CAPACITY BUILDING</p>

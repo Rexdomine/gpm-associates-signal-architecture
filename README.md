@@ -1,6 +1,6 @@
 # GPM Associates — Signal Architecture
 
-A production-minded, single-page corporate website prototype built with Next.js App Router, React, and TypeScript. The visual system expresses regulatory complexity becoming operational clarity through editorial layouts, controlled signal artwork, fine rules, and restrained motion.
+A production-minded, single-page corporate website prototype built with Next.js App Router, React, and TypeScript. The visual system expresses regulatory complexity becoming operational clarity through editorial layouts, premium workflow-led photography, controlled signal details, fine rules, and restrained motion.
 
 ## Architecture
 
@@ -30,13 +30,14 @@ The homepage is deliberately component-light while the content model is still sm
 
 ## Asset provenance
 
-The three production PNGs in `public/images/` were copied unchanged from the approved local GPM project source at `/opt/data/gpm-ndpa-quick-check/`:
+The four production WebP assets in `public/images/` were art-directed specifically for the approved GPM imagery brief. They combine credible data-protection operations with non-generic human contexts while avoiding meeting-room, conference, handshake, and laptop-stock conventions:
 
-- `higgsfield-signal-architecture-hero.png`
-- `higgsfield-signal-method.png`
-- `higgsfield-signal-capacity.png`
+- `gpm-data-protection-hero.webp` — professional placing a navy archive box on shelving
+- `gpm-regulatory-method.webp` — professional arranging blank tiles and coloured markers
+- `gpm-independent-advice.webp` — professional holding a folio in a stone corridor
+- `gpm-capacity-building-v2.webp` — two professionals sorting coloured discs into a navy case
 
-They are served locally through `next/image`; there are no runtime image CDNs or remote image dependencies. The concept HTML and render under `/opt/data/cache/` were visual references only, and no Tailwind CDN, WebGL, or runtime-generated code was copied.
+The generated masters were visually inspected for faces, hands, logos, text, implied claims, and crop resilience before approved derivatives were exported locally as metadata-light WebP files. Tests lock the exact four SHA-256 checksums. They are served through `next/image`; there are no runtime image CDNs or remote image dependencies. The original Signal Architecture concept remains the visual-system reference, but its abstract PNG artwork is no longer shipped.
 
 ## Factual and placeholder caveats
 
