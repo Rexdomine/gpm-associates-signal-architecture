@@ -22,7 +22,13 @@ const insights = [
 ] as const;
 
 function Arrow() {
-  return <span aria-hidden="true">↗</span>;
+  return (
+    <span aria-hidden="true">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M4 12 12 4M6 4h6v6" />
+      </svg>
+    </span>
+  );
 }
 
 export default function Home() {
@@ -76,7 +82,7 @@ export default function Home() {
             <div className="editorial-list">
               {expertise.map(([number, title, body]) => (
                 <article className="expertise-row" key={number}>
-                  <span className="row-number">{number}</span><h3>{title}</h3><p>{body}</p><span className="row-mark" aria-hidden="true">↗</span>
+                  <span className="row-number">{number}</span><h3>{title}</h3><p>{body}</p><span className="row-mark"><Arrow /></span>
                 </article>
               ))}
             </div>
