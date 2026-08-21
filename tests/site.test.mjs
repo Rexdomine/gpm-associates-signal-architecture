@@ -37,6 +37,12 @@ test("homepage contains the required content and sections", () => {
   for (const id of ["expertise", "approach", "about", "insights", "contact"]) assert.match(page, new RegExp(`id=\\"${id}\\"`));
 });
 
+test("arrows use deterministic vector markup instead of emoji-prone Unicode", () => {
+  assert.match(page, /<svg[^>]*aria-hidden="true"[^>]*focusable="false"[^>]*>/);
+  assert.match(page, /stroke="currentColor"/);
+  assert.equal(page.includes("↗"), false);
+});
+
 test("contact details are exact and policy items are non-navigation treatments", () => {
   for (const detail of [
     "4th Floor, Adamawa Plaza, Plot 1099 First Avenue,",
