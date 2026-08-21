@@ -30,14 +30,14 @@ The homepage is deliberately component-light while the content model is still sm
 
 ## Asset provenance
 
-The four production WebP assets in `public/images/` were art-directed specifically for the approved GPM imagery brief. They combine credible data-protection operations with non-generic human contexts while avoiding meeting-room, conference, handshake, and laptop-stock conventions:
+The four production WebP assets in `public/images/` were art-directed specifically for the approved GPM imagery brief. They show direct, evidence-led data-protection operations in non-generic human contexts while avoiding meeting-room, conference, handshake, and laptop-stock conventions:
 
-- `gpm-data-protection-hero.webp` — professional placing a navy archive box on shelving
-- `gpm-regulatory-method.webp` — professional arranging blank tiles and coloured markers
-- `gpm-independent-advice.webp` — professional holding a folio in a stone corridor
-- `gpm-capacity-building-v2.webp` — two professionals sorting coloured discs into a navy case
+- `gpm-data-flow-mapping-v2.webp` — professional holding a paper register beside a connected process-card flow
+- `gpm-privacy-impact-assessment-v2.webp` — hands mapping a privacy lifecycle with circular icon cards
+- `gpm-independent-policy-review-v2.webp` — professional reviewing structured forms beside policy binders
+- `gpm-privacy-capability-workshop-v3.webp` — facilitator guiding professionals through a paper-based workflow exercise
 
-The generated masters were visually inspected for faces, hands, logos, text, implied claims, and crop resilience before approved derivatives were exported locally as metadata-light WebP files. Tests lock the exact four SHA-256 checksums. They are served through `next/image`; there are no runtime image CDNs or remote image dependencies. The original Signal Architecture concept remains the visual-system reference, but its abstract PNG artwork is no longer shipped.
+The generated masters were visually inspected for faces, hands, logos, text, implied claims, and crop resilience before approved derivatives were exported locally as metadata-light WebP files. Their subjects are illustrative and are not represented as GPM staff, GPM clients, or participants in a real engagement. Tests lock the exact four SHA-256 checksums. They are served through `next/image`; there are no runtime image CDNs or remote image dependencies. The original Signal Architecture concept remains the visual-system reference, while the shipped imagery now grounds that system in visible mapping, assessment, policy-review, and capability-building workflows.
 
 ## Factual and placeholder caveats
 
