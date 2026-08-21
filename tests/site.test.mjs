@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 const page = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
+const revealControllerUrl = new URL("../app/components/ScrollReveal.tsx", import.meta.url);
+const revealController = existsSync(revealControllerUrl) ? readFileSync(revealControllerUrl, "utf8") : "";
 const layout = readFileSync(new URL("../app/layout.tsx", import.meta.url), "utf8");
 const config = readFileSync(new URL("../next.config.ts", import.meta.url), "utf8");
 const robots = readFileSync(new URL("../public/robots.txt", import.meta.url), "utf8");
@@ -86,6 +88,39 @@ test("security headers are configured", () => {
   assert.match(config, /frame-ancestors 'none'/);
   assert.match(config, /nosniff/);
   assert.match(config, /DENY/);
+});
+
+test("scroll reveal is selective, progressive, one-time, and motion-safe", () => {
+  assert.match(page, /import \{ ScrollReveal \} from "\.\/components\/ScrollReveal"/);
+  assert.match(page, /<ScrollReveal \/>/);
+
+  const hooks = page.match(/data-reveal(?:=|\s|>)/g) ?? [];
+  assert.ok(hooks.length >= 10 && hooks.length <= 14, `expected controlled section groups, found ${hooks.length}`);
+  const hero = page.slice(page.indexOf('<section className="hero"'), page.indexOf('<aside className="proof-rail"'));
+  const proof = page.slice(page.indexOf('<aside className="proof-rail"'), page.indexOf('<section className="expertise'));
+  assert.equal(hero.includes("data-reveal"), false, "hero must remain immediate");
+  assert.equal(proof.includes("data-reveal"), false, "proof rail must remain immediate");
+  assert.equal(/<article className="(?:expertise|insight)-row"[^>]*data-reveal/.test(page), false, "do not reveal every repeated row");
+
+  assert.match(revealController, /^"use client";/);
+  assert.match(revealController, /querySelectorAll<HTMLElement>\("\[data-reveal\]"\)/);
+  assert.match(revealController, /IntersectionObserver/);
+  assert.match(revealController, /matchMedia\("\(prefers-reduced-motion: reduce\)"\)/);
+  assert.match(revealController, /getBoundingClientRect\(\)/, "near-viewport content must be finalized before activation");
+  assert.match(revealController, /classList\.add\("reveal-ready"\)/, "hidden states must only activate after setup");
+  assert.match(revealController, /data-reveal-visible/);
+  assert.match(revealController, /unobserve\(/, "reveals must happen once");
+  assert.match(revealController, /disconnect\(\)/);
+  assert.match(revealController, /classList\.remove\("reveal-ready"\)/);
+
+  assert.match(styles, /\.reveal-ready \[data-reveal\]/);
+  assert.match(styles, /opacity:\s*0/);
+  assert.match(styles, /translateY\((?:1[6-9]|2[0-8])px\)/);
+  assert.match(styles, /transition-duration:\s*(?:6[5-9]\d|7\d\d|8[0-5]\d)ms/);
+  assert.match(styles, /cubic-bezier\(/);
+  assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\[data-reveal\][\s\S]*opacity:\s*1/);
+  assert.equal(/from ["'](?:framer-motion|gsap|@react-spring|animejs)/.test(page + revealController), false);
+  assert.equal(/addEventListener\(["']scroll/.test(revealController), false);
 });
 
 test("small muted text colors meet WCAG AA contrast", () => {

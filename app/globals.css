@@ -113,6 +113,22 @@ h1 { max-width: 650px; margin-bottom: 30px; color: var(--navy); font-size: clamp
 .cta-grid > div p { margin-bottom: 30px; line-height: 1.7; }
 .contact-action { width: 100%; background: white; color: var(--navy); }
 
+.reveal-delay-1 { --reveal-delay: 90ms; }
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition-property: opacity, transform;
+  transition-duration: 760ms;
+  transition-delay: var(--reveal-delay, 0ms);
+  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+  will-change: opacity, transform;
+}
+.reveal-ready [data-reveal][data-reveal-visible] {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
 .site-footer { padding-top: 78px; background: #061721; color: white; }
 .footer-top { display: grid; grid-template-columns: 1fr 1.25fr .8fr; gap: 60px; padding-bottom: 70px; }
 .footer-wordmark { display: block; margin-bottom: 14px; font-size: 22px; }
@@ -155,5 +171,11 @@ h1 { max-width: 650px; margin-bottom: 30px; color: var(--navy); font-size: clamp
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .reveal-ready [data-reveal],
+  .reveal-ready [data-reveal][data-reveal-visible] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
