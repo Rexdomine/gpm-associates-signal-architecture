@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
@@ -50,13 +51,19 @@ test("contact details are exact and policy items are non-navigation treatments",
   assert.ok(page.includes("<span>Cookie Policy — forthcoming</span>"));
 });
 
-test("only approved local artwork is referenced and no people imagery is requested", () => {
+test("only approved local workflow imagery is referenced and the exact assets are present", () => {
   const assets = [...page.matchAll(/src=\"(\/images\/[^\"]+)\"/g)].map((match) => match[1]);
-  assert.deepEqual([...new Set(assets)].sort(), [
-    "/images/higgsfield-signal-architecture-hero.png",
-    "/images/higgsfield-signal-capacity.png",
-    "/images/higgsfield-signal-method.png",
-  ]);
+  const approvedAssets = {
+    "/images/gpm-capacity-building-v2.webp": "58467b720eaa780a9c56656f612f1341973348a565bddc68b351b8e118c581b0",
+    "/images/gpm-data-protection-hero.webp": "87448a39f6db181ea1d83f392789e4cfe7fa78f0ff4a6d37ac5b40c8eaab2167",
+    "/images/gpm-independent-advice.webp": "16ff313bf5e98cd9b4b42ddfddd2c8d7c4440eeefafa74e2634e8913f1842049",
+    "/images/gpm-regulatory-method.webp": "ed5e996ec5b0ef2e23f9cb78dd6e127053abc5fdf61c6e550f4559ecf917c808",
+  };
+  assert.deepEqual([...new Set(assets)].sort(), Object.keys(approvedAssets));
+  for (const [asset, checksum] of Object.entries(approvedAssets)) {
+    const bytes = readFileSync(new URL(`../public${asset}`, import.meta.url));
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), checksum, `unexpected bytes for ${asset}`);
+  }
   for (const phrase of ["stock photo", "team portrait", "client logo", "testimonial", "trusted by", "industry-leading"]) {
     assert.equal(page.toLowerCase().includes(phrase), false, `unsupported phrase: ${phrase}`);
   }
