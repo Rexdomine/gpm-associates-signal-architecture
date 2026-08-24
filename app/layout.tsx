@@ -16,14 +16,14 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://gpm-associates.ng"),
-  title: "GPM Associates | Independent Regulatory Advisory",
+  title: "GPM Associates | Data Protection, Privacy Governance & Digital Trust",
   description:
-    "Independent advice across data protection, regulatory compliance, governance, and capacity building.",
+    "GPM Associates helps organisations navigate regulatory complexity, strengthen privacy governance and turn responsible data practices into sustainable business value.",
   robots: { index: false, follow: false },
   openGraph: {
-    title: "GPM Associates | Independent Regulatory Advisory",
+    title: "GPM Associates | Data Protection, Privacy Governance & Digital Trust",
     description:
-      "From regulatory complexity to confident action through practical, independent advice.",
+      "GPM Associates helps organisations navigate regulatory complexity, strengthen privacy governance and turn responsible data practices into sustainable business value.",
     type: "website",
   },
 };
