@@ -26,8 +26,8 @@ export function HeroMedia() {
     <figure className={`hero-media ${reducedMotion ? "hero-motion-paused" : "is-playing"}`}>
       <div className="hero-visual">
         <Image
-          src="/images/gpm-homepage-privacy-operations-v2.webp"
-          alt="African privacy professionals reviewing a data lifecycle workflow and governance records"
+          src="/images/gpm-homepage-single-privacy-professional-v3.webp"
+          alt="An African privacy professional reviewing a data lifecycle governance workflow"
           width={1672}
           height={941}
           priority

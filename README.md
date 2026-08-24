@@ -48,16 +48,16 @@ The Homepage ships three local, checksum-locked assets through `next/image`; the
 
 ### GPT Image 2 hero
 
-- Production derivative: `public/images/gpm-homepage-privacy-operations-v2.webp`
-- Production SHA-256: `f081a17aae1ed5f7025bee8810486ebcc27edfc802f2f7e7e19c760f46459844`
+- Production derivative: `public/images/gpm-homepage-single-privacy-professional-v3.webp`
+- Production SHA-256: `95c555044b54751c1dba2cb1d09be8a48a3b4d57e5b5a729f8f643ff8f794e66`
 - Dimensions: `1672 × 941`
-- File size: approximately `113 KB` (`112672` bytes)
+- File size: approximately `75 KB` (`74540` bytes)
 - Source provider/model: OpenAI GPT Image 2, `gpt-image-2-medium`
-- Generated master SHA-256: `788facb7a42a47441065fffa6eb8bd9b1c750701a9fd03abec91b7551b57f631`
+- Generated master SHA-256: `89c7b7677a9c77673484c616d32c1c9f72b53005a66a882e9fea0949d66dc464`
 
-The scene was art-directed from the locked GPM imagery concept: three African privacy professionals review a data-lifecycle and governance workflow through a credible workstation, records register, laptop and policy binders. Grounded advisory work remains primary; controlled crimson/navy lighting, reflections and interface depth supply the restrained futuristic layer. It avoids generic meetings, cyber-thriller motifs, readable personal information, logos, seals and unsupported institutional evidence. Faces, hands, object contact, desktop/mobile crop resilience and publication safety were visually reviewed before a metadata-light WebP derivative was exported.
+The scene was simplified from the locked GPM imagery concept in response to stakeholder review: one African privacy professional interacts directly with a structured data-lifecycle governance screen. The single-subject composition removes the previous secondary professionals, laptop, books, binders and physical records while retaining a recognisable privacy workflow. Controlled crimson/navy lighting and restrained interface depth provide the futuristic layer without generic meetings, cyber-thriller motifs, readable personal information, logos, seals or unsupported institutional evidence. Her face, hand, screen interaction, desktop/mobile crop resilience and publication safety were visually reviewed before a metadata-light WebP derivative was exported.
 
-The people shown are illustrative generated subjects. They are not GPM personnel, clients or participants in a real engagement.
+The person shown is an illustrative generated subject. She is not GPM personnel, a client or a participant in a real engagement.
 
 ### Client-approved brand and verification assets
 

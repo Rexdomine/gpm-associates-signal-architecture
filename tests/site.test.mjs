@@ -209,7 +209,7 @@ test("hero motion is automatic, reduced-motion safe and uses deterministic SVG a
 
 test("approved Homepage image assets are local and binary-locked", () => {
   const assets = [
-    ["public/images/gpm-homepage-privacy-operations-v2.webp", "/images/gpm-homepage-privacy-operations-v2.webp"],
+    ["public/images/gpm-homepage-single-privacy-professional-v3.webp", "/images/gpm-homepage-single-privacy-professional-v3.webp"],
     ["public/images/gpm-logo-approved.png", "/images/gpm-logo-approved.png"],
     ["public/images/ndpc-verification-qr-approved.png", "/images/ndpc-verification-qr-approved.png"],
   ];
@@ -219,13 +219,13 @@ test("approved Homepage image assets are local and binary-locked", () => {
     assert.ok(source.includes(publicPath), `missing approved asset reference: ${publicPath}`);
     assert.ok(statSync(url).size > 10_000, `asset unexpectedly small: ${file}`);
   }
-  assert.match(source, /alt="African privacy professionals reviewing a data lifecycle workflow and governance records"/);
+  assert.match(source, /alt="An African privacy professional reviewing a data lifecycle governance workflow"/);
   assert.match(source, /width=\{1672\}\s+height=\{941\}/);
 
-  const hero = readFileSync(new URL("public/images/gpm-homepage-privacy-operations-v2.webp", root));
+  const hero = readFileSync(new URL("public/images/gpm-homepage-single-privacy-professional-v3.webp", root));
   const logo = readFileSync(new URL("public/images/gpm-logo-approved.png", root));
   const qr = readFileSync(new URL("public/images/ndpc-verification-qr-approved.png", root));
-  assert.equal(createHash("sha256").update(hero).digest("hex"), "f081a17aae1ed5f7025bee8810486ebcc27edfc802f2f7e7e19c760f46459844");
+  assert.equal(createHash("sha256").update(hero).digest("hex"), "95c555044b54751c1dba2cb1d09be8a48a3b4d57e5b5a729f8f643ff8f794e66");
   assert.equal(createHash("sha256").update(logo).digest("hex"), "5f1de6c5842eb6128ef3b28847d6e3664ee2400d01ab8b4ef24cec225cd97b9d");
   assert.equal(createHash("sha256").update(qr).digest("hex"), "a7a5e24bac214736bded888bd12c4eccf04697527bf5055b82187dae846c9c76");
 });
@@ -260,13 +260,13 @@ test("scroll reveal remains selective, fail-open and reduced-motion safe", () =>
 
 test("README locks GPT Image 2 hero provenance against verified production asset facts", () => {
   assert.ok(readme.length > 0, "README should not be empty");
-  assert.ok(readme.includes("public/images/gpm-homepage-privacy-operations-v2.webp"), "README missing production hero file");
-  assert.ok(readme.includes("f081a17aae1ed5f7025bee8810486ebcc27edfc802f2f7e7e19c760f46459844"), "README missing verified production SHA-256");
+  assert.ok(readme.includes("public/images/gpm-homepage-single-privacy-professional-v3.webp"), "README missing production hero file");
+  assert.ok(readme.includes("95c555044b54751c1dba2cb1d09be8a48a3b4d57e5b5a729f8f643ff8f794e66"), "README missing verified production SHA-256");
   assert.ok(readme.includes("1672") && readme.includes("941"), "README missing verified dimensions 1672x941");
-  assert.ok(readme.includes("112672") || readme.includes("113 KB") || readme.includes("approximately `113 KB`"), "README missing verified file size ~112672 bytes");
+  assert.ok(readme.includes("74540") || readme.includes("75 KB") || readme.includes("approximately `75 KB`"), "README missing verified file size ~74540 bytes");
   assert.ok(readme.includes("OpenAI GPT Image 2"), "README missing provider/model OpenAI GPT Image 2");
   assert.ok(readme.includes("gpt-image-2-medium"), "README missing model gpt-image-2-medium");
-  assert.ok(readme.includes("788facb7a42a47441065fffa6eb8bd9b1c750701a9fd03abec91b7551b57f631"), "README missing generated master SHA-256");
+  assert.ok(readme.includes("89c7b7677a9c77673484c616d32c1c9f72b53005a66a882e9fea0949d66dc464"), "README missing generated master SHA-256");
   assert.ok(readme.includes("Asset provenance"), "README missing asset provenance section");
 });
 
