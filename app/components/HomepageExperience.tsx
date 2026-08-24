@@ -25,14 +25,44 @@ export function HeroMedia() {
   return (
     <figure className={`hero-media ${reducedMotion ? "hero-motion-paused" : "is-playing"}`}>
       <div className="hero-visual">
-        <Image
-          src="/images/gpm-homepage-single-privacy-professional-v3.webp"
-          alt="An African privacy professional reviewing a data lifecycle governance workflow"
-          width={1672}
-          height={941}
-          priority
-          sizes="(max-width: 900px) 100vw, 55vw"
-        />
+        <div className="hero-visual-canvas">
+          <Image
+            src="/images/gpm-homepage-single-privacy-professional-v3.webp"
+            alt="An African privacy professional reviewing a data lifecycle governance workflow"
+            width={1672}
+            height={941}
+            priority
+            sizes="(max-width: 900px) 100vw, 55vw"
+          />
+          <svg
+            className="hero-screen-overlay"
+            viewBox="0 0 1672 941"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <clipPath id="hero-screen-clip">
+                <path d="M20 138 730 188 730 520 20 540Z" />
+              </clipPath>
+            </defs>
+            <g clipPath="url(#hero-screen-clip)">
+              <path className="hero-screen-trace" d="M239 329h38m-13-13 13 13-13 13M477 340h38m-13-13 13 13-13 13" />
+              <path className="hero-screen-trace hero-screen-trace-delay" d="M66 475h132M329 471h111M574 462h96" />
+              <g className="hero-screen-status">
+                <rect x="66" y="470" width="72" height="7" rx="3.5" />
+                <rect x="329" y="467" width="68" height="7" rx="3.5" />
+                <rect x="574" y="458" width="58" height="7" rx="3.5" />
+              </g>
+              <g className="hero-screen-pulse">
+                <circle cx="120" cy="272" r="10" />
+                <circle cx="347" cy="388" r="9" />
+                <circle cx="562" cy="322" r="9" />
+                <circle cx="677" cy="322" r="9" />
+              </g>
+              <path className="hero-screen-scan" d="M34 205 711 252" />
+            </g>
+          </svg>
+        </div>
       </div>
       <div className="hero-media-shade" aria-hidden="true" />
       <figcaption className="hero-media-caption">

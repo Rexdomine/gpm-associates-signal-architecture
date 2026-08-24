@@ -207,6 +207,24 @@ test("hero motion is automatic, reduced-motion safe and uses deterministic SVG a
   assert.equal(source.includes("↗"), false);
 });
 
+test("hero animation is restricted to the depicted privacy workflow screen", () => {
+  for (const token of [
+    "hero-visual-canvas",
+    "hero-screen-overlay",
+    "hero-screen-clip",
+    "hero-screen-trace",
+    'viewBox="0 0 1672 941"',
+    'aria-hidden="true"',
+    'focusable="false"',
+  ]) assert.ok(experience.includes(token), `missing screen-only overlay contract: ${token}`);
+
+  assert.match(styles, /\.hero-media\.is-playing \.hero-screen-trace/);
+  assert.match(styles, /@keyframes hero-screen-flow/);
+  assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.hero-screen-overlay[\s\S]*animation:\s*none\s*!important/);
+  assert.equal(styles.includes("hero-drift"), false, "the approved woman and photograph must not drift");
+  assert.doesNotMatch(styles, /\.hero-media\.is-playing \.hero-visual\s*\{[^}]*animation:/);
+});
+
 test("approved Homepage image assets are local and binary-locked", () => {
   const assets = [
     ["public/images/gpm-homepage-single-privacy-professional-v3.webp", "/images/gpm-homepage-single-privacy-professional-v3.webp"],
