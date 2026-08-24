@@ -13,23 +13,17 @@ function ArrowIcon() {
 
 export function HeroMedia() {
   const [reducedMotion, setReducedMotion] = useState(true);
-  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => {
-      setReducedMotion(media.matches);
-      setPlaying(!media.matches);
-    };
+    const sync = () => setReducedMotion(media.matches);
     sync();
     media.addEventListener("change", sync);
     return () => media.removeEventListener("change", sync);
   }, []);
 
-  const active = playing && !reducedMotion;
-
   return (
-    <figure className={`hero-media ${active ? "is-playing" : "hero-motion-paused"}`}>
+    <figure className={`hero-media ${reducedMotion ? "hero-motion-paused" : "is-playing"}`}>
       <div className="hero-visual">
         <Image
           src="/images/gpm-homepage-trusted-data-environments-v1.webp"
@@ -50,17 +44,6 @@ export function HeroMedia() {
           <b>BUILD CAPABILITY</b>
         </span>
       </figcaption>
-      <button
-        className="motion-control"
-        type="button"
-        aria-pressed={!active}
-        aria-label={active ? "Pause motion" : "Play motion"}
-        onClick={() => setPlaying((value) => !value)}
-        disabled={reducedMotion}
-      >
-        <span aria-hidden="true">{active ? "Ⅱ" : "▶"}</span>
-        {active ? "Pause motion" : "Play motion"}
-      </button>
     </figure>
   );
 }

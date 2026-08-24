@@ -195,9 +195,12 @@ test("cookie preferences are accessible, first-party only and gate external medi
   assert.equal(/google-analytics|googletagmanager|facebook\.net|hotjar/i.test(source), false);
 });
 
-test("hero motion is controllable, reduced-motion safe and uses deterministic SVG arrows", () => {
-  for (const token of ["Pause motion", "Play motion", "aria-pressed", "prefers-reduced-motion", "hero-motion-paused"]) {
-    assert.ok(experience.includes(token) || styles.includes(token), `missing hero motion contract: ${token}`);
+test("hero motion is automatic, reduced-motion safe and uses deterministic SVG arrows", () => {
+  for (const token of ["prefers-reduced-motion", "is-playing", "hero-motion-paused"]) {
+    assert.ok(experience.includes(token) || styles.includes(token), `missing automatic hero motion contract: ${token}`);
+  }
+  for (const removedControl of ["Pause motion", "Play motion", "motion-control", "aria-pressed"]) {
+    assert.equal(experience.includes(removedControl) || styles.includes(removedControl), false, `manual motion control remains: ${removedControl}`);
   }
   assert.match(source, /<svg[^>]*aria-hidden="true"[^>]*focusable="false"[^>]*>/);
   assert.match(source, /stroke="currentColor"/);
