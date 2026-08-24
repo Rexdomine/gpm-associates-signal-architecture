@@ -6,7 +6,7 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 
 - `app/layout.tsx` defines Next.js-managed Google fonts, exact Homepage metadata and review-only crawler controls.
 - `app/page.tsx` is the semantic, server-rendered Homepage and global header/footer shell.
-- `app/components/HomepageExperience.tsx` provides an automatic, reduced-motion-safe SVG/CSS privacy-workflow overlay restricted to the depicted hero screen, plus keyboard-accessible live-feature tabs.
+- `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
 - `app/components/CookieConsent.tsx` provides first-party preference storage, an accessible settings dialog and explicit external-map gating. No analytics, marketing script or third-party map iframe is loaded.
 - `app/components/MobileMenu.tsx` provides the responsive navigation, Escape handling, keyboard containment and focus restoration.
 - `app/components/ScrollReveal.tsx` progressively enhances selected content with one-time reveals while failing open for reduced-motion and no-JavaScript users.
