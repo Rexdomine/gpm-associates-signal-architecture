@@ -271,7 +271,7 @@ export default function Home() {
           <div className="footer-connect">
             <h4>CONNECT</h4>
             <a href="mailto:dataprotection@gpm-associates.ng">dataprotection@gpm-associates.ng</a>
-            <a href="tel:+234****2782">+234 803 899 2782</a>
+            <a href="tel:+2348038992782">+234 803 899 2782</a>
             <a href="/contact">Start a conversation</a>
             <a href="https://services.ndpc.gov.ng/breach/" target="_blank" rel="noopener noreferrer">Report a Breach to the NDPC<ArrowIcon /></a>
             <div className="social-links" aria-label="GPM Associates social media">

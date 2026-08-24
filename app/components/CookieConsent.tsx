@@ -22,7 +22,11 @@ const readPreferences = (): Preferences | null => {
 };
 
 const persistPreferences = (preferences: Preferences) => {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
+  } catch {
+    // Keep the in-session preference usable when storage is unavailable.
+  }
   window.dispatchEvent(new CustomEvent<Preferences>(PREFERENCES_EVENT, { detail: preferences }));
 };
 
@@ -48,21 +52,41 @@ export function CookieConsent() {
       setDraftExternalMedia(current?.externalMedia ?? false);
       setDialogOpen(true);
     };
+    const syncPreferences = (event: Event) => {
+      const detail = (event as CustomEvent<Preferences>).detail;
+      const current = typeof detail?.externalMedia === "boolean" ? detail : readPreferences();
+      setPreferences(current);
+      setDraftExternalMedia(current?.externalMedia ?? false);
+    };
     window.addEventListener(OPEN_EVENT, openSettings);
+    window.addEventListener(PREFERENCES_EVENT, syncPreferences);
     return () => {
       window.clearTimeout(hydration);
       window.removeEventListener(OPEN_EVENT, openSettings);
+      window.removeEventListener(PREFERENCES_EVENT, syncPreferences);
     };
   }, []);
 
   useEffect(() => {
     if (!dialogOpen) return;
-    const first = dialogRef.current?.querySelector<HTMLElement>("input, button, a[href]");
-    first?.focus();
+    const focusable = dialogRef.current?.querySelectorAll<HTMLElement>("input, button:not([disabled]), a[href]");
+    focusable?.[0]?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      setDialogOpen(false);
-      returnFocusRef.current?.focus();
+      if (event.key === "Escape") {
+        setDialogOpen(false);
+        returnFocusRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);

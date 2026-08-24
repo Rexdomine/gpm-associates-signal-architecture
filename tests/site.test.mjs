@@ -159,7 +159,8 @@ test("global navigation, footer routes and exact contact details match the mocku
     "© 2026 GPM ASSOCIATES",
   ]) assert.match(source, exact(detail));
   assert.match(page, /mailto:dataprotection@gpm-associates\.ng/);
-  assert.ok(page.includes('href="tel:+234****2782"'));
+  const dialableTelephone = ["+234", "803", "899", "2782"].join("");
+  assert.ok(page.includes(`href=\"tel:${dialableTelephone}\"`), "telephone must use complete E.164 digits");
 });
 
 test("approved external links are exact and safely isolated", () => {
@@ -185,6 +186,12 @@ test("cookie preferences are accessible, first-party only and gate external medi
     assert.ok(consent.includes(token), `missing consent behavior: ${token}`);
   }
   assert.match(consent, /externalMedia \?/);
+  assert.match(consent, /try\s*\{[\s\S]*localStorage\.setItem[\s\S]*\}\s*catch\s*\{[\s\S]*dispatchEvent/);
+  assert.match(consent, /addEventListener\(PREFERENCES_EVENT, syncPreferences\)/);
+  assert.match(consent, /removeEventListener\(PREFERENCES_EVENT, syncPreferences\)/);
+  for (const token of ["event.key !== \"Tab\"", "event.shiftKey", "event.preventDefault()", "first.focus()", "last.focus()"]) {
+    assert.ok(consent.includes(token), `missing consent focus containment: ${token}`);
+  }
   assert.equal(/google-analytics|googletagmanager|facebook\.net|hotjar/i.test(source), false);
 });
 

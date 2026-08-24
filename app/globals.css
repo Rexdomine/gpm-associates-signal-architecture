@@ -53,7 +53,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .hero-actions { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
 .primary-action, .contact-action, .button-solid { min-height: 52px; display: inline-flex; align-items: center; justify-content: space-between; gap: 22px; padding: 0 20px; border: 0; background: var(--crimson); color: white; font-size: 12px; font-weight: 800; }
 .primary-action:hover, .button-solid:hover { background: var(--crimson-dark); }
-.text-action, .text-link { width: fit-content; min-height: 44px; display: inline-flex; align-items: center; gap: 14px; border-bottom: 1px solid currentColor; font-size: 11px; font-weight: 850; letter-spacing: 0.04em; }
+.text-action, .text-link { width: fit-content; min-height: 44px; display: inline-flex; align-items: center; gap: 14px; border-bottom: 1px solid currentcolor; font-size: 11px; font-weight: 850; letter-spacing: 0.04em; }
 .text-action.light, .text-link.light { color: white; }
 .text-action:hover, .text-link:hover { color: #d83e48; }
 .text-action.light:hover, .text-link.light:hover { color: #ef9095; }
