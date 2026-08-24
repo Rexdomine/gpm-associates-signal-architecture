@@ -48,14 +48,14 @@ The Homepage ships three local, checksum-locked assets through `next/image`; the
 
 ### GPT Image 2 hero
 
-- Production derivative: `public/images/gpm-homepage-trusted-data-environments-v1.webp`
-- Production SHA-256: `9d8faeaf77f8037f7c24c107230be841eaed55f3f6f8e1ac4486bc76f10efa23`
+- Production derivative: `public/images/gpm-homepage-privacy-operations-v2.webp`
+- Production SHA-256: `f081a17aae1ed5f7025bee8810486ebcc27edfc802f2f7e7e19c760f46459844`
 - Dimensions: `1672 × 941`
-- File size: approximately `129 KB`
+- File size: approximately `113 KB` (`112672` bytes)
 - Source provider/model: OpenAI GPT Image 2, `gpt-image-2-medium`
-- Generated master SHA-256: `1ee668c9fbc1e58acc4878ed2d38fa7ca29e2ab7f4d4874551f072fc631a2386`
+- Generated master SHA-256: `788facb7a42a47441065fffa6eb8bd9b1c750701a9fd03abec91b7551b57f631`
 
-The scene was art-directed to depict a recognisable GPM activity: African professionals mapping personal-data flows, reviewing structured records and placing governance controls. It avoids generic conference imagery, readable synthetic text, logos, seals and unsupported institutional evidence. Faces, hands, object contact, crop resilience and publication safety were visually reviewed before a metadata-light WebP derivative was exported.
+The scene was art-directed from the locked GPM imagery concept: three African privacy professionals review a data-lifecycle and governance workflow through a credible workstation, records register, laptop and policy binders. Grounded advisory work remains primary; controlled crimson/navy lighting, reflections and interface depth supply the restrained futuristic layer. It avoids generic meetings, cyber-thriller motifs, readable personal information, logos, seals and unsupported institutional evidence. Faces, hands, object contact, desktop/mobile crop resilience and publication safety were visually reviewed before a metadata-light WebP derivative was exported.
 
 The people shown are illustrative generated subjects. They are not GPM personnel, clients or participants in a real engagement.
 
