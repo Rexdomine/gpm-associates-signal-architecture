@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { DottedGlobe } from "../components/DottedGlobe";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
@@ -52,6 +53,7 @@ export default function AboutPage() {
         <ScrollReveal />
 
         <section className="about-hero dark-plane" aria-labelledby="about-hero-title">
+          <DottedGlobe />
           <div className="shell about-hero-grid">
             <div className="about-hero-copy" data-reveal>
               <p className="eyebrow">ABOUT GPM</p>

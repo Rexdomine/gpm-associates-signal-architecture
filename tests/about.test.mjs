@@ -10,6 +10,7 @@ const read = (path) => {
 };
 
 const about = read("app/about/page.tsx");
+const dottedGlobe = read("app/components/DottedGlobe.tsx");
 const homepage = read("app/page.tsx");
 const homepageExperience = read("app/components/HomepageExperience.tsx");
 const header = read("app/components/SiteHeader.tsx");
@@ -119,6 +120,62 @@ test("About hero and established panel match exact section 1 contract", () => {
   ]);
   assert.equal(about.includes("Independent advice. Practical regulatory confidence."), false);
   assert.equal(about.includes("gpm-independent-policy-review-v2.webp"), false);
+});
+
+test("About hero has one deterministic, decorative dotted globe with responsive static-safe pulses", () => {
+  assert.ok(dottedGlobe.length > 0, "missing About dotted globe component");
+  assert.equal((about.match(/<DottedGlobe\s*\/>/g) ?? []).length, 1, "About must render exactly one dotted globe");
+  assert.match(about, /import \{ DottedGlobe \} from "\.\.\/components\/DottedGlobe"/);
+  assert.equal(homepage.includes("DottedGlobe"), false, "Homepage must not import or render the About globe");
+
+  assert.match(dottedGlobe, /<svg[^>]*aria-hidden="true"[^>]*focusable="false"/s);
+  assert.match(dottedGlobe, /className="about-globe"/);
+  assert.match(dottedGlobe, /viewBox="0 0 1440 560"/);
+  assert.match(dottedGlobe, /<clipPath id="about-globe-hemisphere"/);
+  assert.ok((dottedGlobe.match(/className="about-globe-curve"/g) ?? []).length >= 8, "globe needs latitude/longitude-like curved geometry");
+  assert.match(dottedGlobe, /<path className="about-globe-curve about-globe-meridian"[^>]*>/, "globe needs a dedicated central meridian path crossing the latitude arcs");
+  assert.equal((dottedGlobe.match(/className="about-globe-pulse /g) ?? []).length, 7, "desktop globe must have seven pulse nodes");
+  assert.equal(/<(video|canvas|img)\b/i.test(dottedGlobe), false, "globe must remain deterministic inline SVG");
+  assert.equal(/https?:\/\//.test(dottedGlobe), false, "globe must not request remote media");
+
+  assert.match(styles, /\.about-globe-layer\s*\{[^}]*pointer-events:\s*none/s);
+  assert.match(styles, /\.about-globe-meridian\s*\{[^}]*stroke-dasharray:/s, "central meridian must remain dotted");
+  const haloOpacity = Number(styles.match(/\.about-globe-pulse-halo\s*\{[^}]*opacity:\s*([\d.]+)/s)?.[1]);
+  assert.ok(Number.isFinite(haloOpacity) && haloOpacity < 0.08, "pulse halo opacity must be restrained below .08");
+  assert.match(styles, /\.about-hero-copy::before[\s\S]*\.about-established::before/, "hero needs localized copy and card legibility masks");
+  assert.match(styles, /@keyframes about-globe-pulse\s*\{[\s\S]*opacity:[\s\S]*transform:\s*scale\(/);
+  assert.match(styles, /@media \(max-width:\s*600px\)[\s\S]*\.about-globe-pulse--mobile-hidden\s*\{\s*display:\s*none/);
+  assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*\.about-globe-pulse\s*\{[^}]*animation:\s*none/);
+});
+
+test("About globe reads as a dotted upper hemisphere at desktop and mobile widths", () => {
+  assert.match(dottedGlobe, /<path className="about-globe-rim"[^>]*>/, "globe needs an explicit outer rim");
+  assert.match(dottedGlobe, /<path className="about-globe-equator"[^>]*>/, "globe needs an explicit lower latitude or equator anchor");
+  assert.match(
+    dottedGlobe,
+    /<[^>]+className="about-globe-surface"[^>]+clipPath="url\(#about-globe-hemisphere\)"[^>]*>/,
+    "globe needs a clipped dotted surface",
+  );
+
+  assert.match(styles, /\.about-globe-rim\s*\{[^}]*stroke-dasharray:[^}]*opacity:/s);
+  assert.match(styles, /\.about-globe-equator\s*\{[^}]*stroke-dasharray:[^}]*opacity:/s);
+  const surfaceOpacity = Number(styles.match(/\.about-globe-surface\s*\{[^}]*opacity:\s*([\d.]+)/s)?.[1]);
+  assert.ok(Number.isFinite(surfaceOpacity) && surfaceOpacity > 0 && surfaceOpacity < 0.2, "surface dots must be present but restrained");
+
+  const desktopCurve = styles.match(/\.about-globe-curve\s*\{([^}]*)\}/s)?.[1] ?? "";
+  const mobileRules = styles.match(/@media \(max-width:\s*600px\)([\s\S]*?)(?=@media|$)/)?.[1] ?? "";
+  const desktopGap = Number(desktopCurve.match(/stroke-dasharray:\s*\.1\s+([\d.]+)/)?.[1]);
+  const mobileCurve = mobileRules.match(/\.about-globe-curve\s*\{([^}]*)\}/s)?.[1] ?? "";
+  const mobileGap = Number(mobileCurve.match(/stroke-dasharray:\s*\.1\s+([\d.]+)/)?.[1]);
+  const desktopOpacity = Number(desktopCurve.match(/opacity:\s*([\d.]+)/)?.[1]);
+  const mobileOpacity = Number(mobileCurve.match(/opacity:\s*([\d.]+)/)?.[1]);
+  assert.ok(mobileGap <= desktopGap, "mobile globe must retain at least desktop dot density");
+  assert.ok(mobileOpacity >= desktopOpacity * 0.9, "mobile globe must retain enough curve opacity to read as spherical");
+
+  const mobileHiddenPulses = (dottedGlobe.match(/className="about-globe-pulse--mobile-hidden"/g) ?? []).length;
+  const pulseGroups = (dottedGlobe.match(/className="about-globe-pulse /g) ?? []).length;
+  assert.equal(pulseGroups - mobileHiddenPulses, 4, "mobile globe must retain four visible pulse groups");
+  assert.match(mobileRules, /\.about-globe-pulse-core\s*\{[^}]*opacity:\s*(?:\.8\d*|\.9\d*|1(?:\.0*)?)/s, "mobile pulse cores must remain visually discernible");
 });
 
 test("About credential strip matches exact section 2 contract", () => {
@@ -290,4 +347,15 @@ test("About omits rejected, fabricated, and unrelated content", () => {
     assert.equal(about.toLowerCase().includes(forbidden.toLowerCase()), false, `forbidden content remains: ${forbidden}`);
   }
   assert.equal(/\b(2022|2023|2024|2025)\b/.test(about), false);
+});
+
+test("About globe rendered-anchor: surface dots and spherical curves must read as coherent upper hemisphere", () => {
+  const surfaceOpacity = Number(styles.match(/\.about-globe-surface\s*\{[^}]*opacity:\s*([\d.]+)/s)?.[1]);
+  const desktopCurveBlock = (styles.match(/\.about-globe-curve\s*\{([^}]*)\}/s)?.[1] ?? "");
+  const curveOpacity = Number(desktopCurveBlock.match(/opacity:\s*([\d.]+)/)?.[1]);
+  assert.ok(Number.isFinite(surfaceOpacity) && surfaceOpacity > 0.11, "surface dots too faint to read as dome; need >0.11");
+  assert.ok(Number.isFinite(curveOpacity) && curveOpacity >= 0.40, "latitude curves too faint; need >=0.40 for projection coherence");
+  assert.match(dottedGlobe, /<path className="about-globe-rim"[^>]*>/, "rim missing");
+  assert.match(dottedGlobe, /<path className="about-globe-equator"[^>]*>/, "equator anchor missing");
+  assert.ok((dottedGlobe.match(/className="about-globe-curve"/g) ?? []).length >= 8, "need coherent meridian/latitude set");
 });
