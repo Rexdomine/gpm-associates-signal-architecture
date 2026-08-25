@@ -2,12 +2,11 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { existsSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { join } from "node:path";
 
-const root = "/opt/data/projects/gpm-industries-page";
-const pagePath = join(root, "app/industries/page.tsx");
+const root = new URL("../", import.meta.url);
+const pagePath = new URL("app/industries/page.tsx", root);
 const pageSource = readFileSync(pagePath, "utf8");
-const imagePath = join(root, "public/images/gpm-industries-editorial-approved.webp");
+const imagePath = new URL("public/images/gpm-industries-editorial-approved.webp", root);
 
 const requiredCopy = [
   "INDUSTRIES &amp; EXPERIENCE",
