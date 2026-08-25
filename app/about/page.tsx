@@ -121,7 +121,6 @@ export default function AboutPage() {
           <div className="shell about-multidisciplinary-grid">
             <figure data-reveal>
               <Image src="/images/gpm-about-team-approved-v1.webp" alt="Senior African professionals in a governance and risk discussion" width={1600} height={1100} sizes="(max-width: 800px) 100vw, 50vw" />
-              <figcaption>Illustrative subjects only — not GPM staff, clients or participants in a real engagement.</figcaption>
             </figure>
             <div className="reveal-delay-1" data-reveal>
               <p className="eyebrow">MULTIDISCIPLINARY BY DESIGN</p>
