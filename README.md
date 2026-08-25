@@ -1,6 +1,6 @@
-# GPM Associates — Approved Homepage + About + Services + Industries
+# GPM Associates — Approved Homepage + About + Services + Industries + Innovation
 
-A production-quality implementation of the client-approved GPM Associates Homepage, About, Services and Industries & Experience routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
+A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience and Innovation routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
 
 ## Architecture
 
@@ -9,10 +9,12 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 - `app/about/page.tsx` is the semantic, server-rendered `/about` route with route-specific metadata.
 - `app/services/page.tsx` is the six-section, semantic, server-rendered `/services` route with route-specific metadata.
 - `app/industries/page.tsx` is the semantic, server-rendered `/industries` route aligned to the approved Industries & Experience mockup, including the exact section sequence, sector cards, anonymised engagement framing and review-only CTA.
-- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries without adding route-specific sections elsewhere.
+- `app/tools/page.tsx` is the semantic, server-rendered `/tools` Innovation route aligned to the approved Innovation Lab mockup, including the featured quick-check framing, live-product embed and route-specific metadata.
+- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries + Innovation without adding route-specific sections elsewhere.
 - `app/components/ServicesLifecycle.tsx` progressively enhances the server-rendered lifecycle illustration with continuous automatic motion while remaining static for reduced-motion and no-JavaScript users.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
-- `app/components/CookieConsent.tsx` provides first-party preference storage, an accessible settings dialog and explicit external-map gating. No analytics, marketing script or third-party map iframe is loaded.
+- `app/components/InnovationQuickCheckEmbed.tsx` gates the live NDPA Quick Check behind explicit external-media consent before embedding the current assessment product.
+- `app/components/CookieConsent.tsx` provides first-party preference storage, an accessible settings dialog and explicit external-map/external-tool gating. No analytics or marketing script is loaded.
 - `app/components/MobileMenu.tsx` provides the responsive navigation, Escape handling, keyboard containment and focus restoration.
 - `app/components/ScrollReveal.tsx` progressively enhances selected content with one-time reveals while failing open for reduced-motion and no-JavaScript users.
 - `app/globals.css` owns the responsive design system, focus states and all motion fallbacks.
@@ -33,7 +35,7 @@ npm audit --audit-level=high
 
 Use Node.js 20.9 or newer (CI uses Node.js 22). `npm run verify` runs ESLint with zero warnings, strict TypeScript and the deterministic test suite.
 
-## Homepage + About + Services + Industries scope and extension points
+## Homepage + About + Services + Industries + Innovation scope and extension points
 
 The approved global navigation already uses the final internal destinations:
 
@@ -45,7 +47,7 @@ The approved global navigation already uses the final internal destinations:
 - `/governance-library`
 - `/contact`
 
-The `/about`, `/services` and `/industries` destinations are implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
+The `/about`, `/services`, `/industries` and `/tools` destinations are implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
 
 ## Asset provenance
 
