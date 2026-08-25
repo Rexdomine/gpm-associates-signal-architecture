@@ -19,6 +19,7 @@ const layout = read("app/layout.tsx");
 const homepage = read("app/page.tsx");
 const homepageExperience = read("app/components/HomepageExperience.tsx");
 const about = read("app/about/page.tsx");
+const projectContext = read("PROJECT_CONTEXT.md");
 const servicesMarkup = services.slice(services.indexOf("export default function ServicesPage"));
 
 function assertIncludesAll(source, values) {
@@ -201,6 +202,10 @@ test("approved local Services images are binary-locked and truthfully disclosed"
   assert.equal(styles.includes("/images/gpm-privacy-impact-assessment-v2.webp"), false, "old Services hero must not be referenced");
   assert.equal(services.includes("/images/gpm-privacy-capability-workshop-v3.webp"), false, "old integrated image must not be referenced");
   assert.equal(services.includes("Senior African professionals working through a governance and risk advisory session"), false);
+  assertIncludesAll(projectContext, [
+    "6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0",
+    "6bdcdba4ee1510795a4be31b0ce090b2852af9d2365c9d018930ee3f6d049a20",
+  ]);
 });
 
 test("lifecycle ambient SVG is automatic normal-motion, reduced-motion/static and no-JS safe with no controls", () => {
