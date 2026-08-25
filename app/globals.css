@@ -277,7 +277,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 /* Services */
 .services-hero { position: relative; isolation: isolate; min-height: 590px; display: grid; align-items: center; overflow: hidden; padding-block: clamp(76px, 9vw, 128px); }
 .services-hero-background, .services-hero-overlay { position: absolute; inset: 0; pointer-events: none; }
-.services-hero-background { z-index: -2; background: url("/images/gpm-privacy-impact-assessment-v2.webp") center 42% / cover no-repeat; }
+.services-hero-background { z-index: -2; background: url("/images/gpm-services-privacy-impact-data-flow-lagos-2026.webp") center 42% / cover no-repeat; }
 .services-hero-overlay { z-index: -1; background: linear-gradient(90deg, rgba(8, 36, 51, .96) 0%, rgba(8, 36, 51, .88) 48%, rgba(8, 36, 51, .72) 100%), linear-gradient(rgba(8, 36, 51, .42), rgba(8, 36, 51, .62)); }
 .services-hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); gap: clamp(56px, 9vw, 140px); align-items: end; }
 .services-hero h1 { max-width: 850px; }
