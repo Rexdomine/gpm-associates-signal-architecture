@@ -1,11 +1,13 @@
-# GPM Associates — Approved Homepage
+# GPM Associates — Approved Homepage + About
 
-A production-quality implementation of the client-approved GPM Associates Homepage, built with Next.js App Router, React and TypeScript. The approved mockup is the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. This branch deliberately implements the Homepage only; the remaining routes will be delivered and reviewed one page at a time.
+A production-quality implementation of the client-approved GPM Associates Homepage + About route, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
 
 ## Architecture
 
 - `app/layout.tsx` defines Next.js-managed Google fonts, exact Homepage metadata and review-only crawler controls.
-- `app/page.tsx` is the semantic, server-rendered Homepage and global header/footer shell.
+- `app/page.tsx` is the semantic, server-rendered Homepage.
+- `app/about/page.tsx` is the semantic, server-rendered `/about` route with route-specific metadata.
+- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About without adding the About credential strip to the Homepage.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
 - `app/components/CookieConsent.tsx` provides first-party preference storage, an accessible settings dialog and explicit external-map gating. No analytics, marketing script or third-party map iframe is loaded.
 - `app/components/MobileMenu.tsx` provides the responsive navigation, Escape handling, keyboard containment and focus restoration.
@@ -28,7 +30,7 @@ npm audit --audit-level=high
 
 Use Node.js 20.9 or newer (CI uses Node.js 22). `npm run verify` runs ESLint with zero warnings, strict TypeScript and the deterministic test suite.
 
-## Homepage scope and extension points
+## Homepage + About scope and extension points
 
 The approved global navigation already uses the final internal destinations:
 
@@ -40,7 +42,7 @@ The approved global navigation already uses the final internal destinations:
 - `/governance-library`
 - `/contact`
 
-Those destination pages are intentionally not implemented on this branch. They will be added only after the Homepage is approved, beginning with About. Shared shell and content primitives should be extracted as each approved page creates a real reuse case; no placeholder page copy or invented route content is included.
+The `/about` destination is implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
 
 ## Asset provenance
 
@@ -65,6 +67,16 @@ The person shown is an illustrative generated subject. She is not GPM personnel,
 - `public/images/ndpc-verification-qr-approved.png` — SHA-256 `a7a5e24bac214736bded888bd12c4eccf04697527bf5055b82187dae846c9c76`
 
 Both files were copied byte-for-byte from the approved client mockup. The QR links only to the approved official NDPC verification destination.
+
+### About multidisciplinary image
+
+- Source: `https://gpm-phase1-mockup.dataprotectiongpm.chatgpt.site/about-team.webp`
+- Production file: `public/images/gpm-about-team-approved-v1.webp`
+- SHA-256: `74e66d49efa6e170e663393a9acee30eb15f5b6a0bb3acad854eb03ecbc96db4`
+- Dimensions: `1600 × 1100`
+- File size: `70962` bytes
+
+The people shown are illustrative subjects. They are not GPM personnel or staff, clients, or participants in a real engagement.
 
 ## Consent and external services
 
