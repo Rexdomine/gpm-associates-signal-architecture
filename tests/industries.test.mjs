@@ -56,6 +56,11 @@ test("industries page matches the approved mockup copy contract", () => {
   assert.match(pageSource, /No unsupported performance claims/);
   assert.match(pageSource, /Approved logos and testimonials only/);
   assert.match(pageSource, /Outcomes supported by engagement evidence/);
+  assert.match(pageSource, /className=\"industries-proof-list\"/);
+  assert.match(pageSource, /className=\"industries-proof-marker\"/);
+  assert.doesNotMatch(pageSource, /industries-proof-grid/);
+  assert.doesNotMatch(pageSource, /Every example on this page is framed to protect confidentiality/);
+  assert.doesNotMatch(pageSource, /HOW WE PRESENT EXPERIENCE/);
 });
 
 test("industries page uses the approved editorial image asset", () => {

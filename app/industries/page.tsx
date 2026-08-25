@@ -253,25 +253,18 @@ export default function IndustriesPage() {
         </section>
 
         <section className="industries-proof section-pad">
-          <div className="shell industries-proof-layout" data-reveal>
-            <div className="industries-proof-intro">
+          <div className="shell" data-reveal>
+            <div className="industries-proof-intro-simple">
               <p className="eyebrow">PROOF PRINCIPLES</p>
               <h2>Credible. Specific. Responsible.</h2>
-              <p className="industries-proof-summary">
-                Every example on this page is framed to protect confidentiality, avoid overstatement and keep the emphasis on defensible client outcomes.
-              </p>
-              <div className="industries-proof-note">
-                <span>HOW WE PRESENT EXPERIENCE</span>
-                <p>
-                  Experience references are anonymised where required and structured around verified engagement evidence rather than marketing shorthand.
-                </p>
-              </div>
             </div>
 
-            <ol className="industries-proof-grid">
+            <ol className="industries-proof-list" aria-label="Proof principles">
               {proofPrinciples.map((item, index) => (
                 <li key={item} className={index % 2 ? "reveal-delay-1" : ""} data-reveal>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <span aria-hidden="true" className="industries-proof-marker">
+                    ↗
+                  </span>
                   <p>{item}</p>
                 </li>
               ))}

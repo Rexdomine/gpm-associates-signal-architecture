@@ -415,18 +415,12 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .industries-engagement-card dt { margin-bottom: 6px; color: var(--crimson); font-size: 10px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
 .industries-engagement-card dd { margin: 0; color: var(--slate); font-size: 14px; line-height: 1.72; }
 
-.industries-proof-layout { display: grid; grid-template-columns: minmax(300px, .78fr) minmax(0, 1.22fr); gap: clamp(38px, 6vw, 96px); align-items: start; }
-.industries-proof-intro { display: grid; gap: 24px; max-width: 470px; }
-.industries-proof-intro h2 { margin: 0; color: var(--navy); font-size: clamp(42px, 4.7vw, 66px); font-weight: 500; line-height: 1.04; letter-spacing: -.045em; }
-.industries-proof-summary { margin: 0; color: var(--slate); font-size: 15px; line-height: 1.8; }
-.industries-proof-note { display: grid; gap: 12px; padding: 22px 24px; border-left: 2px solid var(--crimson); background: rgba(255,253,248,.72); box-shadow: inset 0 0 0 1px rgba(8,36,51,.08); }
-.industries-proof-note span { color: var(--crimson); font-size: 10px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
-.industries-proof-note p { margin: 0; color: var(--ink); font-size: 13px; line-height: 1.72; }
-.industries-proof-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--navy); }
-.industries-proof-grid li { min-height: 0; display: grid; align-content: start; gap: 26px; padding: 28px 26px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: rgba(255,253,248,.9); }
-.industries-proof-grid li:nth-child(2n + 1) { border-left: 1px solid var(--rule); }
-.industries-proof-grid span { color: var(--crimson); font-size: 10px; font-weight: 850; letter-spacing: .16em; }
-.industries-proof-grid p { max-width: 18ch; margin: 0; color: var(--navy); font-family: var(--font-space-grotesk), sans-serif; font-size: clamp(24px, 2.4vw, 34px); font-weight: 500; line-height: 1.16; letter-spacing: -.03em; }
+.industries-proof-intro-simple { display: grid; gap: 18px; margin-bottom: clamp(24px, 4vw, 36px); max-width: 980px; }
+.industries-proof-intro-simple h2 { margin: 0; color: var(--navy); font-size: clamp(42px, 4.7vw, 66px); font-weight: 500; line-height: 1.04; letter-spacing: -.045em; }
+.industries-proof-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(8,36,51,.82); }
+.industries-proof-list li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 16px; align-items: center; min-height: 84px; padding: 22px 0; border-bottom: 1px solid rgba(8,36,51,.14); }
+.industries-proof-marker { color: var(--crimson); font-size: 14px; font-weight: 700; line-height: 1; }
+.industries-proof-list p { margin: 0; color: var(--ink); font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; }
 
 .cookie-banner { position: fixed; z-index: 120; right: 20px; bottom: 20px; left: 20px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; max-width: 1260px; margin-inline: auto; padding: 22px 24px; border: 1px solid rgba(255,255,255,.25); background: #082433; color: white; box-shadow: 0 24px 70px rgba(0,0,0,.28); }
 .cookie-title { margin-bottom: 7px; font-weight: 800; }
@@ -469,9 +463,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .industries-priority-grid { grid-template-columns: repeat(2, 1fr); }
   .industries-approach-layout { grid-template-columns: minmax(0, 1.02fr) minmax(300px, .98fr); gap: 34px; }
   .industries-approach-copy h2 { max-width: 9.4ch; }
-  .industries-proof-layout { grid-template-columns: 1fr; gap: 34px; }
-  .industries-proof-intro { max-width: 760px; }
-  .industries-proof-grid p { max-width: 14ch; }
+  .industries-proof-intro-simple { margin-bottom: 28px; }
   .services-stage-grid { grid-template-columns: repeat(3, 1fr); }
   .services-stage-grid article { border-bottom: 1px solid var(--rule); }
 }
@@ -488,9 +480,8 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .industries-approach-copy h2 { max-width: 12ch; }
   .industries-body-copy-text { max-width: 100%; }
   .industries-approach-media { max-width: 100%; }
-  .industries-proof-grid { grid-template-columns: 1fr; }
-  .industries-proof-grid li { min-height: 0; border-left: 1px solid var(--rule); }
-  .industries-proof-grid p { max-width: 100%; }
+  .industries-proof-list li { grid-template-columns: 18px minmax(0, 1fr); min-height: 0; gap: 12px; padding: 18px 0; }
+  .industries-proof-list p { font-size: 17px; }
   .service-row { grid-template-columns: 44px 1fr 40px; gap: 18px; padding: 30px 0; }
   .service-row > span { padding-top: 6px; }
   .service-row p { grid-column: 2 / 4; }
