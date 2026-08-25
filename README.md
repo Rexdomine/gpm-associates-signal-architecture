@@ -1,20 +1,22 @@
-# GPM Associates — Approved Homepage + About
+# GPM Associates — Approved Homepage + About + Services
 
-A production-quality implementation of the client-approved GPM Associates Homepage + About route, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
+A production-quality implementation of the client-approved GPM Associates Homepage, About and Services routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
 
 ## Architecture
 
 - `app/layout.tsx` defines Next.js-managed Google fonts, exact Homepage metadata and review-only crawler controls.
 - `app/page.tsx` is the semantic, server-rendered Homepage.
 - `app/about/page.tsx` is the semantic, server-rendered `/about` route with route-specific metadata.
-- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About without adding the About credential strip to the Homepage.
+- `app/services/page.tsx` is the six-section, semantic, server-rendered `/services` route with route-specific metadata.
+- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services without adding route-specific sections elsewhere.
+- `app/components/ServicesLifecycle.tsx` progressively animates the server-rendered lifecycle illustration, with pause/play and reduced-motion behavior.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
 - `app/components/CookieConsent.tsx` provides first-party preference storage, an accessible settings dialog and explicit external-map gating. No analytics, marketing script or third-party map iframe is loaded.
 - `app/components/MobileMenu.tsx` provides the responsive navigation, Escape handling, keyboard containment and focus restoration.
 - `app/components/ScrollReveal.tsx` progressively enhances selected content with one-time reveals while failing open for reduced-motion and no-JavaScript users.
 - `app/globals.css` owns the responsive design system, focus states and all motion fallbacks.
 - `next.config.ts` sets global security headers.
-- `tests/site.test.mjs` locks exact copy, section order, user journeys, asset checksums, metadata, indexing and security requirements with Node’s built-in test runner.
+- `tests/*.test.mjs` lock exact copy, section order, user journeys, asset checksums, metadata, indexing and security requirements with Node’s built-in test runner.
 - `.github/workflows/ci.yml` runs locked dependency installation, verification and a production build with read-only repository permissions.
 
 ## Commands
@@ -30,7 +32,7 @@ npm audit --audit-level=high
 
 Use Node.js 20.9 or newer (CI uses Node.js 22). `npm run verify` runs ESLint with zero warnings, strict TypeScript and the deterministic test suite.
 
-## Homepage + About scope and extension points
+## Homepage + About + Services scope and extension points
 
 The approved global navigation already uses the final internal destinations:
 
@@ -42,7 +44,7 @@ The approved global navigation already uses the final internal destinations:
 - `/governance-library`
 - `/contact`
 
-The `/about` destination is implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
+The `/about` and `/services` destinations are implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
 
 ## Asset provenance
 
@@ -77,6 +79,15 @@ Both files were copied byte-for-byte from the approved client mockup. The QR lin
 - File size: `70962` bytes
 
 The people shown are illustrative subjects. They are not GPM personnel or staff, clients, or participants in a real engagement.
+
+### Services data-flow image
+
+- Production file: `public/images/gpm-data-flow-mapping-v2.webp`
+- SHA-256: `459fd1db818c42b6e1d7610f5d2bf3780a83a19656bee5fa252a5fcba9b98ac5`
+- Dimensions: `1536 × 1024`
+- Provenance: existing repository-local approved production asset; no file was downloaded or regenerated for the Services implementation.
+
+The image is used as an illustrative data-flow mapping scene. Its subject is not GPM personnel or staff, a client, or a participant in a real engagement. The mockup’s generic `services-editorial.webp` meeting image is not shipped or requested.
 
 ## Consent and external services
 
