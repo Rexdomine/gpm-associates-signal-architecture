@@ -164,33 +164,33 @@ test("desktop and mobile Services links expose current route while focus behavio
 
 test("approved local Services images are binary-locked and truthfully disclosed", () => {
   // Hero background — decorative, faded, blended with dark overlays; no alt/focus
-  const heroAsset = "public/images/gpm-privacy-impact-assessment-v2.webp";
+  const heroAsset = "public/images/gpm-services-privacy-impact-data-flow-lagos-2026.webp";
   const heroUrl = new URL(heroAsset, root);
   assert.ok(existsSync(heroUrl), `hero decorative asset missing: ${heroAsset}`);
   const heroData = readFileSync(heroUrl);
-  assert.equal(createHash("sha256").update(heroData).digest("hex"), "ec431c641ef23f097c1a28eb5643fa154299ddb28e46cfd51f4050b030f62238");
-  assert.deepEqual(webpDimensions(heroData), { width: 1254, height: 1254 });
+  assert.equal(createHash("sha256").update(heroData).digest("hex"), "6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0");
+  assert.deepEqual(webpDimensions(heroData), { width: 1344, height: 752 });
   const heroHook = services.match(/<div className="services-hero-background"[^>]*\/>/)?.[0] ?? "";
   assertIncludesAll(heroHook, ['aria-hidden="true"']);
   assert.equal(heroHook.includes("alt="), false, "hero decorative background hook must have no alt");
   assert.equal(heroHook.includes("tabIndex"), false, "hero decorative background hook must not be focusable");
-  assert.match(styles, /\.services-hero-background\s*\{[^}]*background:\s*url\("\/images\/gpm-privacy-impact-assessment-v2\.webp"\)\s+center 42% \/ cover no-repeat;/s);
+  assert.match(styles, /\.services-hero-background\s*\{[^}]*background:\s*url\("\/images\/gpm-services-privacy-impact-data-flow-lagos-2026\.webp"\)\s+center 42% \/ cover no-repeat;/s);
   assert.match(styles, /\.services-hero-overlay\s*\{[^}]*background:\s*linear-gradient\([^}]*rgba\(8, 36, 51, \.96\)[^}]*linear-gradient\([^}]*rgba\(8, 36, 51, \.62\)/s);
   assert.match(styles, /\.services-hero-background, \.services-hero-overlay\s*\{[^}]*pointer-events:\s*none;/s);
 
   // Integrated design — approved illustrative image with factual alt and disclosure
-  const imagePath = "public/images/gpm-privacy-capability-workshop-v3.webp";
-  const imagePublicPath = "/images/gpm-privacy-capability-workshop-v3.webp";
+  const imagePath = "public/images/gpm-services-integrated-privacy-assessment-lab-2026.webp";
+  const imagePublicPath = "/images/gpm-services-integrated-privacy-assessment-lab-2026.webp";
   const assetUrl = new URL(imagePath, root);
   assert.ok(existsSync(assetUrl), `asset missing: ${imagePath}`);
   const data = readFileSync(assetUrl);
-  assert.equal(createHash("sha256").update(data).digest("hex"), "4ae9f54dd6837b3de10fd95a8989a5227bb50cf19ade76d8e12e884156c1f985");
-  assert.deepEqual(webpDimensions(data), { width: 1537, height: 1023 });
+  assert.equal(createHash("sha256").update(data).digest("hex"), "6bdcdba4ee1510795a4be31b0ce090b2852af9d2365c9d018930ee3f6d049a20");
+  assert.deepEqual(webpDimensions(data), { width: 1024, height: 688 });
   assertIncludesAll(services, [
     imagePublicPath,
-    "width={1537}",
-    "height={1023}",
-    'alt="African privacy professionals working through a structured data-governance exercise"',
+    "width={1024}",
+    "height={688}",
+    'alt="Three African privacy professionals connecting data-lifecycle mapping, technical control validation and governance evidence in a privacy-by-design assessment"',
   ]);
   assertInOrder(services, ["GPM ADVISORY", "Expertise connected around the client’s operating reality."]);
   assert.match(services, /illustrative/i);
@@ -198,6 +198,8 @@ test("approved local Services images are binary-locked and truthfully disclosed"
   assert.match(services, /not[^.]*client/i);
   assert.match(services, /not[^.]*real engagement/i);
   assert.equal(services.includes("/services-editorial.webp"), false, "rejected generic meeting photo must not be used");
+  assert.equal(styles.includes("/images/gpm-privacy-impact-assessment-v2.webp"), false, "old Services hero must not be referenced");
+  assert.equal(services.includes("/images/gpm-privacy-capability-workshop-v3.webp"), false, "old integrated image must not be referenced");
   assert.equal(services.includes("Senior African professionals working through a governance and risk advisory session"), false);
 });
 
