@@ -148,8 +148,38 @@ test("About hero has one deterministic, decorative dotted globe with responsive 
   assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*\.about-globe-pulse\s*\{[^}]*animation:\s*none/);
 });
 
-test("About globe reads as a dotted upper hemisphere at desktop and mobile widths", () => {
-  assert.match(dottedGlobe, /<path className="about-globe-rim"[^>]*>/, "globe needs an explicit outer rim");
+test("About globe reads as a broad bottom-emerging planetary horizon", () => {
+  assert.match(dottedGlobe, /<svg[^>]*preserveAspectRatio="none"/s, "globe must map the full horizon into every viewport");
+  assert.equal(dottedGlobe.includes('preserveAspectRatio="xMidYMid slice"'), false, "globe must not crop its rim endpoints");
+
+  const baseGlobeRule = styles.match(/\.about-globe\s*\{([^}]*)\}/s)?.[1] ?? "";
+  assert.match(baseGlobeRule, /inset:\s*0(?:;|\s)/, "base globe must fill the hero bounds");
+  assert.match(baseGlobeRule, /width:\s*100%/, "base globe must use the full viewport width");
+  assert.match(baseGlobeRule, /height:\s*100%/, "base globe must use the full hero height");
+  const mobileGlobeRule = styles.match(/@media \(max-width:\s*800px\)[\s\S]*?\.about-globe\s*\{([^}]*)\}/)?.[1] ?? "";
+  assert.match(mobileGlobeRule, /inset:\s*0(?:;|\s)/, "mobile globe must fill the hero bounds");
+  assert.match(mobileGlobeRule, /width:\s*100%/, "mobile globe must use the full viewport width");
+  assert.match(mobileGlobeRule, /height:\s*100%/, "mobile globe must use the full hero height");
+  const responsiveGlobeRules = [...styles.matchAll(/\.about-globe\s*\{([^}]*)\}/gs)].map((match) => match[1]).join("\n");
+  assert.equal(/width:\s*(?:1120|1440)px/.test(responsiveGlobeRules), false, "responsive globe must not use oversized widths that crop endpoints");
+
+  // Reject the old top-crown / dome geometry (crown peak near y=32, high arc)
+  assert.equal(dottedGlobe.includes("C135 185 375 32"), false, "rejected top-crown rim geometry");
+  assert.equal(dottedGlobe.includes("M70 505C135 185"), false, "rejected top-crown dome path");
+
+  // Semantic geometry check (replaces broken string regex that expected no spaces in SVG C-command)
+  const rimPath = (dottedGlobe.match(/className="about-globe-rim"[^>]*d="([^"]*)"/) || [])[1] || "";
+  // Endpoints near bottom (y >= 500); apex in lower-middle (y ~250-360, not top <150)
+  const pts = [...rimPath.matchAll(/([A-Z])\s*(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)/g)].map(m => ({ cmd: m[1], x: parseFloat(m[2]), y: parseFloat(m[3]) }));
+  const start = pts[0]; const end = pts[pts.length - 1];
+  assert.ok(start && start.y >= 500, "rim starts at/below bottom-left (y>=500); old crown fails");
+  assert.ok(end && end.y >= 500, "rim ends at/below bottom-right (y>=500)");
+  const apex = pts.slice(1, -1).reduce((a, p) => (!a || p.y < a.y ? p : a), null);
+  assert.ok(apex && apex.y >= 250 && apex.y <= 360, "apex in lower-middle (y 250-360), not top crown");
+  assert.ok(apex.y >= 150, "apex must not be near top (<150) — rejects old dome geometry");
+
+  // Must read as bottom-emerging: outer silhouette begins at/below bottom-left, rises to lower-middle, returns below bottom-right
+  assert.ok(/<path className="about-globe-rim"/.test(dottedGlobe), "rim missing");
   assert.match(dottedGlobe, /<path className="about-globe-equator"[^>]*>/, "globe needs an explicit lower latitude or equator anchor");
   assert.match(
     dottedGlobe,
@@ -172,10 +202,19 @@ test("About globe reads as a dotted upper hemisphere at desktop and mobile width
   assert.ok(mobileGap <= desktopGap, "mobile globe must retain at least desktop dot density");
   assert.ok(mobileOpacity >= desktopOpacity * 0.9, "mobile globe must retain enough curve opacity to read as spherical");
 
+  // Surface dots, curves and pulses must live predominantly in lower region (lower y == higher number in viewBox)
+  const curveYs = [...(dottedGlobe.matchAll(/C[^>]*?(\d{3}) (\d{3})/g) || [])].map(m => parseInt(m[2]));
+  const lowerCurves = curveYs.filter(y => y > 260);
+  assert.ok(lowerCurves.length >= 4, "majority of curves must sit in lower globe region");
+
+  // Preserve decorative, static-safe pulse count and responsive visibility rules
+  assert.equal((dottedGlobe.match(/className="about-globe-pulse /g) ?? []).length, 7, "desktop must keep 7 pulse nodes");
+  assert.equal((dottedGlobe.match(/className="about-globe-pulse--mobile-hidden"/g) ?? []).length, 3, "3 hidden on mobile -> 4 visible");
   const mobileHiddenPulses = (dottedGlobe.match(/className="about-globe-pulse--mobile-hidden"/g) ?? []).length;
   const pulseGroups = (dottedGlobe.match(/className="about-globe-pulse /g) ?? []).length;
   assert.equal(pulseGroups - mobileHiddenPulses, 4, "mobile globe must retain four visible pulse groups");
   assert.match(mobileRules, /\.about-globe-pulse-core\s*\{[^}]*opacity:\s*(?:\.8\d*|\.9\d*|1(?:\.0*)?)/s, "mobile pulse cores must remain visually discernible");
+  assert.ok(dottedGlobe.includes('aria-hidden="true"'), "decorative aria-hidden preserved");
 });
 
 test("About credential strip matches exact section 2 contract", () => {
