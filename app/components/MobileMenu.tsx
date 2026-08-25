@@ -1,28 +1,56 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 const links = [
-  ["Expertise", "#expertise"],
-  ["Approach", "#approach"],
-  ["About", "#about"],
-  ["Insights", "#insights"],
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Industries & Experience", href: "/industries" },
+  { label: "Innovation", href: "/tools" },
+  { label: "Insights", href: "/insights" },
+  { label: "Governance Library", href: "/governance-library" },
 ] as const;
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
   const menuId = useId();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!open) return;
-    const close = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
-    document.addEventListener("keydown", close);
-    return () => document.removeEventListener("keydown", close);
+    const panel = panelRef.current;
+    const focusable = panel?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
+    focusable?.[0]?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open]);
+
+  const close = () => setOpen(false);
 
   return (
     <div className="mobile-nav">
       <button
+        ref={toggleRef}
         className="menu-toggle"
         type="button"
         aria-expanded={open}
@@ -33,15 +61,11 @@ export function MobileMenu() {
         <span aria-hidden="true">{open ? "Close" : "Menu"}</span>
       </button>
       {open && (
-        <nav className="mobile-panel" id={menuId} aria-label="Mobile navigation">
-          {links.map(([label, href]) => (
-            <a key={href} href={href} onClick={() => setOpen(false)}>
-              {label}
-            </a>
+        <nav ref={panelRef} className="mobile-panel" id={menuId} aria-label="Mobile navigation">
+          {links.map(({ label, href }) => (
+            <a key={href} href={href} onClick={close}>{label}</a>
           ))}
-          <a className="mobile-contact" href="#contact" onClick={() => setOpen(false)}>
-            Start a conversation
-          </a>
+          <a className="mobile-contact" href="/contact" onClick={close}>Speak with an advisor</a>
         </nav>
       )}
     </div>

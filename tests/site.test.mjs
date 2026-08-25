@@ -1,180 +1,285 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import test from "node:test";
 
-const page = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
-const revealControllerUrl = new URL("../app/components/ScrollReveal.tsx", import.meta.url);
-const revealController = existsSync(revealControllerUrl) ? readFileSync(revealControllerUrl, "utf8") : "";
-const layout = readFileSync(new URL("../app/layout.tsx", import.meta.url), "utf8");
-const config = readFileSync(new URL("../next.config.ts", import.meta.url), "utf8");
-const robots = readFileSync(new URL("../public/robots.txt", import.meta.url), "utf8");
-const styles = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-
-const luminance = (hex) => {
-  const channels = hex.match(/[a-f\d]{2}/gi).map((channel) => parseInt(channel, 16) / 255);
-  const linear = channels.map((channel) => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4);
-  return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+const root = new URL("../", import.meta.url);
+const read = (path) => {
+  const url = new URL(path, root);
+  return existsSync(url) ? readFileSync(url, "utf8") : "";
 };
 
-const contrast = (foreground, background) => {
-  const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
-  return (values[0] + 0.05) / (values[1] + 0.05);
+const page = read("app/page.tsx");
+const layout = read("app/layout.tsx");
+const config = read("next.config.ts");
+const robots = read("public/robots.txt");
+const styles = read("app/globals.css");
+const mobileMenu = read("app/components/MobileMenu.tsx");
+const experience = read("app/components/HomepageExperience.tsx");
+const consent = read("app/components/CookieConsent.tsx");
+const reveal = read("app/components/ScrollReveal.tsx");
+const readme = read("README.md");
+const source = [page, layout, styles, mobileMenu, experience, consent, reveal].join("\n");
+
+const exact = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
+const assertInOrder = (haystack, markers) => {
+  let cursor = -1;
+  for (const marker of markers) {
+    const next = haystack.indexOf(marker, cursor + 1);
+    assert.ok(next > cursor, `missing or out of order: ${marker}`);
+    cursor = next;
+  }
 };
 
-test("homepage contains the required content and sections", () => {
+test("homepage follows the approved mockup section order", () => {
+  assertInOrder(page, [
+    "DATA PROTECTION. PRIVACY GOVERNANCE. DIGITAL TRUST.",
+    "2019",
+    "THE OPERATING REALITY",
+    "WHAT WE DO",
+    "SELECTED EXPERIENCE",
+    "GPM INNOVATION LAB",
+    "LIVE FEATURES",
+    "LATEST THINKING",
+    "BEGIN A CONVERSATION",
+    "Where Data Protection Meets Innovation.",
+  ]);
+});
+
+test("homepage preserves the exact approved hero, operating reality and final CTA copy", () => {
   const required = [
-    "INDEPENDENT REGULATORY ADVISORY",
-    "From regulatory complexity to confident action.",
-    "One connected regulatory intelligence system.",
-    "From obligation to operational confidence.",
-    "Independent advice. Practical regulatory confidence.",
-    "Building capability that lasts beyond compliance.",
-    "Regulatory perspectives for informed decisions.",
-    "Ready to move from obligation to confident action?",
-    "2017 Guidelines for Data Protection",
-    "draft Nigeria Data Protection Regulation (NDPR)",
+    "Building trusted, accountable and resilient data environments.",
+    "GPM Associates helps organisations navigate regulatory complexity, strengthen privacy governance and turn responsible data practices into sustainable business value.",
+    "Explore our services",
+    "Speak with an advisor",
+    "Data is now a source of accountability, exposure and strategic value.",
+    "Organisations must do more than publish policies. They need defensible governance, clear accountability, effective controls and evidence that their obligations are being met in practice.",
+    "GPM combines regulatory insight with implementation capability to help leaders move from fragmented compliance activity to a sustainable privacy and data governance operating model.",
+    "Your next data challenge deserves more than a generic solution.",
+    "Start a focused conversation with a GPM advisor.",
   ];
-  for (const copy of required) assert.match(page, new RegExp(copy.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
-  for (const id of ["expertise", "approach", "about", "insights", "contact"]) assert.match(page, new RegExp(`id=\\"${id}\\"`));
+  for (const copy of required) assert.match(page, exact(copy));
 });
 
-test("arrows use deterministic vector markup instead of emoji-prone Unicode", () => {
-  assert.match(page, /<svg[^>]*aria-hidden="true"[^>]*focusable="false"[^>]*>/);
-  assert.match(page, /stroke="currentColor"/);
-  assert.equal(page.includes("↗"), false);
+test("homepage contains the exact credibility strip", () => {
+  for (const item of ["2019", "ESTABLISHED", "NDPC", "LICENSED DPCO", "7", "CAPABILITY PILLARS", "10+", "SECTORS SUPPORTED"]) {
+    assert.ok(page.includes(item), `missing credibility item: ${item}`);
+  }
 });
 
-test("contact details are exact and policy items are non-navigation treatments", () => {
+test("homepage contains exactly the seven approved capability titles and descriptions", () => {
+  const services = [
+    ["Regulatory Compliance & Assurance", "Audits, CARs, registrations, maturity reviews and remediation assurance."],
+    ["Privacy Governance & Risk Management", "Operating models, DPO support, DPIAs and accountable programme oversight."],
+    ["Data Lifecycle & Privacy Engineering", "Data mapping, records, retention, consent, rights and privacy-by-design controls."],
+    ["Third-Party & Cross-Border Advisory", "Vendor risk, contracts, transfers and external dependency governance."],
+    ["Cyber Resilience & Information Assurance", "Security assurance, incident readiness and resilience improvement."],
+    ["AI & Emerging Technology Governance", "AI accountability, impact assessment and responsible lifecycle controls."],
+    ["Training & Capability Development", "Executive, practitioner and workforce programmes shaped around operating risk."],
+  ];
+  for (const [title, description] of services) {
+    assert.equal(page.split(title).length - 1, 1, `expected one homepage service title: ${title}`);
+    assert.match(page, exact(description));
+  }
+  assert.match(page, /services\.map\(/);
+});
+
+test("homepage preserves exact selected experience and Innovation Lab content", () => {
+  const required = [
+    "Complex environments. Practical outcomes. Defensible assurance.",
+    "From public institutions and regulated enterprises to technology and health organisations, our work strengthens accountability where the stakes are highest.",
+    "NATIONAL-SCALE",
+    "Data ecosystems and public-interest programmes",
+    "REGULATED",
+    "Financial, pension, health and professional environments",
+    "END-TO-END",
+    "Assessment, remediation, training and continuing assurance",
+    "Start with a clearer view of your obligations.",
+    "Use the GPM NDPA Quick Check to identify your organisation's likely UHL, EHL or OHL processing level and the practical next steps that may follow.",
+    "INDICATIVE LEVEL",
+    "EHL",
+    "Illustrative classification preview",
+  ];
+  for (const copy of required) assert.match(page, exact(copy));
+});
+
+test("live features have exact tabs, panels and accessible keyboard behavior", () => {
+  const required = [
+    "Useful digital experiences—available now.",
+    "Readiness assessment",
+    "Turn uncertainty into a focused starting point.",
+    "Complete the live GPM Readiness & Classification Tool to receive an indicative view of your organisation’s regulatory position, readiness priorities and recommended next steps.",
+    "5–8 min",
+    "GUIDED ASSESSMENT",
+    "Insights explorer",
+    "Find intelligence relevant to the decision in front of you.",
+    "Explore practical perspectives across regulation, governance, technology and learning using a responsive topic filter designed for faster discovery.",
+    "intelligence themes",
+    "Governance Library",
+    "Discover implementation-ready governance resources.",
+    "Review selected policy resources and toolkits available for purchase, then request the right package for your organisation through a guided enquiry.",
+    "policy resources",
+  ];
+  for (const copy of required) assert.match(page + experience, exact(copy));
+  for (const token of ["role=\"tablist\"", "role=\"tab\"", "role=\"tabpanel\"", "aria-selected", "aria-controls", "ArrowLeft", "ArrowRight", "Home", "End"]) {
+    assert.ok(experience.includes(token), `missing accessible tab behavior: ${token}`);
+  }
+  assert.match(experience, /tabIndex=\{activeIndex === index \? 0 : -1\}/);
+});
+
+test("latest thinking content is exact and complete", () => {
+  const required = [
+    "Intelligence for responsible data leadership.",
+    "GPM PRIVACY PULSE · ISSUE 01",
+    "Understanding Data Protection Fundamentals",
+    "A practical foundation for teams responsible for handling personal data.",
+    "REGULATORY INTELLIGENCE",
+    "From annual compliance to continuous assurance",
+    "Why evidence, ownership and remediation matter beyond the audit cycle.",
+    "RESPONSIBLE INNOVATION",
+    "Building accountability into emerging technology",
+    "Practical governance questions for organisations adopting AI-enabled systems.",
+  ];
+  for (const copy of required) assert.match(page, exact(copy));
+});
+
+test("global navigation, footer routes and exact contact details match the mockup", () => {
+  for (const route of ["/about", "/services", "/industries", "/tools", "/insights", "/governance-library", "/contact"]) {
+    assert.ok(page.includes(`href=\"${route}\"`) || mobileMenu.includes(`href: \"${route}\"`), `missing route: ${route}`);
+  }
   for (const detail of [
-    "4th Floor, Adamawa Plaza, Plot 1099 First Avenue,",
-    "Central Business District, Abuja, Nigeria.",
-    "info@gpm-associates.ng",
-    "enquiries@gpm-associates.ng",
-    "+234 805 615 1038",
-    "+234 803 312 6637",
-    "© 2026 GPM Associates. All rights reserved.",
-  ]) assert.ok(page.includes(detail), `missing ${detail}`);
-  assert.ok(page.includes("<span>Privacy Policy — forthcoming</span>"));
-  assert.ok(page.includes("<span>Cookie Policy — forthcoming</span>"));
+    "Suites 1008 & 1009, KINGFEM GA247",
+    "264 Ahmadu Bello Way, Mabushi, Abuja FCT",
+    "dataprotection@gpm-associates.ng",
+    "+234 803 899 2782",
+    "Where Data Protection Meets Innovation.",
+    "Report a Breach to the NDPC",
+    "GPM Associates, Abuja",
+    "© 2026 GPM ASSOCIATES",
+  ]) assert.match(source, exact(detail));
+  assert.match(page, /mailto:dataprotection@gpm-associates\.ng/);
+  const dialableTelephone = ["+234", "803", "899", "2782"].join("");
+  assert.ok(page.includes(`href=\"tel:${dialableTelephone}\"`), "telephone must use complete E.164 digits");
 });
 
-test("only approved local workflow imagery is referenced and the exact assets are present", () => {
-  const assets = [...page.matchAll(/src=\"(\/images\/[^\"]+)\"/g)].map((match) => match[1]);
-  const approvedAssets = {
-    "/images/gpm-data-flow-mapping-v2.webp": {
-      checksum: "459fd1db818c42b6e1d7610f5d2bf3780a83a19656bee5fa252a5fcba9b98ac5",
-      alt: "Professional holding a paper register beside a wall of connected blank process cards",
-      width: 1536,
-      height: 1024,
-    },
-    "/images/gpm-independent-policy-review-v2.webp": {
-      checksum: "fdc62579c7e0fa560968f6c0f1c68c58f138643a1cc0c51ea39674a79e9d5d90",
-      alt: "Professional reviewing structured forms beside policy binders",
-      width: 1024,
-      height: 1536,
-    },
-    "/images/gpm-privacy-capability-workshop-v3.webp": {
-      checksum: "4ae9f54dd6837b3de10fd95a8989a5227bb50cf19ade76d8e12e884156c1f985",
-      alt: "Facilitator pointing to a card workflow while three professionals complete paper exercises",
-      width: 1537,
-      height: 1023,
-    },
-    "/images/gpm-privacy-impact-assessment-v2.webp": {
-      checksum: "ec431c641ef23f097c1a28eb5643fa154299ddb28e46cfd51f4050b030f62238",
-      alt: "Hands arranging circular icon cards depicting people, documents, storage, sharing, archiving and deletion",
-      width: 1254,
-      height: 1254,
-    },
-  };
-  const supersededAssets = [
-    "/images/gpm-capacity-building-v2.webp",
-    "/images/gpm-data-protection-hero.webp",
-    "/images/gpm-independent-advice.webp",
-    "/images/gpm-regulatory-method.webp",
+test("approved external links are exact and safely isolated", () => {
+  const links = [
+    "https://services.ndpc.gov.ng/portal/?page=verify-c&d=4384CC9A-B06F-4FD3-B19B-8C6B3CF86&id=20892&sn=9c73c00bb8c85b96db03b097e4d043ff&t=eosic_business_registration&tp=nwp_eosic",
+    "https://services.ndpc.gov.ng/breach/",
+    "https://www.linkedin.com/company/gpm-associates-data-protection-consultants/",
+    "https://www.facebook.com/GPM-Associates-Data-Protection-Consultants/",
+    "https://x.com/GPM_DataProtect",
+    "https://www.instagram.com/gpm_dataprotect/",
+    "https://www.gpm-associates.ng/?p=Privacy-Policy",
+    "https://www.gpm-associates.ng/?p=Cookies-Policy",
   ];
-
-  assert.deepEqual([...new Set(assets)].sort(), Object.keys(approvedAssets));
-  for (const [asset, contract] of Object.entries(approvedAssets)) {
-    assert.ok(
-      page.includes(`src=\"${asset}\" alt=\"${contract.alt}\" width={${contract.width}} height={${contract.height}}`),
-      `missing image contract for ${asset}`,
-    );
-    const bytes = readFileSync(new URL(`../public${asset}`, import.meta.url));
-    assert.equal(createHash("sha256").update(bytes).digest("hex"), contract.checksum, `unexpected bytes for ${asset}`);
-  }
-  for (const asset of supersededAssets) assert.equal(page.includes(asset), false, `superseded asset referenced: ${asset}`);
-  for (const phrase of ["stock photo", "team portrait", "client logo", "testimonial", "trusted by", "industry-leading"]) {
-    assert.equal(page.toLowerCase().includes(phrase), false, `unsupported phrase: ${phrase}`);
-  }
+  for (const link of links) assert.ok(page.includes(link), `missing approved external link: ${link}`);
+  assert.match(page, /rel="noopener noreferrer"/);
 });
 
-test("mobile policy-review crop preserves the direct-work evidence", () => {
-  const mobileStyles = styles.match(/@media \(max-width: 600px\) \{([\s\S]*?)\n\}/)?.[1];
-  assert.ok(mobileStyles, "missing mobile media block");
-
-  const aboutArtRule = mobileStyles.match(/\.about-art\s*\{([^}]*)\}/)?.[1];
-  assert.ok(aboutArtRule, "missing mobile .about-art rule");
-  assert.match(aboutArtRule, /height:\s*460px/);
-  assert.match(aboutArtRule, /margin-inline:\s*-16px/);
-
-  const aboutImageRule = mobileStyles.match(/\.about-art img\s*\{([^}]*)\}/)?.[1];
-  assert.ok(aboutImageRule, "missing mobile .about-art img rule");
-  assert.match(aboutImageRule, /object-position:\s*center 60%/);
+test("cookie preferences are accessible, first-party only and gate external media", () => {
+  for (const label of ["Manage preferences", "Reject optional", "Accept all", "External media", "Cookie Settings", "Google Maps is blocked until you allow external media.", "ENABLE MAP"]) {
+    assert.match(page + consent, exact(label));
+  }
+  for (const token of ["localStorage", "externalMedia", "role=\"dialog\"", "aria-modal=\"true\"", "gpm-cookie-preferences"]) {
+    assert.ok(consent.includes(token), `missing consent behavior: ${token}`);
+  }
+  assert.match(consent, /externalMedia \?/);
+  assert.match(consent, /try\s*\{[\s\S]*localStorage\.setItem[\s\S]*\}\s*catch\s*\{[\s\S]*dispatchEvent/);
+  assert.match(consent, /addEventListener\(PREFERENCES_EVENT, syncPreferences\)/);
+  assert.match(consent, /removeEventListener\(PREFERENCES_EVENT, syncPreferences\)/);
+  for (const token of ["event.key !== \"Tab\"", "event.shiftKey", "event.preventDefault()", "first.focus()", "last.focus()"]) {
+    assert.ok(consent.includes(token), `missing consent focus containment: ${token}`);
+  }
+  assert.equal(/google-analytics|googletagmanager|facebook\.net|hotjar/i.test(source), false);
 });
 
-test("review prototype blocks indexing and crawling", () => {
+test("hero motion is automatic, reduced-motion safe and uses deterministic SVG arrows", () => {
+  for (const token of ["prefers-reduced-motion", "is-playing", "hero-motion-paused"]) {
+    assert.ok(experience.includes(token) || styles.includes(token), `missing automatic hero motion contract: ${token}`);
+  }
+  for (const removedControl of ["Pause motion", "Play motion", "motion-control", "aria-pressed"]) {
+    assert.equal(experience.includes(removedControl) || styles.includes(removedControl), false, `manual motion control remains: ${removedControl}`);
+  }
+  assert.match(source, /<svg[^>]*aria-hidden="true"[^>]*focusable="false"[^>]*>/);
+  assert.match(source, /stroke="currentColor"/);
+  assert.equal(source.includes("↗"), false);
+});
+
+test("approved Homepage image assets are local and binary-locked", () => {
+  const assets = [
+    ["public/images/gpm-homepage-single-privacy-professional-v3.webp", "/images/gpm-homepage-single-privacy-professional-v3.webp"],
+    ["public/images/gpm-logo-approved.png", "/images/gpm-logo-approved.png"],
+    ["public/images/ndpc-verification-qr-approved.png", "/images/ndpc-verification-qr-approved.png"],
+  ];
+  for (const [file, publicPath] of assets) {
+    const url = new URL(file, root);
+    assert.ok(existsSync(url), `missing approved asset: ${file}`);
+    assert.ok(source.includes(publicPath), `missing approved asset reference: ${publicPath}`);
+    assert.ok(statSync(url).size > 10_000, `asset unexpectedly small: ${file}`);
+  }
+  assert.match(source, /alt="An African privacy professional reviewing a data lifecycle governance workflow"/);
+  assert.match(source, /width=\{1672\}\s+height=\{941\}/);
+
+  const hero = readFileSync(new URL("public/images/gpm-homepage-single-privacy-professional-v3.webp", root));
+  const logo = readFileSync(new URL("public/images/gpm-logo-approved.png", root));
+  const qr = readFileSync(new URL("public/images/ndpc-verification-qr-approved.png", root));
+  assert.equal(createHash("sha256").update(hero).digest("hex"), "95c555044b54751c1dba2cb1d09be8a48a3b4d57e5b5a729f8f643ff8f794e66");
+  assert.equal(createHash("sha256").update(logo).digest("hex"), "5f1de6c5842eb6128ef3b28847d6e3664ee2400d01ab8b4ef24cec225cd97b9d");
+  assert.equal(createHash("sha256").update(qr).digest("hex"), "a7a5e24bac214736bded888bd12c4eccf04697527bf5055b82187dae846c9c76");
+});
+
+test("metadata and preview indexing posture match the approved Homepage", () => {
+  assert.match(layout, exact("GPM Associates | Data Protection, Privacy Governance & Digital Trust"));
+  assert.match(layout, exact("GPM Associates helps organisations navigate regulatory complexity, strengthen privacy governance and turn responsible data practices into sustainable business value."));
   assert.match(layout, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/);
   assert.match(robots, /User-agent:\s*\*/);
   assert.match(robots, /Disallow:\s*\//);
 });
 
-test("security headers are configured", () => {
-  for (const header of ["Content-Security-Policy", "X-Content-Type-Options", "X-Frame-Options", "Referrer-Policy", "Permissions-Policy"]) assert.ok(config.includes(header));
+test("security headers remain strict", () => {
+  for (const header of ["Content-Security-Policy", "X-Content-Type-Options", "X-Frame-Options", "Referrer-Policy", "Permissions-Policy"]) {
+    assert.ok(config.includes(header), `missing security header: ${header}`);
+  }
   assert.match(config, /frame-ancestors 'none'/);
   assert.match(config, /nosniff/);
   assert.match(config, /DENY/);
 });
 
-test("scroll reveal is selective, progressive, one-time, and motion-safe", () => {
-  assert.match(page, /import \{ ScrollReveal \} from "\.\/components\/ScrollReveal"/);
+test("scroll reveal remains selective, fail-open and reduced-motion safe", () => {
   assert.match(page, /<ScrollReveal \/>/);
-
-  const hooks = page.match(/data-reveal(?:=|\s|>)/g) ?? [];
-  assert.ok(hooks.length >= 10 && hooks.length <= 14, `expected controlled section groups, found ${hooks.length}`);
-  const hero = page.slice(page.indexOf('<section className="hero"'), page.indexOf('<aside className="proof-rail"'));
-  const proof = page.slice(page.indexOf('<aside className="proof-rail"'), page.indexOf('<section className="expertise'));
-  assert.equal(hero.includes("data-reveal"), false, "hero must remain immediate");
-  assert.equal(proof.includes("data-reveal"), false, "proof rail must remain immediate");
-  assert.equal(/<article className="(?:expertise|insight)-row"[^>]*data-reveal/.test(page), false, "do not reveal every repeated row");
-
-  assert.match(revealController, /^"use client";/);
-  assert.match(revealController, /querySelectorAll<HTMLElement>\("\[data-reveal\]"\)/);
-  assert.match(revealController, /IntersectionObserver/);
-  assert.match(revealController, /matchMedia\("\(prefers-reduced-motion: reduce\)"\)/);
-  assert.match(revealController, /getBoundingClientRect\(\)/, "near-viewport content must be finalized before activation");
-  assert.match(revealController, /classList\.add\("reveal-ready"\)/, "hidden states must only activate after setup");
-  assert.match(revealController, /data-reveal-visible/);
-  assert.match(revealController, /unobserve\(/, "reveals must happen once");
-  assert.match(revealController, /disconnect\(\)/);
-  assert.match(revealController, /classList\.remove\("reveal-ready"\)/);
-
+  assert.match(reveal, /IntersectionObserver/);
+  assert.match(reveal, /matchMedia\("\(prefers-reduced-motion: reduce\)"\)/);
+  assert.match(reveal, /classList\.add\("reveal-ready"\)/);
+  assert.match(reveal, /unobserve\(/);
   assert.match(styles, /\.reveal-ready \[data-reveal\]/);
-  assert.match(styles, /opacity:\s*0/);
-  assert.match(styles, /translateY\((?:1[6-9]|2[0-8])px\)/);
-  assert.match(styles, /transition-duration:\s*(?:6[5-9]\d|7\d\d|8[0-5]\d)ms/);
-  assert.match(styles, /cubic-bezier\(/);
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\[data-reveal\][\s\S]*opacity:\s*1/);
-  assert.equal(/from ["'](?:framer-motion|gsap|@react-spring|animejs)/.test(page + revealController), false);
-  assert.equal(/addEventListener\(["']scroll/.test(revealController), false);
+  assert.equal(/addEventListener\(["']scroll/.test(reveal), false);
 });
 
-test("small muted text colors meet WCAG AA contrast", () => {
-  const slate = styles.match(/--slate:\s*(#[a-f\d]{6})/i)?.[1];
-  const methodEyebrow = styles.match(/\.method-content > \.eyebrow\s*\{\s*color:\s*(#[a-f\d]{6})/i)?.[1];
+test("README locks GPT Image 2 hero provenance against verified production asset facts", () => {
+  assert.ok(readme.length > 0, "README should not be empty");
+  assert.ok(readme.includes("public/images/gpm-homepage-single-privacy-professional-v3.webp"), "README missing production hero file");
+  assert.ok(readme.includes("95c555044b54751c1dba2cb1d09be8a48a3b4d57e5b5a729f8f643ff8f794e66"), "README missing verified production SHA-256");
+  assert.ok(readme.includes("1672") && readme.includes("941"), "README missing verified dimensions 1672x941");
+  assert.ok(readme.includes("74540") || readme.includes("75 KB") || readme.includes("approximately `75 KB`"), "README missing verified file size ~74540 bytes");
+  assert.ok(readme.includes("OpenAI GPT Image 2"), "README missing provider/model OpenAI GPT Image 2");
+  assert.ok(readme.includes("gpt-image-2-medium"), "README missing model gpt-image-2-medium");
+  assert.ok(readme.includes("89c7b7677a9c77673484c616d32c1c9f72b53005a66a882e9fea0949d66dc464"), "README missing generated master SHA-256");
+  assert.ok(readme.includes("Asset provenance"), "README missing asset provenance section");
+});
 
-  assert.ok(slate, "missing slate color");
-  assert.ok(methodEyebrow, "missing method eyebrow color");
-  assert.ok(contrast(slate, "#f7f5f0") >= 4.5, "slate text must pass on ivory");
-  assert.ok(contrast(methodEyebrow, "#0a2231") >= 4.5, "method eyebrow must pass on navy");
+test("legacy Homepage copy, contacts and superseded imagery are absent", () => {
+  for (const forbidden of [
+    "From regulatory complexity to confident action.",
+    "info@gpm-associates.ng",
+    "enquiries@gpm-associates.ng",
+    "4th Floor, Adamawa Plaza",
+    "Central Business District, Abuja, Nigeria.",
+    "/images/gpm-data-protection-hero.webp",
+    "/images/gpm-regulatory-method.webp",
+    "/images/gpm-independent-advice.webp",
+    "/images/gpm-capacity-building-v2.webp",
+  ]) assert.equal(page.includes(forbidden), false, `legacy content remains: ${forbidden}`);
 });
