@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const links = [
   { label: "About", href: "/about" },
@@ -12,6 +13,7 @@ const links = [
 ] as const;
 
 export function MobileMenu() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -63,7 +65,7 @@ export function MobileMenu() {
       {open && (
         <nav ref={panelRef} className="mobile-panel" id={menuId} aria-label="Mobile navigation">
           {links.map(({ label, href }) => (
-            <a key={href} href={href} onClick={close}>{label}</a>
+            <a key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={close}>{label}</a>
           ))}
           <a className="mobile-contact" href="/contact" onClick={close}>Speak with an advisor</a>
         </nav>
