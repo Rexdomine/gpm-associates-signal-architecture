@@ -7,7 +7,7 @@ const root = new URL("../", import.meta.url);
 const pagePath = new URL("app/industries/page.tsx", root);
 const pageSource = readFileSync(pagePath, "utf8");
 const imagePath = new URL("public/images/gpm-industries-editorial-approved.webp", root);
-const approachImagePath = new URL("public/images/gpm-data-flow-mapping-v2.webp", root);
+const approachImagePath = new URL("public/images/gpm-sector-workflow-premium-20260825.webp", root);
 
 const requiredCopy = [
   "INDUSTRIES &amp; EXPERIENCE",
@@ -68,9 +68,12 @@ test("industries page uses the approved editorial image asset", () => {
 
 test("industries sector-aware section includes the approved complementary workflow image", () => {
   assert.equal(existsSync(approachImagePath), true, "sector-aware workflow image should exist locally");
-  assert.match(pageSource, /src=\"\/images\/gpm-data-flow-mapping-v2\.webp\"/);
-  assert.match(pageSource, /A privacy professional mapping governance and data workflow requirements across a structured process board/);
-  assert.match(pageSource, /className=\"industries-approach-figure\"/);
+  assert.match(pageSource, /src=\"\/images\/gpm-sector-workflow-premium-20260825\.webp\"/);
+  assert.match(pageSource, /A Nigerian privacy advisor working through a live governance workflow on a structured process board/);
+  assert.match(pageSource, /className=\"industries-approach-media\"/);
+
+  const digest = createHash("sha256").update(readFileSync(approachImagePath)).digest("hex");
+  assert.equal(digest, "e9c6acb35c3624ffda9e91a1ccc61f95ec00def6632413a1a8a5bca3b6210f0f");
 });
 
 test("industries page preserves review metadata", () => {

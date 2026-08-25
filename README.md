@@ -126,6 +126,17 @@ The previous stale statement that neither asset was regenerated is removed. Thes
 
 The image was copied from the approved mockup to keep the Industries route aligned with the approved review reference. It is an editorial environment image used to communicate cross-sector context rather than evidence of a specific client engagement.
 
+### Industries sector-aware workflow image (fresh GPT Image 2 asset)
+
+- Generation model: `gpt-image-2-medium`
+- Prompt intent: grounded Nigerian privacy/workflow advisory scene, no conference clichés, active governance process-board interaction, left-column editorial use
+- Production file: `public/images/gpm-sector-workflow-premium-20260825.webp`
+- SHA-256: `e9c6acb35c3624ffda9e91a1ccc61f95ec00def6632413a1a8a5bca3b6210f0f`
+- Dimensions: `1024 × 1535`
+- File size: `131066` bytes
+
+This asset was freshly generated for the Industries route to follow the agreed imagery workflow rather than reusing a prior workflow image. It is used in the sector-aware section as a larger left-column editorial image with the explanatory write-up on the right.
+
 ## Consent and external services
 
 Cookie preferences are stored locally in the browser under `gpm-cookie-preferences`. Essential operation does not depend on optional consent. The footer map begins blocked and, after the user explicitly enables external media, exposes a normal link to Google Maps rather than embedding or loading third-party code. Rejecting optional preferences leaves external media blocked. Settings can be reopened from the footer.

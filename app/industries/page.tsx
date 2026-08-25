@@ -182,12 +182,22 @@ export default function IndustriesPage() {
         </section>
 
         <section className="industries-sector-approach section-pad">
-          <div className="shell industries-two-column" data-reveal>
-            <div>
+          <div className="shell industries-approach-layout" data-reveal>
+            <figure className="industries-approach-media">
+              <Image
+                alt="A Nigerian privacy advisor working through a live governance workflow on a structured process board"
+                className="industries-approach-image"
+                height={1535}
+                sizes="(max-width: 800px) 100vw, (max-width: 1200px) 56vw, 720px"
+                src="/images/gpm-sector-workflow-premium-20260825.webp"
+                width={1024}
+              />
+            </figure>
+
+            <div className="industries-approach-copy">
               <p className="eyebrow">A SECTOR-AWARE APPROACH</p>
               <h2>Same legislation. Different operating consequences.</h2>
-            </div>
-            <div className="industries-body-copy">
+
               <div className="industries-body-copy-text">
                 <p>
                   A financial institution, public agency, hospital and technology company may share core obligations, but their risk, evidence, governance and control requirements are not identical.
@@ -196,17 +206,6 @@ export default function IndustriesPage() {
                   We adapt the regulatory framework to the sector&apos;s operating environment while maintaining clear, defensible standards.
                 </p>
               </div>
-
-              <figure className="industries-approach-figure">
-                <Image
-                  alt="A privacy professional mapping governance and data workflow requirements across a structured process board"
-                  className="industries-approach-image"
-                  height={1365}
-                  sizes="(max-width: 800px) 100vw, (max-width: 1200px) 52vw, 620px"
-                  src="/images/gpm-data-flow-mapping-v2.webp"
-                  width={1024}
-                />
-              </figure>
             </div>
           </div>
         </section>
