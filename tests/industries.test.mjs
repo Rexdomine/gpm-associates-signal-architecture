@@ -58,6 +58,10 @@ test("industries page matches the approved mockup copy contract", () => {
   assert.match(pageSource, /Outcomes supported by engagement evidence/);
   assert.match(pageSource, /className=\"industries-proof-list\"/);
   assert.match(pageSource, /className=\"industries-proof-marker\"/);
+  assert.match(pageSource, /function ProofArrowIcon\(\)/);
+  assert.match(pageSource, /<ProofArrowIcon \/>/);
+  assert.match(pageSource, /viewBox=\"0 0 18 18\"/);
+  assert.doesNotMatch(pageSource, /↗/);
   assert.doesNotMatch(pageSource, /industries-proof-grid/);
   assert.doesNotMatch(pageSource, /Every example on this page is framed to protect confidentiality/);
   assert.doesNotMatch(pageSource, /HOW WE PRESENT EXPERIENCE/);

@@ -169,8 +169,10 @@ test("approved local Services images are binary-locked and truthfully disclosed"
   const heroUrl = new URL(heroAsset, root);
   assert.ok(existsSync(heroUrl), `hero decorative asset missing: ${heroAsset}`);
   const heroData = readFileSync(heroUrl);
-  assert.equal(createHash("sha256").update(heroData).digest("hex"), "6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0");
-  assert.deepEqual(webpDimensions(heroData), { width: 1344, height: 752 });
+  const heroHash = createHash("sha256").update(heroData).digest("hex");
+  assert.equal(heroHash, "b3f85dbd00374463e3862fb2f00a9e7966d6a8c3f0669b6cce46f43465f9969b");
+  assert.notEqual(heroHash, "6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0", "superseded hero derivative must be rejected");
+  assert.deepEqual(webpDimensions(heroData), { width: 1664, height: 936 });
   const heroHook = services.match(/<div className="services-hero-background"[^>]*\/>/)?.[0] ?? "";
   assertIncludesAll(heroHook, ['aria-hidden="true"']);
   assert.equal(heroHook.includes("alt="), false, "hero decorative background hook must have no alt");
@@ -207,15 +209,27 @@ test("approved local Services images are binary-locked and truthfully disclosed"
   assert.equal(services.includes("/images/gpm-services-integrated-privacy-assessment-lab-2026.webp"), false, "abstract integrated image must not be referenced");
   assert.equal(services.includes("Senior African professionals working through a governance and risk advisory session"), false);
   assertIncludesAll(projectContext, [
-    "6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0",
+    "fff1acb52eca1721a3aa89a716a3e615822b75d0baa913cff21f0183f831cf71",
     "53cc2c53b336cc3ce8f72fa1987921fa55fce6b27e2b8458ce776f4e4eecde3e",
+    "b3f85dbd00374463e3862fb2f00a9e7966d6a8c3f0669b6cce46f43465f9969b",
     "860cf22b283aba23d0cff438ed50ad182db014f6e507af3c97a95782e8231f21",
+    "1664 × 936",
+    "1536 × 1024",
   ]);
 });
 
-test("lifecycle ambient SVG is automatic normal-motion, reduced-motion/static and no-JS safe with no controls", () => {
+test("lifecycle animation is automatic, responsive and reduced-motion safe with no controls", () => {
   assert.ok(lifecycle.length > 0, "missing Services lifecycle interaction component");
-  assertIncludesAll(lifecycle, ["use client", "prefers-reduced-motion: reduce", "services-lifecycle-static", "services-lifecycle--animated"]);
+  assertIncludesAll(lifecycle, [
+    "use client",
+    "prefers-reduced-motion: reduce",
+    "services-lifecycle-static",
+    "services-lifecycle--animated",
+    'const lifecycleSteps = ["01", "02", "03", "04", "05"]',
+    'className="services-lifecycle-track"',
+    'className="services-lifecycle-progress"',
+    'className="services-lifecycle-nodes"',
+  ]);
   assert.equal(lifecycle.includes("aria-pressed"), false, "lifecycle must have no aria-pressed control state");
   assert.equal(lifecycle.includes("Pause lifecycle animation"), false, "lifecycle must have no Play/Pause copy");
   assert.equal(lifecycle.includes("Play lifecycle animation"), false, "lifecycle must have no Play/Pause copy");
@@ -225,25 +239,21 @@ test("lifecycle ambient SVG is automatic normal-motion, reduced-motion/static an
   assert.equal(lifecycle.includes("toggle"), false, "lifecycle must have no toggle handler");
   assert.match(lifecycle, /matchMedia\(["']\(prefers-reduced-motion: reduce\)["']\)/);
   assert.match(lifecycle, /useState\(false\)/, "lifecycle must server-render in its static state");
-  assert.match(lifecycle, /<svg[^>]*aria-hidden="true"[^>]*focusable="false"/s);
-  assert.match(lifecycle, /<path\b[^>]*d="[^"]+"/s, "SVG paths must be deterministic");
+  assert.match(lifecycle, /lifecycleSteps\.map\(/, "lifecycle should render its five steps from deterministic data");
+  assert.match(lifecycle, /style=\{\{ animationDelay: `\$\{index\}s` \} as CSSProperties\}/, "each lifecycle node must receive a staggered animation delay");
   assert.equal(/[Ⅱ▶]/u.test(lifecycle), false, "emoji-prone play/pause glyphs must not be used");
-  // Positive automatic-motion assertions
   assert.match(styles, /\.services-lifecycle--animated \.services-lifecycle-progress\s*\{[^}]*animation:\s*services-lifecycle-flow 5s ease-in-out infinite;/s);
   assert.match(styles, /\.services-lifecycle--animated \.services-lifecycle-node\s*\{[^}]*animation:\s*services-lifecycle-pulse 5s ease-in-out infinite;/s);
-  assertIncludesAll(styles, [
-    ".services-lifecycle-node:nth-of-type(2) { animation-delay: 1s; }",
-    ".services-lifecycle-node:nth-of-type(3) { animation-delay: 2s; }",
-    ".services-lifecycle-node:nth-of-type(4) { animation-delay: 3s; }",
-    ".services-lifecycle-node:nth-of-type(5) { animation-delay: 4s; }",
-  ]);
-  assert.equal(styles.includes(".services-lifecycle-node:nth-of-type(6)"), false, "five SVG nodes must not require a nonexistent sixth <g> selector");
+  assert.match(styles, /\.services-lifecycle-progress\s*\{[^}]*transform-origin:\s*left center;/s, "progress bar must grow from the left edge");
+  assert.match(styles, /\.services-lifecycle-nodes\s*\{[^}]*grid-template-columns:\s*repeat\(5, minmax\(0, 1fr\)\);/s, "lifecycle nodes must stay in a five-column responsive grid");
+  assert.match(styles, /\.services-lifecycle-node\s*\{[^}]*width:\s*clamp\(58px, 8vw, 98px\);/s, "desktop lifecycle nodes must scale responsively");
+  assert.match(styles, /@media \(max-width:\s*600px\)[\s\S]*\.services-lifecycle-node\s*\{[^}]*width:\s*clamp\(44px, 14vw, 56px\);/s, "mobile lifecycle nodes must shrink to fit narrow screens");
+  assert.equal(styles.includes("overflow-x: auto"), false, "mobile lifecycle must not require horizontal scrolling");
+  assert.equal(styles.includes("min-width: 760px"), false, "mobile lifecycle must not keep a fixed minimum width");
   assert.match(styles, /@keyframes services-lifecycle-flow/);
   assert.match(styles, /@keyframes services-lifecycle-pulse/);
-  assert.match(styles, /\.services-lifecycle-progress\s*\{[^}]*stroke-dashoffset:\s*0;/s, "static frame must be complete without JS");
   assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*\.services-lifecycle-progress, \.services-lifecycle-node\s*\{\s*animation:\s*none !important;/s);
   assert.equal(/services-lifecycle-static button|services-lifecycle.*position:\s*sticky/.test(styles), false, "lifecycle control CSS must be removed");
-  // No duplicated static content in noscript
   assert.equal(services.includes("<noscript>"), false, "static lifecycle content must not be duplicated in noscript");
 });
 

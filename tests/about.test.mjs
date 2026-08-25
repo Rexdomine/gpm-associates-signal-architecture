@@ -220,7 +220,7 @@ test("About vision and mission match exact section 5 contract", () => {
   ]);
 });
 
-test("About multidisciplinary feature matches exact section 6 contract and discloses illustrative subjects", () => {
+test("About multidisciplinary feature matches exact section 6 contract without an inline disclaimer caption", () => {
   assertIncludesAll(about, [
     "MULTIDISCIPLINARY BY DESIGN",
     "One advisory team connecting regulation, governance, technology and implementation.",
@@ -228,10 +228,11 @@ test("About multidisciplinary feature matches exact section 6 contract and discl
     imagePublicPath,
     "Senior African professionals in a governance and risk discussion",
   ]);
-  assert.match(about, /illustrative/i);
-  assert.match(about, /not GPM staff/i);
-  assert.match(about, /not[^.]*clients/i);
-  assert.match(about, /not[^.]*real engagement/i);
+  assert.doesNotMatch(about, /Illustrative subjects only/i);
+  assert.doesNotMatch(about, /not GPM staff/i);
+  assert.doesNotMatch(about, /not[^.]*clients/i);
+  assert.doesNotMatch(about, /not[^.]*real engagement/i);
+  assert.doesNotMatch(about, /<figcaption>/i);
 });
 
 test("About values match the exact ordered section 7 contract", () => {
