@@ -69,9 +69,10 @@ This imagery workflow is the standing project standard. It applies to all future
 
 - Scope: Services hero and “One challenge can require several kinds of expertise.”
 - Creative authority: meeting-led GPM privacy and data-governance workflow above.
-- Model/provider: GPT Image 2 through Higgsfield (`videotape-alpha`).
-- Method: two genuinely new text-to-image generations. Supplied screenshots defined placement and crop only; they were not model inputs. No prior GPM image was used as a generation reference.
+- Model/provider: hero—GPT Image 2 through Higgsfield (`videotape-alpha`); inclusive integrated update—OpenAI GPT Image 2 Medium through the subscription-backed `openai-codex` image generator.
+- Method: genuinely new text-to-image generations. Supplied screenshots defined placement and crop only; they were not model inputs. No prior GPM image was used as a generation reference.
 - Hero generation: `10f13d2c-a8c7-4984-ad9e-f006c52f20ef`; master 1344 × 752 PNG, SHA-256 `689ffd1335eaa2322291a17d033d82ade0d6c7639bf122af954a305d33ed113f`; production derivative `public/images/gpm-services-privacy-impact-data-flow-lagos-2026.webp`, SHA-256 `6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0`.
-- Integrated generation: `44007a0c-4425-46ee-85ea-71100e9d1287`; master 1024 × 688 PNG, SHA-256 `6bf97a8562285fe4101bf5a16bb1b2a8618922e5b185e1b477e213ae631dd7c6`; production derivative `public/images/gpm-services-integrated-privacy-assessment-lab-2026.webp`, SHA-256 `6bdcdba4ee1510795a4be31b0ce090b2852af9d2365c9d018930ee3f6d049a20`.
+- Integrated generation: subscription-backed OpenAI GPT Image 2 Medium, text-to-image only; accepted master 1536 × 1024 PNG, SHA-256 `892f916940a650aa848e7beaf3ef2e3fd810b3bf9926a81479eddc73601ed41e`; production derivative `public/images/gpm-services-integrated-privacy-assessment-lab-2026.webp`, 1536 × 1024, 182268 bytes, SHA-256 `7f556d352c8c4eb1b948ee6f0d146b2e7875aa3d1b0ea2eb7cd91fb88a3390d0`.
+- Integrated inclusion direction: exactly three Nigerian professionals performing connected privacy work, including a Muslim woman in a refined hijab and a man in native attire with an understated northern Nigerian embroidered cap. Cultural details are contemporary and professional rather than costume-like. The first candidate was rejected for lower-right caption intrusion; one regeneration produced the accepted image.
 - Disclosure: subjects are AI-generated illustrative people—not GPM personnel, clients, or participants in a real engagement.
 - QA: production derivatives are binary-locked in deterministic tests and must pass browser loading, responsive crop, Axe A/AA, motion, no-JavaScript, performance, and publication-safety checks before release.

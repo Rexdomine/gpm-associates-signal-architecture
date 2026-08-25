@@ -185,13 +185,15 @@ test("approved local Services images are binary-locked and truthfully disclosed"
   const assetUrl = new URL(imagePath, root);
   assert.ok(existsSync(assetUrl), `asset missing: ${imagePath}`);
   const data = readFileSync(assetUrl);
-  assert.equal(createHash("sha256").update(data).digest("hex"), "6bdcdba4ee1510795a4be31b0ce090b2852af9d2365c9d018930ee3f6d049a20");
-  assert.deepEqual(webpDimensions(data), { width: 1024, height: 688 });
+  const integratedHash = createHash("sha256").update(data).digest("hex");
+  assert.equal(integratedHash, "7f556d352c8c4eb1b948ee6f0d146b2e7875aa3d1b0ea2eb7cd91fb88a3390d0");
+  assert.notEqual(integratedHash, "6bdcdba4ee1510795a4be31b0ce090b2852af9d2365c9d018930ee3f6d049a20", "less-inclusive integrated derivative must be rejected");
+  assert.deepEqual(webpDimensions(data), { width: 1536, height: 1024 });
   assertIncludesAll(services, [
     imagePublicPath,
-    "width={1024}",
-    "height={688}",
-    'alt="Three African privacy professionals connecting data-lifecycle mapping, technical control validation and governance evidence in a privacy-by-design assessment"',
+    "width={1536}",
+    "height={1024}",
+    'alt="Three Nigerian privacy professionals—including a woman in a hijab and a man in native attire with a northern cap—connecting DPIA review, technical control validation and data-lifecycle mapping"',
   ]);
   assertInOrder(services, ["GPM ADVISORY", "Expertise connected around the client’s operating reality."]);
   assert.match(services, /illustrative/i);
@@ -204,7 +206,8 @@ test("approved local Services images are binary-locked and truthfully disclosed"
   assert.equal(services.includes("Senior African professionals working through a governance and risk advisory session"), false);
   assertIncludesAll(projectContext, [
     "6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0",
-    "6bdcdba4ee1510795a4be31b0ce090b2852af9d2365c9d018930ee3f6d049a20",
+    "892f916940a650aa848e7beaf3ef2e3fd810b3bf9926a81479eddc73601ed41e",
+    "7f556d352c8c4eb1b948ee6f0d146b2e7875aa3d1b0ea2eb7cd91fb88a3390d0",
   ]);
 });
 

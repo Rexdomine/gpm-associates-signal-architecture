@@ -99,18 +99,19 @@ Two genuinely new GPT Image 2 production masters were generated and approved by 
 - Disclosure: the person shown is an illustrative generated subject, not GPM personnel or staff, not a client, and not a participant in a real engagement; the background is decorative with no alt/focus
 
 **Integrated design master**
-- Job ID / generation mode: `gpt_image_2` (text-to-image), job `44007a0c-4425-46ee-85ea-71100e9d1287`, model `videotape-alpha`, tier `gpt-image-2-medium`
-- Generation mode: text-to-image; supplied reference screenshots were used only to determine placement, crop and focal position and were not model inputs
-- Master file: `/tmp/gpm-integrated-new.png`
-- Master SHA-256: `6bf97a8562285fe4101bf5a16bb1b2a8618922e5b185e1b477e213ae631dd7c6`
-- Actual master dimensions: `1024 × 688`
+- Model/provider: OpenAI GPT Image 2 Medium through the subscription-backed `openai-codex` image generator
+- Generation mode: text-to-image only; no image inputs or prior GPM assets
+- Accepted master: `.hermes/generated/gpm-services-integrated-inclusive-nigeria.png` in the restricted working archive
+- Master SHA-256: `892f916940a650aa848e7beaf3ef2e3fd810b3bf9926a81479eddc73601ed41e`
+- Actual master dimensions: `1536 × 1024`
 - Production derivative: `public/images/gpm-services-integrated-privacy-assessment-lab-2026.webp`
-- Derivative SHA-256: `6bdcdba4ee1510795a4be31b0ce090b2852af9d2365c9d018930ee3f6d049a20`
-- Derivative dimensions: `1024 × 688`
-- Derivative file size: `147574` bytes (`144.1 KB`)
-- Derivative format: metadata-light lossy WebP (`-q:v 95`, no embedded metadata/title/author)
-- Scene: new editorial photograph of three culturally credible African privacy professionals visibly contributing different expertise (governance lead at a data-lifecycle wall, technical engineer validating control evidence, regulatory specialist reviewing a DPIA risk-and-evidence matrix) within a privacy-by-design assessment lab
+- Derivative SHA-256: `7f556d352c8c4eb1b948ee6f0d146b2e7875aa3d1b0ea2eb7cd91fb88a3390d0`
+- Derivative dimensions: `1536 × 1024`
+- Derivative file size: `182268` bytes (`178.0 KB`)
+- Derivative format: metadata-stripped high-quality lossy WebP (`quality 95`, effort 6)
+- Scene: exactly three Nigerian privacy professionals performing connected privacy work: a Muslim woman in a refined hijab reviews a DPIA matrix; a man in premium native attire and an understated northern Nigerian embroidered cap validates technical control evidence; and another professional maps the data lifecycle. Cultural details are contemporary and professional rather than costume-like.
 - Disclosure: the people shown are illustrative generated subjects, not GPM personnel or staff, not clients, and not participants in a real engagement; image is presented with truthful alt text and illustrative-subject disclosure caption
+- Acceptance/regeneration: the first inclusive candidate was rejected for lower-right caption intrusion; one regeneration produced the accepted 1536 × 1024 image.
 
 The previous stale statement that neither asset was regenerated is removed. These two assets replace only the previous hero (`gpm-privacy-impact-assessment-v2.webp`) and integrated (`gpm-privacy-capability-workshop-v3.webp`) references on the Services route; the old binary files remain in the repository if referenced by other routes, and removal would be unsafe.
 

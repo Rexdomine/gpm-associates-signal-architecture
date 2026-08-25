@@ -35,7 +35,7 @@ export default function ServicesPage() {
         <section className="services-integrated" aria-labelledby="services-integrated-title">
           <div className="shell services-integrated-grid">
             <figure data-reveal>
-              <Image src="/images/gpm-services-integrated-privacy-assessment-lab-2026.webp" alt="Three African privacy professionals connecting data-lifecycle mapping, technical control validation and governance evidence in a privacy-by-design assessment" width={1024} height={688} sizes="(max-width: 800px) 100vw, 55vw" />
+              <Image src="/images/gpm-services-integrated-privacy-assessment-lab-2026.webp" alt="Three Nigerian privacy professionals—including a woman in a hijab and a man in native attire with a northern cap—connecting DPIA review, technical control validation and data-lifecycle mapping" width={1536} height={1024} sizes="(max-width: 800px) 100vw, 55vw" />
               <figcaption><span>GPM ADVISORY</span><strong>Expertise connected around the client’s operating reality.</strong><small>Illustrative subject only — not GPM personnel or staff, not a client, and not a participant in a real engagement.</small></figcaption>
             </figure>
             <div data-reveal className="services-integrated-copy reveal-delay-1"><p className="eyebrow">Integrated by design</p><h2 id="services-integrated-title">One challenge can require several kinds of expertise.</h2><p>We connect regulatory interpretation, governance, technology, implementation and organisational capability so that advice can move from obligation to sustained practice.</p><ul><li><b>01</b>Regulatory depth</li><li><b>02</b>Operational context</li><li><b>03</b>Evidence-led delivery</li></ul></div>
