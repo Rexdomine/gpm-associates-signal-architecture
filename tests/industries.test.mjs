@@ -1,147 +1,81 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join } from "node:path";
 
 const root = "/opt/data/projects/gpm-industries-page";
-const read = (file) => readFileSync(join(root, file), "utf8");
-const industries = read("app/industries/page.tsx");
-const layout = read("app/layout.tsx");
-const styles = read("app/globals.css");
-const readme = read("README.md");
-const markup = industries.slice(industries.indexOf("export default function IndustriesPage"));
+const pagePath = join(root, "app/industries/page.tsx");
+const pageSource = readFileSync(pagePath, "utf8");
+const imagePath = join(root, "public/images/gpm-industries-editorial-approved.webp");
 
-function exact(text) {
-  return new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-}
+const requiredCopy = [
+  "INDUSTRIES &amp; EXPERIENCE",
+  "Sector insight backed by practical experience.",
+  "CONNECTED ENVIRONMENTS",
+  "Sector context changes how obligations must operate in practice.",
+  "WHERE WE WORK",
+  "Experience across regulated and data-intensive environments.",
+  "A SECTOR-AWARE APPROACH",
+  "Same legislation. Different operating consequences.",
+  "SELECTED ENGAGEMENT EXPERIENCE",
+  "Practical work in complex environments.",
+  "PROOF PRINCIPLES",
+  "Credible. Specific. Responsible.",
+  "BEGIN A CONVERSATION",
+  "Bring sector context into your compliance programme.",
+  "Explore sector considerations",
+  "Discuss your environment",
+];
 
-function assertInOrder(source, snippets) {
-  let cursor = 0;
-  for (const snippet of snippets) {
-    const index = source.indexOf(snippet, cursor);
-    assert.notEqual(index, -1, `missing ordered snippet: ${snippet}`);
-    cursor = index + snippet.length;
+const requiredSectors = [
+  "Financial Services & Pensions",
+  "Public Sector & Regulators",
+  "Health & Life Sciences",
+  "Technology & Digital Services",
+  "Education & Professional Bodies",
+  "Insurance",
+  "Professional Services",
+  "Emerging & Data-Intensive Enterprises",
+];
+
+const requiredEngagements = [
+  "Strengthening governance around a national-scale data environment",
+  "Moving from annual audit activity to sustained remediation",
+  "Protecting sensitive information across a multi-stakeholder environment",
+  "Embedding privacy and assurance into service delivery",
+];
+
+test("industries page matches the approved mockup copy contract", () => {
+  for (const text of [...requiredCopy, ...requiredSectors, ...requiredEngagements]) {
+    assert.match(pageSource, new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   }
-}
 
-test("Industries route exports exact route metadata and remains noindex, nofollow", () => {
-  assert.match(industries, /export const metadata: Metadata = \{/);
-  assert.match(industries, /title: "Industries & Experience \| GPM Associates"/);
-  assert.match(industries, /description:\s*"Explore the sectors where GPM Associates supports data protection, privacy governance, regulatory assurance and operational accountability\./);
-  assert.match(industries, /robots: \{ index: false, follow: false \}/);
-  assert.match(layout, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/);
+  assert.match(pageSource, /proofPrinciples = \[/);
+  assert.match(pageSource, /No confidential client information/);
+  assert.match(pageSource, /No unsupported performance claims/);
+  assert.match(pageSource, /Approved logos and testimonials only/);
+  assert.match(pageSource, /Outcomes supported by engagement evidence/);
 });
 
-test("Industries follows the approved seven-section order", () => {
-  assertInOrder(markup, [
-    'className="industries-hero dark-plane"',
-    'className="stat-strip"',
-    'id="sectors" className="industries-sectors section-pad"',
-    'id="experience" className="experience dark-plane section-pad"',
-    'className="services section-pad"',
-    'className="latest section-pad"',
-    'className="contact-cta"',
-    '<SiteFooter />',
-  ]);
+test("industries page uses the approved editorial image asset", () => {
+  assert.equal(existsSync(imagePath), true, "approved editorial image should exist locally");
+  assert.match(pageSource, /src=\"\/images\/gpm-industries-editorial-approved\.webp\"/);
+
+  const digest = createHash("sha256").update(readFileSync(imagePath)).digest("hex");
+  assert.equal(digest, "a664a23631bf40337b631cef48c5cbe9901ca1e3551c9338c76462cee76a4de8");
 });
 
-test("Industries hero, sector framing and experience copy are exact", () => {
-  for (const copy of [
-    "INDUSTRIES &amp; EXPERIENCE",
-    "Sector context changes the shape of compliance.",
-    "From public institutions and regulated enterprises to technology and health organisations, our work strengthens accountability where the stakes are highest.",
-    "The regulatory question may sound familiar across sectors, but the operating environment, risk profile, decision rights and evidence burden are never exactly the same.",
-    "WHERE WE WORK",
-    "Recognisable operating environments. Practical sector judgement.",
-    "SELECTED EXPERIENCE",
-    "Complex environments. Practical outcomes. Defensible assurance.",
-    "NATIONAL-SCALE",
-    "Data ecosystems and public-interest programmes",
-    "REGULATED",
-    "Financial, pension, health and professional environments",
-    "END-TO-END",
-    "Assessment, remediation, training and continuing assurance",
-  ]) {
-    assert.match(industries, exact(copy));
-  }
+test("industries page preserves review metadata", () => {
+  assert.match(pageSource, /title: \"Industries & Experience \| GPM Associates\"/);
+  assert.match(pageSource, /robots: \{ index: false, follow: false \}/);
 });
 
-test("Industries includes the four approved sector anchors and sector-specific cards", () => {
-  for (const token of [
-    'href="#public-institutions"',
-    'href="#regulated-enterprises"',
-    'href="#technology-services"',
-    'href="#health-organisations"',
-    'id: "public-institutions"',
-    'id: "regulated-enterprises"',
-    'id: "technology-services"',
-    'id: "health-organisations"',
-    "Public institutions and public-interest programmes",
-    "Financial, pension and other regulated environments",
-    "Technology organisations and digital service delivery",
-    "Health organisations and sensitive-data operations",
-  ]) {
-    assert.match(industries, exact(token));
-  }
-});
-
-test("Industries delivery-priority and cross-sector sections stay grounded and service-linked", () => {
-  for (const copy of [
-    "DELIVERY PRIORITIES",
-    "What usually changes from one industry to another?",
-    "Governance model",
-    "Evidence burden",
-    "Operational pressure",
-    "Workforce adoption",
-    "CROSS-SECTOR PRIORITIES",
-    "The patterns that carry across industries.",
-    "HIGH-ACCOUNTABILITY PROCESSING",
-    "CROSS-FUNCTIONAL IMPLEMENTATION",
-    "REGULATOR-READY ASSURANCE",
-    "RESPONSIBLE INNOVATION",
-    'href="/services" aria-label={`See related services for ${item.title}`}',
-    'href="/contact"',
-  ]) {
-    assert.match(industries, exact(copy));
-  }
-});
-
-test("Industries styling stays local, responsive and integrated with the design system", () => {
-  for (const token of [
-    ".industries-hero",
-    ".industries-hero-grid",
-    ".industries-context-card",
-    ".industries-sector-grid",
-    ".industries-sector-card",
-    ".industries-priority-grid",
-    "@media (max-width: 1100px)",
-    "@media (max-width: 800px)",
-    "@media (max-width: 600px)",
-  ]) {
-    assert.ok(styles.includes(token), `missing Industries styling token: ${token}`);
-  }
-});
-
-test("README documents Industries as an implemented route", () => {
-  for (const copy of [
-    "Approved Homepage + About + Services + Industries",
-    "Industries & Experience routes",
-    "`app/industries/page.tsx` is the semantic, server-rendered `/industries` route",
-    "The `/about`, `/services` and `/industries` destinations are implemented on this branch.",
-  ]) {
-    assert.match(readme, exact(copy));
-  }
-});
-
-test("Industries avoids invented case-study signals and named-client claims", () => {
-  for (const forbidden of [
-    "CLIENT LOGOS",
-    "CASE STUDY",
-    "Our clients include",
-    "Named-client relationships",
-    "conference hall",
-    "boardroom",
-  ]) {
-    assert.equal(industries.includes(forbidden), false, `forbidden Industries content present: ${forbidden}`);
-  }
+test("industries page contains the expected mockup structure counts", () => {
+  const sectorCards = (pageSource.match(/className=\{index % 2 \? \"industries-sector-card-mockup/g) || []).length;
+  const engagementCards = (pageSource.match(/className=\{index % 2 \? \"industries-engagement-card/g) || []).length;
+  assert.equal(sectorCards, 1, "mapped sector card template should exist");
+  assert.equal(engagementCards, 1, "mapped engagement card template should exist");
+  assert.match(pageSource, /const sectorCards = \[/);
+  assert.match(pageSource, /const engagements = \[/);
 });

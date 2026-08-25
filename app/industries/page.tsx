@@ -1,290 +1,257 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 
 import { ScrollReveal } from "../components/ScrollReveal";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
-function ArrowIcon() {
-  return (
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 18 18">
-      <path d="M4 14 14 4M7 4h7v7" fill="none" stroke="currentColor" strokeLinecap="square" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
 export const metadata: Metadata = {
   title: "Industries & Experience | GPM Associates",
   description:
-    "Explore the sectors where GPM Associates supports data protection, privacy governance, regulatory assurance and operational accountability.",
+    "Data obligations are shaped by sector context, regulatory exposure and information sensitivity. Explore GPM Associates' industries and experience.",
   robots: { index: false, follow: false },
 };
 
 const sectorCards = [
   {
-    id: "public-institutions",
-    label: "PUBLIC INSTITUTIONS",
-    title: "Public institutions and public-interest programmes",
-    description:
-      "Accountability expectations are shaped by public trust, lawful handling of citizen information, inter-agency coordination and the need for records that stand up to scrutiny.",
-    focus: [
-      "Lawful, documented handling of citizen and programme data",
-      "Accountability structures that survive leadership and operational change",
-      "Evidence, audit trails and records discipline for high-visibility environments",
-    ],
-  },
-  {
-    id: "regulated-enterprises",
-    label: "REGULATED ENTERPRISES",
-    title: "Financial, pension and other regulated environments",
-    description:
-      "In regulated operating contexts, privacy and governance work must align with formal oversight expectations, internal control frameworks and decision-ready remediation evidence.",
-    focus: [
-      "Control ownership, escalation paths and regulator-ready documentation",
-      "Operational assurance across multi-team or multi-location structures",
-      "Remediation priorities that can be tracked, evidenced and sustained",
-    ],
-  },
-  {
-    id: "technology-services",
-    label: "TECHNOLOGY & DIGITAL SERVICES",
-    title: "Technology organisations and digital service delivery",
-    description:
-      "Product velocity, vendor dependencies, cross-functional delivery and emerging-technology decisions can compress timelines while increasing the need for structured accountability.",
-    focus: [
-      "Privacy-by-design decisions within fast-moving delivery cycles",
-      "Clear ownership for platform changes, vendors and shared data flows",
-      "Responsible innovation questions before risk becomes operational debt",
-    ],
-  },
-  {
-    id: "health-organisations",
-    label: "HEALTH ORGANISATIONS",
-    title: "Health organisations and sensitive-data operations",
-    description:
-      "Sensitive information, continuity requirements and the human impact of operational mistakes raise the standard for access, evidence, staff practice and defensible governance.",
-    focus: [
-      "Sensitive-data handling and access discipline across operational teams",
-      "Assurance approaches that recognise continuity and care obligations",
-      "Workforce behaviours that reduce avoidable risk in high-stakes contexts",
-    ],
-  },
-] as const;
-
-const deliveryPriorities = [
-  {
     number: "01",
-    title: "Governance model",
+    title: "Financial Services & Pensions",
     description:
-      "Who owns the risk, who approves decisions, how escalation works and how leadership maintains visibility often changes materially from one sector to another.",
+      "High-volume personal and financial data, complex processor ecosystems and intensive regulatory oversight.",
   },
   {
     number: "02",
-    title: "Evidence burden",
+    title: "Public Sector & Regulators",
     description:
-      "The records, approvals, audit trails, remediation proof and operational artefacts required for defensible assurance are shaped by the industry context, not by templates alone.",
+      "Public-interest mandates, national-scale systems, sensitive citizen data and heightened accountability.",
   },
   {
     number: "03",
-    title: "Operational pressure",
+    title: "Health & Life Sciences",
     description:
-      "Legacy systems, distributed teams, programme scale, third-party handling and service continuity expectations all affect how quickly a practical compliance response can be embedded.",
+      "Sensitive health information, research environments, confidentiality and multi-party data sharing.",
   },
   {
     number: "04",
-    title: "Workforce adoption",
+    title: "Technology & Digital Services",
     description:
-      "What people need to understand—and how that understanding is turned into repeatable behaviour—depends on the working reality of the organisation, not just the policy wording.",
+      "Rapid product cycles, platform data, cloud dependencies, AI use and privacy-by-design requirements.",
+  },
+  {
+    number: "05",
+    title: "Education & Professional Bodies",
+    description:
+      "Large member and learner populations, credential data, digital platforms and statutory functions.",
+  },
+  {
+    number: "06",
+    title: "Insurance",
+    description:
+      "Risk profiling, claims data, health information, automated decisions and third-party distribution networks.",
+  },
+  {
+    number: "07",
+    title: "Professional Services",
+    description:
+      "Client confidentiality, workforce data, cross-border collaboration and information assurance.",
+  },
+  {
+    number: "08",
+    title: "Emerging & Data-Intensive Enterprises",
+    description:
+      "Scaling governance, new technology adoption and accountable data commercialisation.",
   },
 ] as const;
 
-const crossSectorPriorities = [
+const engagements = [
   {
-    label: "HIGH-ACCOUNTABILITY PROCESSING",
-    title: "Where data decisions carry legal, operational and reputational weight",
-    body:
-      "We focus on the processing environments where governance gaps become visible quickly and where practical controls need to hold under real operational pressure.",
+    number: "01",
+    label: "Public-interest data ecosystem",
+    title: "Strengthening governance around a national-scale data environment",
+    challenge:
+      "Complex accountability, large data populations and multiple institutional dependencies.",
+    response:
+      "Governance review, regulatory assurance, risk prioritisation and implementation guidance.",
+    value:
+      "Clearer ownership, stronger evidence and a structured path for continuing assurance.",
   },
   {
-    label: "CROSS-FUNCTIONAL IMPLEMENTATION",
-    title: "Where compliance has to work across teams, systems and vendors",
-    body:
-      "The work is rarely isolated to one department. Legal, operations, technology, leadership and frontline teams often need a shared implementation path.",
+    number: "02",
+    label: "Financial services & pensions",
+    title: "Moving from annual audit activity to sustained remediation",
+    challenge:
+      "Recurring gaps across documentation, processor governance, privacy controls and internal accountability.",
+    response:
+      "Compliance assessment, executive prioritisation, remediation planning and continuing advisory support.",
+    value:
+      "Improved visibility over material gaps and a more disciplined implementation pathway.",
   },
   {
-    label: "REGULATOR-READY ASSURANCE",
-    title: "Where evidence matters as much as intent",
-    body:
-      "Policies alone are not enough. The operating context determines what evidence, remediation proof and accountable ownership need to exist in practice.",
+    number: "03",
+    label: "Health & research",
+    title: "Protecting sensitive information across a multi-stakeholder environment",
+    challenge:
+      "Sensitive data, research activity, partner relationships and complex lawful-use considerations.",
+    response:
+      "Policy and practice review, governance strengthening, evidence assessment and capacity building.",
+    value:
+      "More consistent controls and clearer responsibilities across the information lifecycle.",
   },
   {
-    label: "RESPONSIBLE INNOVATION",
-    title: "Where new tools or delivery models need clearer decision discipline",
-    body:
-      "Emerging technology, digital transformation and scaled data use raise questions that should be structured early rather than left to late-stage remediation.",
+    number: "04",
+    label: "Technology enterprise",
+    title: "Embedding privacy and assurance into service delivery",
+    challenge:
+      "Fast-moving products, client data, cloud dependencies and evolving security expectations.",
+    response:
+      "Privacy-by-design guidance, vendor governance, policy development and internal capability support.",
+    value:
+      "A stronger foundation for trusted client delivery and responsible scale.",
   },
 ] as const;
 
-const experiencePoints = [
-  {
-    label: "NATIONAL-SCALE",
-    body: "Data ecosystems and public-interest programmes",
-  },
-  {
-    label: "REGULATED",
-    body: "Financial, pension, health and professional environments",
-  },
-  {
-    label: "END-TO-END",
-    body: "Assessment, remediation, training and continuing assurance",
-  },
+const proofPrinciples = [
+  "No confidential client information",
+  "No unsupported performance claims",
+  "Approved logos and testimonials only",
+  "Outcomes supported by engagement evidence",
 ] as const;
 
 export default function IndustriesPage() {
   return (
     <>
-      <a className="skip-link" href="#content">Skip to content</a>
+      <a className="skip-link" href="#content">
+        Skip to content
+      </a>
       <ScrollReveal />
       <SiteHeader />
 
       <main id="content">
-        <section className="industries-hero dark-plane">
-          <div className="shell industries-hero-grid">
-            <div className="industries-hero-copy" data-reveal>
-              <p className="eyebrow">INDUSTRIES &amp; EXPERIENCE</p>
-              <h1>Sector context changes the shape of compliance.</h1>
-              <p className="industries-hero-intro">
-                From public institutions and regulated enterprises to technology and health organisations, our work strengthens accountability where the stakes are highest.
-              </p>
-              <p className="industries-hero-detail">
-                The regulatory question may sound familiar across sectors, but the operating environment, risk profile, decision rights and evidence burden are never exactly the same.
-              </p>
-              <div className="hero-actions">
-                <a className="primary-action" href="#sectors">
-                  Explore sector priorities
-                  <ArrowIcon />
-                </a>
-                <a className="text-action light" href="/contact">
-                  Speak with an advisor
-                  <ArrowIcon />
-                </a>
-              </div>
-            </div>
+        <section className="industries-page-hero dark-plane">
+          <div className="shell industries-page-hero-copy" data-reveal>
+            <p className="eyebrow">INDUSTRIES &amp; EXPERIENCE</p>
+            <h1>Sector insight backed by practical experience.</h1>
+            <p className="industries-page-intro">
+              Data obligations are shaped by business models, regulatory exposure, technology, stakeholders and the sensitivity of the information involved. We combine that context with practical experience across complex public and private data environments.
+            </p>
+          </div>
 
-            <aside className="industries-context-card reveal-delay-1" data-reveal aria-label="Industries page summary">
-              <span>WORKING CONTEXTS</span>
-              <strong>Recognisable environments where accountability has to survive real operating pressure.</strong>
-              <ul className="industries-context-list">
-                <li><b>PUBLIC INTEREST</b><p>Citizen data, programmes, oversight and defensible records.</p></li>
-                <li><b>REGULATED OPERATIONS</b><p>Controls, evidence, escalation and sustained remediation.</p></li>
-                <li><b>DIGITAL DELIVERY</b><p>Product velocity, vendors, change management and emerging technology.</p></li>
-                <li><b>SENSITIVE SERVICES</b><p>High-stakes decisions, continuity needs and workforce discipline.</p></li>
-              </ul>
-            </aside>
+          <div className="shell" data-reveal>
+            <figure className="industries-editorial">
+              <Image
+                alt="A modern African institutional district connecting public services, finance, healthcare, technology and infrastructure"
+                className="industries-editorial-image"
+                height={1081}
+                priority
+                sizes="(max-width: 900px) 100vw, 1320px"
+                src="/images/gpm-industries-editorial-approved.webp"
+                width={1573}
+              />
+              <figcaption className="industries-editorial-panel">
+                <span>CONNECTED ENVIRONMENTS</span>
+                <h2>Sector context changes how obligations must operate in practice.</h2>
+              </figcaption>
+            </figure>
           </div>
         </section>
 
-        <section className="stat-strip" aria-label="Industry navigation">
-          <div className="shell stat-grid">
-            <a href="#public-institutions"><strong>Public</strong><span>Institutions &amp; programmes</span></a>
-            <a href="#regulated-enterprises"><strong>Regulated</strong><span>Financial, pension and more</span></a>
-            <a href="#technology-services"><strong>Technology</strong><span>Digital services &amp; delivery</span></a>
-            <a href="#health-organisations"><strong>Health</strong><span>Sensitive-data operations</span></a>
-          </div>
-        </section>
-
-        <section id="sectors" className="industries-sectors section-pad">
+        <section className="industries-sectors-page section-pad">
           <div className="shell">
-            <div className="section-intro" data-reveal>
+            <div className="section-intro compact" data-reveal>
               <p className="eyebrow">WHERE WE WORK</p>
               <div>
-                <h2>Recognisable operating environments. Practical sector judgement.</h2>
-                <p>
-                  We do not treat industry context as decoration around a generic compliance method. The environment itself changes the operating questions, the governance design and the evidence needed for defensible assurance.
-                </p>
+                <h2>Experience across regulated and data-intensive environments.</h2>
               </div>
             </div>
 
-            <div className="industries-sector-grid">
+            <div className="industries-sector-grid-mockup">
               {sectorCards.map((sector, index) => (
-                <article key={sector.id} id={sector.id} className={`industries-sector-card ${index % 2 ? "reveal-delay-1" : ""}`} data-reveal>
-                  <span>{sector.label}</span>
+                <article
+                  key={sector.number}
+                  className={index % 2 ? "industries-sector-card-mockup reveal-delay-1" : "industries-sector-card-mockup"}
+                  data-reveal
+                >
+                  <span>{sector.number}</span>
                   <h3>{sector.title}</h3>
                   <p>{sector.description}</p>
-                  <ul>
-                    {sector.focus.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
+                  <small>Explore sector considerations</small>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="experience" className="experience dark-plane section-pad">
-          <div className="shell experience-grid" data-reveal>
-            <div className="experience-copy">
-              <p className="eyebrow">SELECTED EXPERIENCE</p>
-              <h2>Complex environments. Practical outcomes. Defensible assurance.</h2>
+        <section className="industries-sector-approach section-pad">
+          <div className="shell industries-two-column" data-reveal>
+            <div>
+              <p className="eyebrow">A SECTOR-AWARE APPROACH</p>
+              <h2>Same legislation. Different operating consequences.</h2>
+            </div>
+            <div className="industries-body-copy">
               <p>
-                From public institutions and regulated enterprises to technology and health organisations, our work strengthens accountability where the stakes are highest.
+                A financial institution, public agency, hospital and technology company may share core obligations, but their risk, evidence, governance and control requirements are not identical.
               </p>
-              <a className="text-link light" href="/services">
-                SEE THE SERVICE LINES THAT SUPPORT THIS WORK
-                <ArrowIcon />
-              </a>
-            </div>
-            <div className="experience-points">
-              {experiencePoints.map((point) => (
-                <article key={point.label}>
-                  <strong>{point.label}</strong>
-                  <p>{point.body}</p>
-                </article>
-              ))}
+              <p>
+                We adapt the regulatory framework to the sector&apos;s operating environment while maintaining clear, defensible standards.
+              </p>
             </div>
           </div>
         </section>
 
-        <section className="services section-pad" aria-labelledby="industries-delivery-title">
+        <section className="industries-engagements section-pad">
           <div className="shell">
-            <div className="section-intro" data-reveal>
-              <p className="eyebrow">DELIVERY PRIORITIES</p>
+            <div className="section-intro compact" data-reveal>
+              <p className="eyebrow">SELECTED ENGAGEMENT EXPERIENCE</p>
               <div>
-                <h2 id="industries-delivery-title">What usually changes from one industry to another?</h2>
+                <h2>Practical work in complex environments.</h2>
                 <p>
-                  The answer is rarely the headline obligation alone. What changes most is the governance reality around it: who decides, what evidence matters, how fast change is possible and what frontline behaviour must look like for the controls to hold.
+                  Where confidentiality applies, our experience is presented in anonymised form and focused on the challenge, GPM&apos;s response and the value created.
                 </p>
               </div>
             </div>
-            <div className="service-list">
-              {deliveryPriorities.map((item, index) => (
-                <article key={item.number} className={`service-row ${index % 2 ? "reveal-delay-1" : ""}`} data-reveal>
+
+            <div className="industries-engagement-grid">
+              {engagements.map((item, index) => (
+                <article
+                  key={item.number}
+                  className={index % 2 ? "industries-engagement-card reveal-delay-1" : "industries-engagement-card"}
+                  data-reveal
+                >
                   <span>{item.number}</span>
+                  <p className="industries-engagement-label">{item.label}</p>
                   <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <a href="/services" aria-label={`See related services for ${item.title}`}><ArrowIcon /></a>
+                  <dl>
+                    <div>
+                      <dt>Challenge</dt>
+                      <dd>{item.challenge}</dd>
+                    </div>
+                    <div>
+                      <dt>GPM response</dt>
+                      <dd>{item.response}</dd>
+                    </div>
+                    <div>
+                      <dt>Value created</dt>
+                      <dd>{item.value}</dd>
+                    </div>
+                  </dl>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="latest section-pad" aria-labelledby="industries-priorities-title">
-          <div className="shell">
-            <div className="section-intro latest-intro" data-reveal>
-              <p className="eyebrow">CROSS-SECTOR PRIORITIES</p>
-              <h2 id="industries-priorities-title">The patterns that carry across industries.</h2>
+        <section className="industries-proof section-pad">
+          <div className="shell industries-two-column" data-reveal>
+            <div>
+              <p className="eyebrow">PROOF PRINCIPLES</p>
+              <h2>Credible. Specific. Responsible.</h2>
             </div>
-            <div className="insight-grid industries-priority-grid">
-              {crossSectorPriorities.map((item, index) => (
-                <article key={item.title} className={index ? "reveal-delay-1" : ""} data-reveal>
-                  <p className="insight-label">{item.label}</p>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                  <a className="text-link" href="/contact">
-                    Start a sector conversation
-                    <ArrowIcon />
-                  </a>
-                </article>
-              ))}
+            <div>
+              <ul className="industries-proof-list">
+                {proofPrinciples.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
@@ -292,14 +259,13 @@ export default function IndustriesPage() {
         <section className="contact-cta">
           <div className="shell cta-grid" data-reveal>
             <div>
-              <p className="eyebrow">NEXT STEP</p>
-              <h2>Bring the sector reality into the conversation from the start.</h2>
+              <p className="eyebrow">BEGIN A CONVERSATION</p>
+              <h2>Bring sector context into your compliance programme.</h2>
             </div>
             <div>
-              <p>Start a focused discussion about the regulatory, operational and accountability pressures specific to your industry context.</p>
+              <p>Discuss the obligations, exposures and priorities specific to your organisation.</p>
               <a className="contact-action" href="/contact">
-                Speak with an advisor
-                <ArrowIcon />
+                Discuss your environment
               </a>
             </div>
           </div>
