@@ -21,9 +21,6 @@ const homepageExperience = read("app/components/HomepageExperience.tsx");
 const about = read("app/about/page.tsx");
 const servicesMarkup = services.slice(services.indexOf("export default function ServicesPage"));
 
-const imagePath = "public/images/gpm-data-flow-mapping-v2.webp";
-const imagePublicPath = "/images/gpm-data-flow-mapping-v2.webp";
-
 function assertIncludesAll(source, values) {
   for (const value of values) assert.ok(source.includes(value), `missing exact contract text: ${value}`);
 }
@@ -165,17 +162,35 @@ test("desktop and mobile Services links expose current route while focus behavio
   assert.match(mobileMenu, /pathname === href \? "page" : undefined/);
 });
 
-test("approved local Services image is binary-locked and truthfully disclosed as illustrative", () => {
+test("approved local Services images are binary-locked and truthfully disclosed", () => {
+  // Hero background — decorative, faded, blended with dark overlays; no alt/focus
+  const heroAsset = "public/images/gpm-privacy-impact-assessment-v2.webp";
+  const heroUrl = new URL(heroAsset, root);
+  assert.ok(existsSync(heroUrl), `hero decorative asset missing: ${heroAsset}`);
+  const heroData = readFileSync(heroUrl);
+  assert.equal(createHash("sha256").update(heroData).digest("hex"), "ec431c641ef23f097c1a28eb5643fa154299ddb28e46cfd51f4050b030f62238");
+  assert.deepEqual(webpDimensions(heroData), { width: 1254, height: 1254 });
+  const heroHook = services.match(/<div className="services-hero-background"[^>]*\/>/)?.[0] ?? "";
+  assertIncludesAll(heroHook, ['aria-hidden="true"']);
+  assert.equal(heroHook.includes("alt="), false, "hero decorative background hook must have no alt");
+  assert.equal(heroHook.includes("tabIndex"), false, "hero decorative background hook must not be focusable");
+  assert.match(styles, /\.services-hero-background\s*\{[^}]*background:\s*url\("\/images\/gpm-privacy-impact-assessment-v2\.webp"\)\s+center 42% \/ cover no-repeat;/s);
+  assert.match(styles, /\.services-hero-overlay\s*\{[^}]*background:\s*linear-gradient\([^}]*rgba\(8, 36, 51, \.96\)[^}]*linear-gradient\([^}]*rgba\(8, 36, 51, \.62\)/s);
+  assert.match(styles, /\.services-hero-background, \.services-hero-overlay\s*\{[^}]*pointer-events:\s*none;/s);
+
+  // Integrated design — approved illustrative image with factual alt and disclosure
+  const imagePath = "public/images/gpm-privacy-capability-workshop-v3.webp";
+  const imagePublicPath = "/images/gpm-privacy-capability-workshop-v3.webp";
   const assetUrl = new URL(imagePath, root);
   assert.ok(existsSync(assetUrl), `asset missing: ${imagePath}`);
   const data = readFileSync(assetUrl);
-  assert.equal(createHash("sha256").update(data).digest("hex"), "459fd1db818c42b6e1d7610f5d2bf3780a83a19656bee5fa252a5fcba9b98ac5");
-  assert.deepEqual(webpDimensions(data), { width: 1536, height: 1024 });
+  assert.equal(createHash("sha256").update(data).digest("hex"), "4ae9f54dd6837b3de10fd95a8989a5227bb50cf19ade76d8e12e884156c1f985");
+  assert.deepEqual(webpDimensions(data), { width: 1537, height: 1023 });
   assertIncludesAll(services, [
     imagePublicPath,
-    "width={1536}",
-    "height={1024}",
-    'alt="African privacy professional mapping data flows on a structured workflow board"',
+    "width={1537}",
+    "height={1023}",
+    'alt="African privacy professionals working through a structured data-governance exercise"',
   ]);
   assertInOrder(services, ["GPM ADVISORY", "Expertise connected around the client’s operating reality."]);
   assert.match(services, /illustrative/i);
@@ -186,20 +201,30 @@ test("approved local Services image is binary-locked and truthfully disclosed as
   assert.equal(services.includes("Senior African professionals working through a governance and risk advisory session"), false);
 });
 
-test("lifecycle motion has a meaningful control, reduced-motion behavior and a server-rendered static frame", () => {
+test("lifecycle ambient SVG is automatic normal-motion, reduced-motion/static and no-JS safe with no controls", () => {
   assert.ok(lifecycle.length > 0, "missing Services lifecycle interaction component");
-  assertIncludesAll(lifecycle, ["use client", "prefers-reduced-motion: reduce", "aria-pressed", "Pause lifecycle animation", "Play lifecycle animation"]);
+  assertIncludesAll(lifecycle, ["use client", "prefers-reduced-motion: reduce", "services-lifecycle-static", "services-lifecycle--animated"]);
+  assert.equal(lifecycle.includes("aria-pressed"), false, "lifecycle must have no aria-pressed control state");
+  assert.equal(lifecycle.includes("Pause lifecycle animation"), false, "lifecycle must have no Play/Pause copy");
+  assert.equal(lifecycle.includes("Play lifecycle animation"), false, "lifecycle must have no Play/Pause copy");
+  assert.equal(lifecycle.includes("<button"), false, "lifecycle must have no button control");
+  assert.match(lifecycle, /role="region"[\s\S]*aria-label="GPM advisory lifecycle diagram"[\s\S]*tabIndex=\{0\}/, "labelled lifecycle region must be keyboard focusable");
+  assert.equal(lifecycle.includes("playing"), false, "lifecycle must have no manual playback state/handler");
+  assert.equal(lifecycle.includes("toggle"), false, "lifecycle must have no toggle handler");
   assert.match(lifecycle, /matchMedia\(["']\(prefers-reduced-motion: reduce\)["']\)/);
-  assert.match(lifecycle, /<button[^>]*type="button"[^>]*aria-pressed=/s);
-  assert.match(lifecycle, /<div[^>]*className=\{`services-lifecycle-static[^>]*role="region"[^>]*tabIndex=\{0\}[^>]*aria-label="GPM advisory lifecycle diagram"/s);
-  assert.match(lifecycle, /aria-pressed=\{playing\}/, "pressed state must mean the lifecycle animation is playing");
-  assert.match(lifecycle, /<svg[^>]*aria-hidden="true"[^>]*focusable="false"/s);
-  assert.match(lifecycle, /<path\b[^>]*d="[^"]+"/s, "control icons must use deterministic SVG paths");
-  assert.equal(/[Ⅱ▶]/u.test(lifecycle), false, "emoji-prone play/pause glyphs must not be used");
-  assertIncludesAll(lifecycle, ["services-lifecycle-static", "services-lifecycle--animated"]);
   assert.match(lifecycle, /useState\(false\)/, "lifecycle must server-render in its static state");
-  assert.match(styles, /\.services-lifecycle[^}]*--static|\.services-lifecycle-static/s, "static lifecycle hook missing");
-  assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*services-lifecycle/s);
+  assert.match(lifecycle, /<svg[^>]*aria-hidden="true"[^>]*focusable="false"/s);
+  assert.match(lifecycle, /<path\b[^>]*d="[^"]+"/s, "SVG paths must be deterministic");
+  assert.equal(/[Ⅱ▶]/u.test(lifecycle), false, "emoji-prone play/pause glyphs must not be used");
+  // Positive automatic-motion assertions
+  assert.match(styles, /\.services-lifecycle--animated \.services-lifecycle-progress\s*\{[^}]*animation:\s*services-lifecycle-flow 5s ease-in-out infinite;/s);
+  assert.match(styles, /\.services-lifecycle--animated \.services-lifecycle-node\s*\{[^}]*animation:\s*services-lifecycle-pulse 5s ease-in-out infinite;/s);
+  assert.match(styles, /@keyframes services-lifecycle-flow/);
+  assert.match(styles, /@keyframes services-lifecycle-pulse/);
+  assert.match(styles, /\.services-lifecycle-progress\s*\{[^}]*stroke-dashoffset:\s*0;/s, "static frame must be complete without JS");
+  assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*\.services-lifecycle-progress, \.services-lifecycle-node\s*\{\s*animation:\s*none !important;/s);
+  assert.equal(/services-lifecycle-static button|services-lifecycle.*position:\s*sticky/.test(styles), false, "lifecycle control CSS must be removed");
+  // No duplicated static content in noscript
   assert.equal(services.includes("<noscript>"), false, "static lifecycle content must not be duplicated in noscript");
 });
 

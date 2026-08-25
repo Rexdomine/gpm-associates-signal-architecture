@@ -275,8 +275,11 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .about-cta .contact-action { min-height: 52px; }
 
 /* Services */
-.services-hero { min-height: 590px; display: grid; align-items: center; padding-block: clamp(76px, 9vw, 128px); }
-.services-hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); gap: clamp(56px, 9vw, 140px); align-items: end; }
+.services-hero { position: relative; isolation: isolate; min-height: 590px; display: grid; align-items: center; overflow: hidden; padding-block: clamp(76px, 9vw, 128px); }
+.services-hero-background, .services-hero-overlay { position: absolute; inset: 0; pointer-events: none; }
+.services-hero-background { z-index: -2; background: url("/images/gpm-privacy-impact-assessment-v2.webp") center 42% / cover no-repeat; }
+.services-hero-overlay { z-index: -1; background: linear-gradient(90deg, rgba(8, 36, 51, .96) 0%, rgba(8, 36, 51, .88) 48%, rgba(8, 36, 51, .72) 100%), linear-gradient(rgba(8, 36, 51, .42), rgba(8, 36, 51, .62)); }
+.services-hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); gap: clamp(56px, 9vw, 140px); align-items: end; }
 .services-hero h1 { max-width: 850px; }
 .services-hero-grid > div > p:last-child { max-width: 720px; margin: 0; color: #cdd7da; font-size: 16px; line-height: 1.8; }
 .services-hero-aside { display: grid; gap: 16px; padding: 30px 0 8px 28px; border-left: 1px solid var(--rule-light); }
@@ -319,15 +322,12 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .services-lifecycle-progress { stroke: var(--crimson); stroke-dasharray: 1020; stroke-dashoffset: 0; }
 .services-lifecycle-node circle { fill: var(--paper); stroke: var(--navy); stroke-width: 2; }
 .services-lifecycle-node text { fill: var(--navy); font: 800 17px var(--font-manrope), sans-serif; letter-spacing: .08em; }
-.services-lifecycle--animated.services-lifecycle--playing .services-lifecycle-progress { animation: services-lifecycle-flow 5s ease-in-out infinite; }
-.services-lifecycle--animated.services-lifecycle--playing .services-lifecycle-node { animation: services-lifecycle-pulse 5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-.services-lifecycle--animated.services-lifecycle--playing .services-lifecycle-node:nth-of-type(3) { animation-delay: 1s; }
-.services-lifecycle--animated.services-lifecycle--playing .services-lifecycle-node:nth-of-type(4) { animation-delay: 2s; }
-.services-lifecycle--animated.services-lifecycle--playing .services-lifecycle-node:nth-of-type(5) { animation-delay: 3s; }
-.services-lifecycle--animated.services-lifecycle--playing .services-lifecycle-node:nth-of-type(6) { animation-delay: 4s; }
-.services-lifecycle-static button { position: absolute; right: 0; bottom: 0; min-height: 42px; display: inline-flex; align-items: center; gap: 10px; padding: 0 15px; border: 1px solid var(--navy); background: transparent; font-size: 10px; font-weight: 800; }
-.services-lifecycle-static button svg { width: 14px; height: 14px; flex: 0 0 auto; }
-.services-lifecycle-static button:disabled { cursor: default; opacity: .62; }
+.services-lifecycle--animated .services-lifecycle-progress { animation: services-lifecycle-flow 5s ease-in-out infinite; }
+.services-lifecycle--animated .services-lifecycle-node { animation: services-lifecycle-pulse 5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.services-lifecycle--animated .services-lifecycle-node:nth-of-type(3) { animation-delay: 1s; }
+.services-lifecycle--animated .services-lifecycle-node:nth-of-type(4) { animation-delay: 2s; }
+.services-lifecycle--animated .services-lifecycle-node:nth-of-type(5) { animation-delay: 3s; }
+.services-lifecycle--animated .services-lifecycle-node:nth-of-type(6) { animation-delay: 4s; }
 .services-stage-grid { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--navy); }
 .services-stage-grid article { min-height: 245px; padding: 30px 25px; border-right: 1px solid var(--rule); }
 .services-stage-grid article:last-child { border-right: 0; }
@@ -493,7 +493,6 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .services-stage-grid article { min-height: 0; border-right: 0; }
   .services-lifecycle-static { min-height: 210px; overflow-x: auto; }
   .services-lifecycle-static svg { width: 760px; }
-  .services-lifecycle-static button { position: sticky; left: 0; }
   .services-cta a { width: 100%; }
 }
 

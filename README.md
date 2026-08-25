@@ -9,7 +9,7 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 - `app/about/page.tsx` is the semantic, server-rendered `/about` route with route-specific metadata.
 - `app/services/page.tsx` is the six-section, semantic, server-rendered `/services` route with route-specific metadata.
 - `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services without adding route-specific sections elsewhere.
-- `app/components/ServicesLifecycle.tsx` progressively animates the server-rendered lifecycle illustration, with pause/play and reduced-motion behavior.
+- `app/components/ServicesLifecycle.tsx` progressively enhances the server-rendered lifecycle illustration with continuous automatic motion while remaining static for reduced-motion and no-JavaScript users.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
 - `app/components/CookieConsent.tsx` provides first-party preference storage, an accessible settings dialog and explicit external-map gating. No analytics, marketing script or third-party map iframe is loaded.
 - `app/components/MobileMenu.tsx` provides the responsive navigation, Escape handling, keyboard containment and focus restoration.
@@ -80,14 +80,17 @@ Both files were copied byte-for-byte from the approved client mockup. The QR lin
 
 The people shown are illustrative subjects. They are not GPM personnel or staff, clients, or participants in a real engagement.
 
-### Services data-flow image
+### Services imagery
 
-- Production file: `public/images/gpm-data-flow-mapping-v2.webp`
-- SHA-256: `459fd1db818c42b6e1d7610f5d2bf3780a83a19656bee5fa252a5fcba9b98ac5`
-- Dimensions: `1536 × 1024`
-- Provenance: existing repository-local approved production asset; no file was downloaded or regenerated for the Services implementation.
+- Decorative hero production file: `public/images/gpm-privacy-impact-assessment-v2.webp`
+- Decorative hero SHA-256: `ec431c641ef23f097c1a28eb5643fa154299ddb28e46cfd51f4050b030f62238`
+- Decorative hero dimensions: `1254 × 1254`
+- Integrated image production file: `public/images/gpm-privacy-capability-workshop-v3.webp`
+- Integrated image SHA-256: `4ae9f54dd6837b3de10fd95a8989a5227bb50cf19ade76d8e12e884156c1f985`
+- Integrated image dimensions: `1537 × 1023`
+- Provenance: existing repository-local approved production assets; neither file was downloaded nor regenerated for this refinement.
 
-The image is used as an illustrative data-flow mapping scene. Its subject is not GPM personnel or staff, a client, or a participant in a real engagement. The mockup’s generic `services-editorial.webp` meeting image is not shipped or requested.
+The hero image is a decorative, faded background and is hidden from assistive technology. The integrated image is an illustrative structured data-governance exercise. Its subjects are not GPM personnel or staff, clients, or participants in a real engagement. The mockup’s generic `services-editorial.webp` meeting image is not shipped or requested.
 
 ## Consent and external services
 

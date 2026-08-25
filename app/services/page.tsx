@@ -24,6 +24,8 @@ export default function ServicesPage() {
         <ScrollReveal />
 
         <section className="services-hero dark-plane" aria-labelledby="services-hero-title">
+          <div className="services-hero-background" aria-hidden="true" />
+          <div className="services-hero-overlay" aria-hidden="true" />
           <div className="shell services-hero-grid">
             <div data-reveal><p className="eyebrow">Services</p><h1 id="services-hero-title">Connected services for complex data environments.</h1><p>GPM brings regulatory, governance, technical and organisational expertise together through seven service pillars that help clients reduce exposure, demonstrate accountability and build sustainable compliance capability.</p></div>
             <aside data-reveal className="services-hero-aside reveal-delay-1"><span>Seven capability pillars</span><strong>One integrated delivery model</strong></aside>
@@ -33,7 +35,7 @@ export default function ServicesPage() {
         <section className="services-integrated" aria-labelledby="services-integrated-title">
           <div className="shell services-integrated-grid">
             <figure data-reveal>
-              <Image src="/images/gpm-data-flow-mapping-v2.webp" alt="African privacy professional mapping data flows on a structured workflow board" width={1536} height={1024} sizes="(max-width: 800px) 100vw, 55vw" />
+              <Image src="/images/gpm-privacy-capability-workshop-v3.webp" alt="African privacy professionals working through a structured data-governance exercise" width={1537} height={1023} sizes="(max-width: 800px) 100vw, 55vw" />
               <figcaption><span>GPM ADVISORY</span><strong>Expertise connected around the client’s operating reality.</strong><small>Illustrative subject only — not GPM personnel or staff, not a client, and not a participant in a real engagement.</small></figcaption>
             </figure>
             <div data-reveal className="services-integrated-copy reveal-delay-1"><p className="eyebrow">Integrated by design</p><h2 id="services-integrated-title">One challenge can require several kinds of expertise.</h2><p>We connect regulatory interpretation, governance, technology, implementation and organisational capability so that advice can move from obligation to sustained practice.</p><ul><li><b>01</b>Regulatory depth</li><li><b>02</b>Operational context</li><li><b>03</b>Evidence-led delivery</li></ul></div>
