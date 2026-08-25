@@ -18,8 +18,10 @@ const mobileMenu = read("app/components/MobileMenu.tsx");
 const experience = read("app/components/HomepageExperience.tsx");
 const consent = read("app/components/CookieConsent.tsx");
 const reveal = read("app/components/ScrollReveal.tsx");
+const header = read("app/components/SiteHeader.tsx");
+const footer = read("app/components/SiteFooter.tsx");
 const readme = read("README.md");
-const source = [page, layout, styles, mobileMenu, experience, consent, reveal].join("\n");
+const source = [page, layout, styles, mobileMenu, experience, consent, reveal, header, footer].join("\n");
 
 const exact = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
 
@@ -33,7 +35,7 @@ const assertInOrder = (haystack, markers) => {
 };
 
 test("homepage follows the approved mockup section order", () => {
-  assertInOrder(page, [
+  assertInOrder(page + footer, [
     "DATA PROTECTION. PRIVACY GOVERNANCE. DIGITAL TRUST.",
     "2019",
     "THE OPERATING REALITY",
@@ -158,9 +160,9 @@ test("global navigation, footer routes and exact contact details match the mocku
     "GPM Associates, Abuja",
     "© 2026 GPM ASSOCIATES",
   ]) assert.match(source, exact(detail));
-  assert.match(page, /mailto:dataprotection@gpm-associates\.ng/);
+  assert.match(footer, /mailto:dataprotection@gpm-associates\.ng/);
   const dialableTelephone = ["+234", "803", "899", "2782"].join("");
-  assert.ok(page.includes(`href=\"tel:${dialableTelephone}\"`), "telephone must use complete E.164 digits");
+  assert.ok(footer.includes(`href=\"tel:${dialableTelephone}\"`), "telephone must use complete E.164 digits");
 });
 
 test("approved external links are exact and safely isolated", () => {
@@ -174,8 +176,8 @@ test("approved external links are exact and safely isolated", () => {
     "https://www.gpm-associates.ng/?p=Privacy-Policy",
     "https://www.gpm-associates.ng/?p=Cookies-Policy",
   ];
-  for (const link of links) assert.ok(page.includes(link), `missing approved external link: ${link}`);
-  assert.match(page, /rel="noopener noreferrer"/);
+  for (const link of links) assert.ok(footer.includes(link), `missing approved external link: ${link}`);
+  assert.match(footer, /rel="noopener noreferrer"/);
 });
 
 test("cookie preferences are accessible, first-party only and gate external media", () => {
