@@ -7,6 +7,7 @@ const root = new URL("../", import.meta.url);
 const pagePath = new URL("app/industries/page.tsx", root);
 const pageSource = readFileSync(pagePath, "utf8");
 const imagePath = new URL("public/images/gpm-industries-editorial-approved.webp", root);
+const approachImagePath = new URL("public/images/gpm-data-flow-mapping-v2.webp", root);
 
 const requiredCopy = [
   "INDUSTRIES &amp; EXPERIENCE",
@@ -63,6 +64,13 @@ test("industries page uses the approved editorial image asset", () => {
 
   const digest = createHash("sha256").update(readFileSync(imagePath)).digest("hex");
   assert.equal(digest, "a664a23631bf40337b631cef48c5cbe9901ca1e3551c9338c76462cee76a4de8");
+});
+
+test("industries sector-aware section includes the approved complementary workflow image", () => {
+  assert.equal(existsSync(approachImagePath), true, "sector-aware workflow image should exist locally");
+  assert.match(pageSource, /src=\"\/images\/gpm-data-flow-mapping-v2\.webp\"/);
+  assert.match(pageSource, /A privacy professional mapping governance and data workflow requirements across a structured process board/);
+  assert.match(pageSource, /className=\"industries-approach-figure\"/);
 });
 
 test("industries page preserves review metadata", () => {

@@ -395,11 +395,14 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .industries-sector-card-mockup small { margin-top: auto; color: var(--navy); font-size: 10px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
 
 .industries-sector-approach, .industries-proof { background: var(--mist); }
-.industries-two-column { display: grid; grid-template-columns: minmax(240px, .78fr) minmax(0, 1.22fr); gap: clamp(42px, 7vw, 110px); }
-.industries-two-column h2 { margin-bottom: 0; color: var(--navy); font-size: clamp(42px, 4.7vw, 66px); font-weight: 500; line-height: 1.04; letter-spacing: -.045em; }
-.industries-body-copy { max-width: 700px; }
+.industries-two-column { display: grid; grid-template-columns: minmax(260px, .84fr) minmax(0, 1.16fr); gap: clamp(34px, 5.2vw, 92px); align-items: start; }
+.industries-two-column h2 { max-width: 9.8ch; margin-bottom: 0; color: var(--navy); font-size: clamp(42px, 4.7vw, 66px); font-weight: 500; line-height: 1.04; letter-spacing: -.045em; }
+.industries-body-copy { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 280px); gap: clamp(20px, 2.6vw, 28px); align-items: start; max-width: 760px; }
+.industries-body-copy-text { max-width: 28rem; }
 .industries-body-copy p { margin: 0 0 18px; color: var(--slate); font-size: 15px; line-height: 1.8; }
 .industries-body-copy p:last-child { margin-bottom: 0; }
+.industries-approach-figure { margin: 0; max-width: 280px; }
+.industries-approach-image { display: block; width: 100%; height: auto; border: 1px solid rgba(8,36,51,.08); }
 
 .industries-engagements { background: var(--paper); }
 .industries-engagement-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--navy); }
@@ -455,6 +458,8 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .industries-hero-grid { grid-template-columns: 1fr; }
   .industries-context-card { max-width: 760px; }
   .industries-priority-grid { grid-template-columns: repeat(2, 1fr); }
+  .industries-two-column { grid-template-columns: minmax(220px, .78fr) minmax(0, 1.22fr); gap: 36px; }
+  .industries-two-column h2 { max-width: 10.2ch; }
   .services-stage-grid { grid-template-columns: repeat(3, 1fr); }
   .services-stage-grid article { border-bottom: 1px solid var(--rule); }
 }
@@ -466,6 +471,11 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .operating-copy { margin-top: 18px; }
   .industries-sector-grid, .industries-priority-grid { grid-template-columns: 1fr; }
   .industries-sector-card { min-height: 0; }
+  .industries-two-column { grid-template-columns: 1fr; gap: 26px; }
+  .industries-two-column h2 { max-width: 12ch; }
+  .industries-body-copy { grid-template-columns: 1fr; max-width: none; }
+  .industries-body-copy-text { max-width: 100%; }
+  .industries-approach-figure { max-width: 100%; }
   .service-row { grid-template-columns: 44px 1fr 40px; gap: 18px; padding: 30px 0; }
   .service-row > span { padding-top: 6px; }
   .service-row p { grid-column: 2 / 4; }
@@ -519,6 +529,9 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .operating-grid h2, .section-intro h2, .experience h2, .innovation h2, .latest h2, .contact-cta h2 { font-size: 40px; }
   .operating-copy { grid-template-columns: 1fr; gap: 8px; }
   .industries-context-list li { grid-template-columns: 1fr; gap: 10px; }
+  .industries-two-column h2 { max-width: 12.5ch; }
+  .industries-approach-figure { margin-inline: -16px; }
+  .industries-approach-image { border-inline: 0; }
   .service-row { grid-template-columns: 30px 1fr 36px; gap: 12px; }
   .service-row h3 { font-size: 24px; }
   .service-row p { font-size: 13px; }

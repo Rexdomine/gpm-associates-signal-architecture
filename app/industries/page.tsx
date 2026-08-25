@@ -188,12 +188,25 @@ export default function IndustriesPage() {
               <h2>Same legislation. Different operating consequences.</h2>
             </div>
             <div className="industries-body-copy">
-              <p>
-                A financial institution, public agency, hospital and technology company may share core obligations, but their risk, evidence, governance and control requirements are not identical.
-              </p>
-              <p>
-                We adapt the regulatory framework to the sector&apos;s operating environment while maintaining clear, defensible standards.
-              </p>
+              <div className="industries-body-copy-text">
+                <p>
+                  A financial institution, public agency, hospital and technology company may share core obligations, but their risk, evidence, governance and control requirements are not identical.
+                </p>
+                <p>
+                  We adapt the regulatory framework to the sector&apos;s operating environment while maintaining clear, defensible standards.
+                </p>
+              </div>
+
+              <figure className="industries-approach-figure">
+                <Image
+                  alt="A privacy professional mapping governance and data workflow requirements across a structured process board"
+                  className="industries-approach-image"
+                  height={1365}
+                  sizes="(max-width: 800px) 100vw, (max-width: 1200px) 52vw, 620px"
+                  src="/images/gpm-data-flow-mapping-v2.webp"
+                  width={1024}
+                />
+              </figure>
             </div>
           </div>
         </section>
