@@ -195,7 +195,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .desktop-nav a { min-height: 44px; display: inline-flex; align-items: center; }
 .about-hero { position: relative; isolation: isolate; overflow: hidden; padding-block: clamp(84px, 10vw, 150px); }
 .about-globe-layer { position: absolute; z-index: -1; inset: 0; overflow: hidden; pointer-events: none; }
-.about-globe { position: absolute; inset: 0; width: 100%; height: 100%; color: #78909c; }
+.about-globe { position: absolute; top: -8%; left: 50%; width: max(100%, 1180px); height: 92%; transform: translateX(-50%); color: #78909c; }
 .about-globe-surface { color: #8ca0a8; opacity: .13; }
 .about-globe-rim { fill: none; stroke: currentcolor; stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: .1 11; opacity: .56; }
 .about-globe-equator { fill: none; stroke: currentcolor; stroke-width: 3.3; stroke-linecap: round; stroke-dasharray: .1 12; opacity: .50; }
@@ -309,6 +309,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .map-consent { min-height: 250px; }
   .about-hero-grid { grid-template-columns: 1fr; }
   .about-established { max-width: 650px; }
+  .about-globe { top: -12%; width: 1380px; height: 72%; }
 }
 
 @media (max-width: 800px) {
@@ -383,7 +384,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .cookie-actions button { width: 100%; }
   .dialog-actions { align-items: stretch; flex-direction: column; }
   .about-hero { padding-block: 68px; }
-  .about-globe { inset: 0; width: 100%; height: 100%; }
+  .about-globe { top: -6%; left: 50%; width: 980px; height: 68%; }
   .about-globe-curve { stroke-dasharray: .1 14; opacity: .40; }
   .about-globe-surface { opacity: .12; }
   .about-globe-rim { stroke-dasharray: .1 10; opacity: .56; }
