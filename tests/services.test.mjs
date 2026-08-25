@@ -226,6 +226,13 @@ test("lifecycle ambient SVG is automatic normal-motion, reduced-motion/static an
   // Positive automatic-motion assertions
   assert.match(styles, /\.services-lifecycle--animated \.services-lifecycle-progress\s*\{[^}]*animation:\s*services-lifecycle-flow 5s ease-in-out infinite;/s);
   assert.match(styles, /\.services-lifecycle--animated \.services-lifecycle-node\s*\{[^}]*animation:\s*services-lifecycle-pulse 5s ease-in-out infinite;/s);
+  assertIncludesAll(styles, [
+    ".services-lifecycle-node:nth-of-type(2) { animation-delay: 1s; }",
+    ".services-lifecycle-node:nth-of-type(3) { animation-delay: 2s; }",
+    ".services-lifecycle-node:nth-of-type(4) { animation-delay: 3s; }",
+    ".services-lifecycle-node:nth-of-type(5) { animation-delay: 4s; }",
+  ]);
+  assert.equal(styles.includes(".services-lifecycle-node:nth-of-type(6)"), false, "five SVG nodes must not require a nonexistent sixth <g> selector");
   assert.match(styles, /@keyframes services-lifecycle-flow/);
   assert.match(styles, /@keyframes services-lifecycle-pulse/);
   assert.match(styles, /\.services-lifecycle-progress\s*\{[^}]*stroke-dashoffset:\s*0;/s, "static frame must be complete without JS");
