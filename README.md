@@ -1,6 +1,6 @@
-# GPM Associates — Approved Homepage + About + Services
+# GPM Associates — Approved Homepage + About + Services + Industries
 
-A production-quality implementation of the client-approved GPM Associates Homepage, About and Services routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
+A production-quality implementation of the client-approved GPM Associates Homepage, About, Services and Industries & Experience routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
 
 ## Architecture
 
@@ -8,7 +8,8 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 - `app/page.tsx` is the semantic, server-rendered Homepage.
 - `app/about/page.tsx` is the semantic, server-rendered `/about` route with route-specific metadata.
 - `app/services/page.tsx` is the six-section, semantic, server-rendered `/services` route with route-specific metadata.
-- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services without adding route-specific sections elsewhere.
+- `app/industries/page.tsx` is the semantic, server-rendered `/industries` route aligned to the approved Industries & Experience mockup, including the exact section sequence, sector cards, anonymised engagement framing and review-only CTA.
+- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries without adding route-specific sections elsewhere.
 - `app/components/ServicesLifecycle.tsx` progressively enhances the server-rendered lifecycle illustration with continuous automatic motion while remaining static for reduced-motion and no-JavaScript users.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
 - `app/components/CookieConsent.tsx` provides first-party preference storage, an accessible settings dialog and explicit external-map gating. No analytics, marketing script or third-party map iframe is loaded.
@@ -32,7 +33,7 @@ npm audit --audit-level=high
 
 Use Node.js 20.9 or newer (CI uses Node.js 22). `npm run verify` runs ESLint with zero warnings, strict TypeScript and the deterministic test suite.
 
-## Homepage + About + Services scope and extension points
+## Homepage + About + Services + Industries scope and extension points
 
 The approved global navigation already uses the final internal destinations:
 
@@ -44,7 +45,7 @@ The approved global navigation already uses the final internal destinations:
 - `/governance-library`
 - `/contact`
 
-The `/about` and `/services` destinations are implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
+The `/about`, `/services` and `/industries` destinations are implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
 
 ## Asset provenance
 
@@ -114,6 +115,27 @@ Two genuinely new GPT Image 2 production masters were generated and approved by 
 - Acceptance/regeneration: the prior inclusive image was rejected because its strings, grids and symbolic props made the work feel abstract. The first grounded candidate was rejected for lower-right caption intrusion and legible generated text; one clean regeneration produced the accepted 1536 × 1024 image.
 
 The previous stale statement that neither asset was regenerated is removed. These two assets replace only the previous hero (`gpm-privacy-impact-assessment-v2.webp`) and integrated (`gpm-privacy-capability-workshop-v3.webp`) references on the Services route; the old binary files remain in the repository if referenced by other routes, and removal would be unsafe.
+
+### Industries editorial image (approved mockup asset)
+
+- Source: `https://gpm-phase1-mockup.dataprotectiongpm.chatgpt.site/industries-hero.webp`
+- Production file: `public/images/gpm-industries-editorial-approved.webp`
+- SHA-256: `a664a23631bf40337b631cef48c5cbe9901ca1e3551c9338c76462cee76a4de8`
+- Dimensions: `1573 × 1081`
+- File size: `150940` bytes
+
+The image was copied from the approved mockup to keep the Industries route aligned with the approved review reference. It is an editorial environment image used to communicate cross-sector context rather than evidence of a specific client engagement.
+
+### Industries sector-aware workflow image (fresh GPT Image 2 asset)
+
+- Generation model: `gpt-image-2-medium`
+- Prompt intent: grounded Nigerian privacy/workflow advisory scene, no conference clichés, active governance process-board interaction, left-column editorial use
+- Production file: `public/images/gpm-sector-workflow-premium-20260825.webp`
+- SHA-256: `e9c6acb35c3624ffda9e91a1ccc61f95ec00def6632413a1a8a5bca3b6210f0f`
+- Dimensions: `1024 × 1535`
+- File size: `131066` bytes
+
+This asset was freshly generated for the Industries route to follow the agreed imagery workflow rather than reusing a prior workflow image. It is used in the sector-aware section as a larger left-column editorial image with the explanatory write-up on the right.
 
 ## Consent and external services
 
