@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
+
+const lifecycleSteps = ["01", "02", "03", "04", "05"];
 
 export function ServicesLifecycle() {
   const [animated, setAnimated] = useState(false);
@@ -20,16 +22,15 @@ export function ServicesLifecycle() {
       aria-label="GPM advisory lifecycle diagram"
       tabIndex={0}
     >
-      <svg aria-hidden="true" focusable="false" viewBox="0 0 1200 300">
-        <path className="services-lifecycle-track" d="M90 150H1110" />
-        <path className="services-lifecycle-progress" d="M90 150H1110" />
-        {[90, 345, 600, 855, 1110].map((x, index) => (
-          <g className="services-lifecycle-node" key={x}>
-            <circle cx={x} cy="150" r="49" />
-            <text x={x} y="157" textAnchor="middle">{String(index + 1).padStart(2, "0")}</text>
-          </g>
+      <div className="services-lifecycle-track" aria-hidden="true" />
+      <div className="services-lifecycle-progress" aria-hidden="true" />
+      <ol className="services-lifecycle-nodes" aria-hidden="true">
+        {lifecycleSteps.map((step, index) => (
+          <li className="services-lifecycle-node" key={step} style={{ animationDelay: `${index}s` } as CSSProperties}>
+            <span>{step}</span>
+          </li>
         ))}
-      </svg>
+      </ol>
     </div>
   );
 }

@@ -83,21 +83,21 @@ The people shown are illustrative subjects. They are not GPM personnel or staff,
 
 ### Services imagery (new GPT Image 2 generation, 2026-08-25)
 
-Two genuinely new GPT Image 2 production masters were generated and approved by Groot for this refinement; the previous local assets (`gpm-privacy-impact-assessment-v2.webp` and `gpm-privacy-capability-workshop-v3.webp`) were not reused, derived, or regenerated.
+Two genuinely new text-to-image production masters were generated with OpenAI GPT Image 2 Medium and accepted for this refinement. No supplied reference, existing GPM production image, or other image was provided to the model as an input. Screenshots were used outside the model only to assess placement, focal position, and crop resilience. The previous local assets (`gpm-privacy-impact-assessment-v2.webp` and `gpm-privacy-capability-workshop-v3.webp`) were not reused, derived, regenerated, or used as references.
 
 **Hero decorative master**
-- Job ID / generation mode: `gpt_image_2` (text-to-image), job `10f13d2c-a8c7-4984-ad9e-f006c52f20ef`, model `videotape-alpha`, tier `gpt-image-2-medium`
-- Generation mode: text-to-image; supplied reference screenshots were used only to determine placement, crop and focal position and were not model inputs
-- Master file: `/tmp/gpm-hero-new.png`
-- Master SHA-256: `689ffd1335eaa2322291a17d033d82ade0d6c7639bf122af954a305d33ed113f`
-- Actual master dimensions: `1344 × 752`
+- Generation mode: text-to-image with GPT Image 2 Medium; no model image inputs
+- Accepted master: `.hermes/generated/gpm-services-hero-new.png`
+- Master SHA-256: `fff1acb52eca1721a3aa89a716a3e615822b75d0baa913cff21f0183f831cf71`
+- Master dimensions: `1664 × 936`
 - Production derivative: `public/images/gpm-services-privacy-impact-data-flow-lagos-2026.webp`
-- Derivative SHA-256: `6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0`
-- Derivative dimensions: `1344 × 752`
-- Derivative file size: `92380` bytes (`90.2 KB`)
-- Derivative format: metadata-light lossy WebP (`-q:v 95`, no embedded metadata/title/author)
+- Derivative SHA-256: `b3f85dbd00374463e3862fb2f00a9e7966d6a8c3f0669b6cce46f43465f9969b`
+- Derivative dimensions: `1664 × 936`
+- Derivative file size: `177130` bytes
+- Derivative format: metadata-stripped high-quality lossy WebP (`-q:v 95`, compression level 6); no resizing or cropping from the accepted master
 - Scene: new editorial photograph of a credible African privacy engineer actively performing a privacy impact assessment in a Lagos operations workspace; the narrative connects directly to GPM’s privacy and data-governance work
 - Disclosure: the person shown is an illustrative generated subject, not GPM personnel or staff, not a client, and not a participant in a real engagement; the background is decorative with no alt/focus
+- Acceptance: accepted on the first generation. The generated output was minimally centre-cropped losslessly from 1672 × 941 to the exact 16:9 accepted master before this derivative milestone; no scene edit was made.
 
 **Integrated design master**
 - Model/provider: OpenAI GPT Image 2 Medium through the subscription-backed `openai-codex` image generator
@@ -114,7 +114,7 @@ Two genuinely new GPT Image 2 production masters were generated and approved by 
 - Disclosure: the people shown are illustrative generated subjects, not GPM personnel or staff, not clients, and not participants in a real engagement; image is presented with truthful alt text and illustrative-subject disclosure caption
 - Acceptance/regeneration: the prior inclusive image was rejected because its strings, grids and symbolic props made the work feel abstract. The first grounded candidate was rejected for lower-right caption intrusion and legible generated text; one clean regeneration produced the accepted 1536 × 1024 image.
 
-The previous stale statement that neither asset was regenerated is removed. These two assets replace only the previous hero (`gpm-privacy-impact-assessment-v2.webp`) and integrated (`gpm-privacy-capability-workshop-v3.webp`) references on the Services route; the old binary files remain in the repository if referenced by other routes, and removal would be unsafe.
+These two assets replace only the previous hero (`gpm-privacy-impact-assessment-v2.webp`) and integrated (`gpm-privacy-capability-workshop-v3.webp`) references on the Services route; the old binary files remain in the repository if referenced by other routes, and removal would be unsafe.
 
 ### Industries editorial image (approved mockup asset)
 
