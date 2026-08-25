@@ -180,20 +180,21 @@ test("approved local Services images are binary-locked and truthfully disclosed"
   assert.match(styles, /\.services-hero-background, \.services-hero-overlay\s*\{[^}]*pointer-events:\s*none;/s);
 
   // Integrated design — approved illustrative image with factual alt and disclosure
-  const imagePath = "public/images/gpm-services-integrated-privacy-assessment-lab-2026.webp";
-  const imagePublicPath = "/images/gpm-services-integrated-privacy-assessment-lab-2026.webp";
+  const imagePath = "public/images/gpm-services-integrated-grounded-brainstorming-nigeria-2026.webp";
+  const imagePublicPath = "/images/gpm-services-integrated-grounded-brainstorming-nigeria-2026.webp";
   const assetUrl = new URL(imagePath, root);
   assert.ok(existsSync(assetUrl), `asset missing: ${imagePath}`);
   const data = readFileSync(assetUrl);
   const integratedHash = createHash("sha256").update(data).digest("hex");
-  assert.equal(integratedHash, "7f556d352c8c4eb1b948ee6f0d146b2e7875aa3d1b0ea2eb7cd91fb88a3390d0");
+  assert.equal(integratedHash, "860cf22b283aba23d0cff438ed50ad182db014f6e507af3c97a95782e8231f21");
+  assert.notEqual(integratedHash, "7f556d352c8c4eb1b948ee6f0d146b2e7875aa3d1b0ea2eb7cd91fb88a3390d0", "abstract integrated derivative must be rejected");
   assert.notEqual(integratedHash, "6bdcdba4ee1510795a4be31b0ce090b2852af9d2365c9d018930ee3f6d049a20", "less-inclusive integrated derivative must be rejected");
   assert.deepEqual(webpDimensions(data), { width: 1536, height: 1024 });
   assertIncludesAll(services, [
     imagePublicPath,
     "width={1536}",
     "height={1024}",
-    'alt="Three Nigerian privacy professionals—including a woman in a hijab and a man in native attire with a northern cap—connecting DPIA review, technical control validation and data-lifecycle mapping"',
+    'alt="Three Nigerian professionals—including a woman in a hijab and a man in native attire with a northern cap—brainstorming around laptops, notebooks and a paper data-flow sketch"',
   ]);
   assertInOrder(services, ["GPM ADVISORY", "Expertise connected around the client’s operating reality."]);
   assert.match(services, /illustrative/i);
@@ -203,11 +204,12 @@ test("approved local Services images are binary-locked and truthfully disclosed"
   assert.equal(services.includes("/services-editorial.webp"), false, "rejected generic meeting photo must not be used");
   assert.equal(styles.includes("/images/gpm-privacy-impact-assessment-v2.webp"), false, "old Services hero must not be referenced");
   assert.equal(services.includes("/images/gpm-privacy-capability-workshop-v3.webp"), false, "old integrated image must not be referenced");
+  assert.equal(services.includes("/images/gpm-services-integrated-privacy-assessment-lab-2026.webp"), false, "abstract integrated image must not be referenced");
   assert.equal(services.includes("Senior African professionals working through a governance and risk advisory session"), false);
   assertIncludesAll(projectContext, [
     "6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0",
-    "892f916940a650aa848e7beaf3ef2e3fd810b3bf9926a81479eddc73601ed41e",
-    "7f556d352c8c4eb1b948ee6f0d146b2e7875aa3d1b0ea2eb7cd91fb88a3390d0",
+    "53cc2c53b336cc3ce8f72fa1987921fa55fce6b27e2b8458ce776f4e4eecde3e",
+    "860cf22b283aba23d0cff438ed50ad182db014f6e507af3c97a95782e8231f21",
   ]);
 });
 

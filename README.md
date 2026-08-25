@@ -101,17 +101,17 @@ Two genuinely new GPT Image 2 production masters were generated and approved by 
 **Integrated design master**
 - Model/provider: OpenAI GPT Image 2 Medium through the subscription-backed `openai-codex` image generator
 - Generation mode: text-to-image only; no image inputs or prior GPM assets
-- Accepted master: `.hermes/generated/gpm-services-integrated-inclusive-nigeria.png` in the restricted working archive
-- Master SHA-256: `892f916940a650aa848e7beaf3ef2e3fd810b3bf9926a81479eddc73601ed41e`
+- Accepted master: `.hermes/generated/gpm-services-integrated-grounded-brainstorming-nigeria.png` in the restricted working archive
+- Master SHA-256: `53cc2c53b336cc3ce8f72fa1987921fa55fce6b27e2b8458ce776f4e4eecde3e`
 - Actual master dimensions: `1536 × 1024`
-- Production derivative: `public/images/gpm-services-integrated-privacy-assessment-lab-2026.webp`
-- Derivative SHA-256: `7f556d352c8c4eb1b948ee6f0d146b2e7875aa3d1b0ea2eb7cd91fb88a3390d0`
+- Production derivative: `public/images/gpm-services-integrated-grounded-brainstorming-nigeria-2026.webp`
+- Derivative SHA-256: `860cf22b283aba23d0cff438ed50ad182db014f6e507af3c97a95782e8231f21`
 - Derivative dimensions: `1536 × 1024`
-- Derivative file size: `182268` bytes (`178.0 KB`)
+- Derivative file size: `195458` bytes (`190.9 KB`)
 - Derivative format: metadata-stripped high-quality lossy WebP (`quality 95`, effort 6)
-- Scene: exactly three Nigerian privacy professionals performing connected privacy work: a Muslim woman in a refined hijab reviews a DPIA matrix; a man in premium native attire and an understated northern Nigerian embroidered cap validates technical control evidence; and another professional maps the data lifecycle. Cultural details are contemporary and professional rather than costume-like.
+- Scene: exactly three Nigerian professionals in a relatable brainstorming session: a Muslim woman in a refined hijab, a man in premium native attire with an understated northern Nigerian embroidered cap, and another contemporary professional collaborate around two laptops, notebooks, working papers and a simple paper data-flow sketch. The activity reads as familiar day-to-day problem solving rather than abstract privacy symbolism.
 - Disclosure: the people shown are illustrative generated subjects, not GPM personnel or staff, not clients, and not participants in a real engagement; image is presented with truthful alt text and illustrative-subject disclosure caption
-- Acceptance/regeneration: the first inclusive candidate was rejected for lower-right caption intrusion; one regeneration produced the accepted 1536 × 1024 image.
+- Acceptance/regeneration: the prior inclusive image was rejected because its strings, grids and symbolic props made the work feel abstract. The first grounded candidate was rejected for lower-right caption intrusion and legible generated text; one clean regeneration produced the accepted 1536 × 1024 image.
 
 The previous stale statement that neither asset was regenerated is removed. These two assets replace only the previous hero (`gpm-privacy-impact-assessment-v2.webp`) and integrated (`gpm-privacy-capability-workshop-v3.webp`) references on the Services route; the old binary files remain in the repository if referenced by other routes, and removal would be unsafe.
 
