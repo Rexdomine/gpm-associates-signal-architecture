@@ -414,7 +414,8 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .industries-proof-intro-simple h2 { margin: 0; color: var(--navy); font-size: clamp(42px, 4.7vw, 66px); font-weight: 500; line-height: 1.04; letter-spacing: -.045em; }
 .industries-proof-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(8,36,51,.82); }
 .industries-proof-list li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 16px; align-items: center; min-height: 84px; padding: 22px 0; border-bottom: 1px solid rgba(8,36,51,.14); }
-.industries-proof-marker { color: var(--crimson); font-size: 14px; font-weight: 700; line-height: 1; }
+.industries-proof-marker { width: 18px; height: 18px; display: grid; place-items: center; color: var(--navy); line-height: 1; }
+.industries-proof-marker svg { width: 18px; height: 18px; display: block; }
 .industries-proof-list p { margin: 0; color: var(--ink); font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; }
 
 .cookie-banner { position: fixed; z-index: 120; right: 20px; bottom: 20px; left: 20px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; max-width: 1260px; margin-inline: auto; padding: 22px 24px; border: 1px solid rgba(255,255,255,.25); background: #082433; color: white; box-shadow: 0 24px 70px rgba(0,0,0,.28); }

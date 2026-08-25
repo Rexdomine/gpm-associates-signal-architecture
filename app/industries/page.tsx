@@ -5,6 +5,14 @@ import { ScrollReveal } from "../components/ScrollReveal";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
+function ProofArrowIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 18 18">
+      <path d="M4 14 14 4M7 4h7v7" fill="none" stroke="currentColor" strokeLinecap="square" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 export const metadata: Metadata = {
   title: "Industries & Experience | GPM Associates",
   description:
@@ -263,7 +271,7 @@ export default function IndustriesPage() {
               {proofPrinciples.map((item, index) => (
                 <li key={item} className={index % 2 ? "reveal-delay-1" : ""} data-reveal>
                   <span aria-hidden="true" className="industries-proof-marker">
-                    ↗
+                    <ProofArrowIcon />
                   </span>
                   <p>{item}</p>
                 </li>
