@@ -1,20 +1,22 @@
-# GPM Associates — Approved Homepage + About
+# GPM Associates — Approved Homepage + About + Services
 
-A production-quality implementation of the client-approved GPM Associates Homepage + About route, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
+A production-quality implementation of the client-approved GPM Associates Homepage, About and Services routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
 
 ## Architecture
 
 - `app/layout.tsx` defines Next.js-managed Google fonts, exact Homepage metadata and review-only crawler controls.
 - `app/page.tsx` is the semantic, server-rendered Homepage.
 - `app/about/page.tsx` is the semantic, server-rendered `/about` route with route-specific metadata.
-- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About without adding the About credential strip to the Homepage.
+- `app/services/page.tsx` is the six-section, semantic, server-rendered `/services` route with route-specific metadata.
+- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services without adding route-specific sections elsewhere.
+- `app/components/ServicesLifecycle.tsx` progressively enhances the server-rendered lifecycle illustration with continuous automatic motion while remaining static for reduced-motion and no-JavaScript users.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
 - `app/components/CookieConsent.tsx` provides first-party preference storage, an accessible settings dialog and explicit external-map gating. No analytics, marketing script or third-party map iframe is loaded.
 - `app/components/MobileMenu.tsx` provides the responsive navigation, Escape handling, keyboard containment and focus restoration.
 - `app/components/ScrollReveal.tsx` progressively enhances selected content with one-time reveals while failing open for reduced-motion and no-JavaScript users.
 - `app/globals.css` owns the responsive design system, focus states and all motion fallbacks.
 - `next.config.ts` sets global security headers.
-- `tests/site.test.mjs` locks exact copy, section order, user journeys, asset checksums, metadata, indexing and security requirements with Node’s built-in test runner.
+- `tests/*.test.mjs` lock exact copy, section order, user journeys, asset checksums, metadata, indexing and security requirements with Node’s built-in test runner.
 - `.github/workflows/ci.yml` runs locked dependency installation, verification and a production build with read-only repository permissions.
 
 ## Commands
@@ -30,7 +32,7 @@ npm audit --audit-level=high
 
 Use Node.js 20.9 or newer (CI uses Node.js 22). `npm run verify` runs ESLint with zero warnings, strict TypeScript and the deterministic test suite.
 
-## Homepage + About scope and extension points
+## Homepage + About + Services scope and extension points
 
 The approved global navigation already uses the final internal destinations:
 
@@ -42,7 +44,7 @@ The approved global navigation already uses the final internal destinations:
 - `/governance-library`
 - `/contact`
 
-The `/about` destination is implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
+The `/about` and `/services` destinations are implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
 
 ## Asset provenance
 
@@ -77,6 +79,41 @@ Both files were copied byte-for-byte from the approved client mockup. The QR lin
 - File size: `70962` bytes
 
 The people shown are illustrative subjects. They are not GPM personnel or staff, clients, or participants in a real engagement.
+
+### Services imagery (new GPT Image 2 generation, 2026-08-25)
+
+Two genuinely new GPT Image 2 production masters were generated and approved by Groot for this refinement; the previous local assets (`gpm-privacy-impact-assessment-v2.webp` and `gpm-privacy-capability-workshop-v3.webp`) were not reused, derived, or regenerated.
+
+**Hero decorative master**
+- Job ID / generation mode: `gpt_image_2` (text-to-image), job `10f13d2c-a8c7-4984-ad9e-f006c52f20ef`, model `videotape-alpha`, tier `gpt-image-2-medium`
+- Generation mode: text-to-image; supplied reference screenshots were used only to determine placement, crop and focal position and were not model inputs
+- Master file: `/tmp/gpm-hero-new.png`
+- Master SHA-256: `689ffd1335eaa2322291a17d033d82ade0d6c7639bf122af954a305d33ed113f`
+- Actual master dimensions: `1344 × 752`
+- Production derivative: `public/images/gpm-services-privacy-impact-data-flow-lagos-2026.webp`
+- Derivative SHA-256: `6e0da87cf917079f460249a15c3c789a1ce6e0ac156e0f1b7e53fc6ebac3d0d0`
+- Derivative dimensions: `1344 × 752`
+- Derivative file size: `92380` bytes (`90.2 KB`)
+- Derivative format: metadata-light lossy WebP (`-q:v 95`, no embedded metadata/title/author)
+- Scene: new editorial photograph of a credible African privacy engineer actively performing a privacy impact assessment in a Lagos operations workspace; the narrative connects directly to GPM’s privacy and data-governance work
+- Disclosure: the person shown is an illustrative generated subject, not GPM personnel or staff, not a client, and not a participant in a real engagement; the background is decorative with no alt/focus
+
+**Integrated design master**
+- Model/provider: OpenAI GPT Image 2 Medium through the subscription-backed `openai-codex` image generator
+- Generation mode: text-to-image only; no image inputs or prior GPM assets
+- Accepted master: `.hermes/generated/gpm-services-integrated-grounded-brainstorming-nigeria.png` in the restricted working archive
+- Master SHA-256: `53cc2c53b336cc3ce8f72fa1987921fa55fce6b27e2b8458ce776f4e4eecde3e`
+- Actual master dimensions: `1536 × 1024`
+- Production derivative: `public/images/gpm-services-integrated-grounded-brainstorming-nigeria-2026.webp`
+- Derivative SHA-256: `860cf22b283aba23d0cff438ed50ad182db014f6e507af3c97a95782e8231f21`
+- Derivative dimensions: `1536 × 1024`
+- Derivative file size: `195458` bytes (`190.9 KB`)
+- Derivative format: metadata-stripped high-quality lossy WebP (`quality 95`, effort 6)
+- Scene: exactly three Nigerian professionals in a relatable brainstorming session: a Muslim woman in a refined hijab, a man in premium native attire with an understated northern Nigerian embroidered cap, and another contemporary professional collaborate around two laptops, notebooks, working papers and a simple paper data-flow sketch. The activity reads as familiar day-to-day problem solving rather than abstract privacy symbolism.
+- Disclosure: the people shown are illustrative generated subjects, not GPM personnel or staff, not clients, and not participants in a real engagement; image is presented with truthful alt text and illustrative-subject disclosure caption
+- Acceptance/regeneration: the prior inclusive image was rejected because its strings, grids and symbolic props made the work feel abstract. The first grounded candidate was rejected for lower-right caption intrusion and legible generated text; one clean regeneration produced the accepted 1536 × 1024 image.
+
+The previous stale statement that neither asset was regenerated is removed. These two assets replace only the previous hero (`gpm-privacy-impact-assessment-v2.webp`) and integrated (`gpm-privacy-capability-workshop-v3.webp`) references on the Services route; the old binary files remain in the repository if referenced by other routes, and removal would be unsafe.
 
 ## Consent and external services
 
