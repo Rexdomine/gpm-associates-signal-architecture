@@ -197,13 +197,13 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .about-globe-layer { position: absolute; z-index: -1; inset: 0; overflow: hidden; pointer-events: none; }
 .about-globe { position: absolute; top: -8%; left: 50%; width: max(100%, 1180px); height: 92%; transform: translateX(-50%); color: #78909c; }
 .about-globe-surface { color: #8ca0a8; opacity: .13; }
-.about-globe-rim { fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: .1 11; opacity: .56; }
-.about-globe-equator { fill: none; stroke: currentColor; stroke-width: 3.3; stroke-linecap: round; stroke-dasharray: .1 12; opacity: .50; }
-.about-globe-curve { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-dasharray: .1 15; opacity: .42; }
+.about-globe-rim { fill: none; stroke: currentcolor; stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: .1 11; opacity: .56; }
+.about-globe-equator { fill: none; stroke: currentcolor; stroke-width: 3.3; stroke-linecap: round; stroke-dasharray: .1 12; opacity: .50; }
+.about-globe-curve { fill: none; stroke: currentcolor; stroke-width: 3; stroke-linecap: round; stroke-dasharray: .1 15; opacity: .42; }
 .about-globe-meridian { stroke-width: 3.4; stroke-dasharray: .1 12; opacity: .52; }
 .about-globe-pulse { color: #d7e1e4; transform-box: fill-box; transform-origin: center; animation: about-globe-pulse 6.8s ease-in-out infinite; }
-.about-globe-pulse-halo { fill: currentColor; opacity: .05; }
-.about-globe-pulse-core { fill: currentColor; opacity: .72; }
+.about-globe-pulse-halo { fill: currentcolor; opacity: .05; }
+.about-globe-pulse-core { fill: currentcolor; opacity: .72; }
 .about-globe-pulse--one, .about-globe-pulse--five { color: #b84a54; }
 .about-globe-pulse--two, .about-globe-pulse--six { color: #9fb0b7; }
 .about-globe-pulse--two { animation-duration: 7.7s; animation-delay: -2.1s; }
