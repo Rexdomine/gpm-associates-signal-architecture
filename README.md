@@ -1,6 +1,6 @@
-# GPM Associates — Approved Homepage + About + Services + Industries
+# GPM Associates — Approved Homepage + About + Services + Industries + Innovation
 
-A production-quality implementation of the client-approved GPM Associates Homepage, About, Services and Industries & Experience routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The remaining routes will be delivered and reviewed one page at a time.
+A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience and Innovation routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The Innovation route’s NDPA Quick Check was rebuilt natively after inspecting the existing quick-check workflow and recreating its decision logic inside the website.
 
 ## Architecture
 
@@ -9,7 +9,10 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 - `app/about/page.tsx` is the semantic, server-rendered `/about` route with route-specific metadata.
 - `app/services/page.tsx` is the six-section, semantic, server-rendered `/services` route with route-specific metadata.
 - `app/industries/page.tsx` is the semantic, server-rendered `/industries` route aligned to the approved Industries & Experience mockup, including the exact section sequence, sector cards, anonymised engagement framing and review-only CTA.
+- `app/tools/page.tsx` is the semantic, server-rendered `/tools` Innovation route and hosts the natively rebuilt NDPA Quick Check experience.
 - `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries without adding route-specific sections elsewhere.
+- `app/components/InnovationQuickCheck.tsx` provides the first-party assessment flow, progress states, result summaries and advisor conversion path for `/tools`.
+- `app/lib/innovationQuickCheck.ts` defines the inspected question set, conditional visibility, rule precedence and indicative result engine used by the native assessment.
 - `app/components/ServicesLifecycle.tsx` progressively enhances the server-rendered lifecycle illustration with continuous automatic motion while remaining static for reduced-motion and no-JavaScript users.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
 - `app/components/CookieConsent.tsx` provides first-party preference storage, an accessible settings dialog and explicit external-map gating. No analytics, marketing script or third-party map iframe is loaded.
@@ -33,7 +36,7 @@ npm audit --audit-level=high
 
 Use Node.js 20.9 or newer (CI uses Node.js 22). `npm run verify` runs ESLint with zero warnings, strict TypeScript and the deterministic test suite.
 
-## Homepage + About + Services + Industries scope and extension points
+## Homepage + About + Services + Industries + Innovation scope and extension points
 
 The approved global navigation already uses the final internal destinations:
 
@@ -45,7 +48,7 @@ The approved global navigation already uses the final internal destinations:
 - `/governance-library`
 - `/contact`
 
-The `/about`, `/services` and `/industries` destinations are implemented on this branch. The other destination pages remain intentionally unimplemented and will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
+The `/about`, `/services`, `/industries` and `/tools` destinations are implemented on this branch. The remaining destination pages will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
 
 ## Asset provenance
 
@@ -139,7 +142,7 @@ This asset was freshly generated for the Industries route to follow the agreed i
 
 ## Consent and external services
 
-Cookie preferences are stored locally in the browser under `gpm-cookie-preferences`. Essential operation does not depend on optional consent. The footer map begins blocked and, after the user explicitly enables external media, exposes a normal link to Google Maps rather than embedding or loading third-party code. Rejecting optional preferences leaves external media blocked. Settings can be reopened from the footer.
+Cookie preferences are stored locally in the browser under `gpm-cookie-preferences`. Essential operation does not depend on optional consent. The footer map begins blocked and, after the user explicitly enables external media, exposes a normal link to Google Maps rather than embedding or loading third-party code. Rejecting optional preferences leaves external media blocked. Settings can be reopened from the footer. The `/tools` quick check is implemented natively and does not depend on an external embed or iframe.
 
 ## Review and factual caveats
 
