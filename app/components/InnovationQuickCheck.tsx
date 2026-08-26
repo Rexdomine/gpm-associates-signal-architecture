@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   evaluateQuickCheck,
@@ -124,6 +124,12 @@ export function InnovationQuickCheck() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [result, setResult] = useState<QuickCheckResult | null>(null);
 
+  useEffect(() => {
+    return () => {
+      document.body.removeAttribute("data-print-target");
+    };
+  }, []);
+
   const visibleQuestions = useMemo(() => getVisibleQuickCheckQuestions(answers), [answers]);
   const currentQuestion = visibleQuestions[currentQuestionIndex];
   const answeredCount = visibleQuestions.filter((question) => Boolean(answers[question.id])).length;
@@ -172,6 +178,17 @@ export function InnovationQuickCheck() {
     }
 
     setCurrentQuestionIndex((index) => Math.max(index - 1, 0));
+  }
+
+  function printResult() {
+    const clearPrintTarget = () => {
+      document.body.removeAttribute("data-print-target");
+      window.removeEventListener("afterprint", clearPrintTarget);
+    };
+
+    document.body.dataset.printTarget = "innovation-result";
+    window.addEventListener("afterprint", clearPrintTarget, { once: true });
+    window.print();
   }
 
   if (!started) {
@@ -264,7 +281,7 @@ export function InnovationQuickCheck() {
                 Request full NDPA assessment
                 <ArrowIcon />
               </a>
-              <button className="button-quiet" type="button" onClick={() => window.print()}>
+              <button className="button-quiet" type="button" onClick={printResult}>
                 Print result
               </button>
             </div>

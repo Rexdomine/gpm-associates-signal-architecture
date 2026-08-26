@@ -51,6 +51,8 @@ test("native quick check preserves the assessment stages and first-party control
     'About 90 seconds',
     'YOUR INDICATIVE RESULT',
     'Recommended next steps',
+    'document.body.dataset.printTarget = "innovation-result"',
+    'window.addEventListener("afterprint", clearPrintTarget, { once: true });',
   ]) {
     assert.match(component, exact(copy));
   }
@@ -113,7 +115,14 @@ test("native tools experience is documented and styled as a first-party route", 
   ]) {
     assert.match(readme, exact(copy));
   }
-  for (const token of [".tools-live", ".innovation-assessment-shell", ".innovation-option-grid", ".innovation-result-panel", ".innovation-intro-orbit"]) {
+  for (const token of [
+    ".tools-live",
+    ".innovation-assessment-shell",
+    ".innovation-option-grid",
+    ".innovation-result-panel",
+    ".innovation-intro-orbit",
+    'body[data-print-target="innovation-result"] .innovation-result-screen',
+  ]) {
     assert.ok(styles.includes(token), `missing innovation style token: ${token}`);
   }
   assert.equal(source.includes("↗"), false);
