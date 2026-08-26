@@ -316,8 +316,9 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .innovation-progress-track span { display: block; width: 0; height: 100%; background: var(--crimson); }
 .innovation-question-card { display: grid; gap: 24px; }
 .innovation-option-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.innovation-option-grid.dense { grid-template-columns: 1fr; }
+.innovation-option-grid.dense { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .innovation-option-grid button { min-height: 118px; display: grid; grid-template-columns: 36px 1fr; align-items: start; gap: 18px; padding: 20px 18px; border: 1px solid var(--rule); background: var(--paper); color: var(--navy); text-align: left; }
+.innovation-option-grid.dense button { min-height: 96px; }
 .innovation-option-grid button:hover, .innovation-option-grid button:focus-visible { border-color: var(--navy); }
 .innovation-option-grid button.selected { border-color: var(--crimson); background: #fff6f6; }
 .innovation-option-grid button > span { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid currentcolor; color: var(--crimson); font-size: 10px; font-weight: 850; letter-spacing: .1em; }

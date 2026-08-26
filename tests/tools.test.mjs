@@ -139,6 +139,8 @@ test("native tools experience is documented and styled as a first-party route", 
     ".tools-live",
     ".innovation-assessment-shell",
     ".innovation-option-grid",
+    ".innovation-option-grid.dense { grid-template-columns: repeat(2, minmax(0, 1fr)); }",
+    ".innovation-option-grid.dense button { min-height: 96px; }",
     ".innovation-result-panel",
     ".innovation-intro-orbit",
   ]) {
