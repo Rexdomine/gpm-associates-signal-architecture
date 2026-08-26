@@ -225,16 +225,20 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .innovation-rail-stats div { display: grid; gap: 6px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.1); }
 .innovation-rail-stats dt { color: #8fa3ab; font-size: 9px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
 .innovation-rail-stats dd { margin: 0; color: white; font: 500 28px/1 var(--font-space-grotesk), sans-serif; }
-.innovation-assessment-stage { padding: clamp(26px, 4vw, 40px); background: white; color: var(--navy); }
-.innovation-assessment-intro { display: grid; gap: 32px; }
+.innovation-assessment-stage { padding: clamp(30px, 4.5vw, 46px); background: white; color: var(--navy); }
+.innovation-assessment-intro { display: grid; gap: 34px; }
 .innovation-assessment-intro h3, .innovation-question-card h3, .innovation-result-card h3 { margin-bottom: 18px; color: var(--navy); font-size: clamp(32px, 4vw, 54px); font-weight: 500; line-height: 1.05; letter-spacing: -.045em; }
-.innovation-assessment-intro p:not(.innovation-tool-kicker), .innovation-question-card > p:not(.innovation-tool-kicker), .innovation-result-hero p:not(.innovation-tool-kicker), .innovation-detail-card p, .innovation-intro-actions > p { margin: 0; color: var(--slate); font-size: 15px; line-height: 1.75; }
+.innovation-assessment-intro p:not(.innovation-tool-kicker), .innovation-question-card > p:not(.innovation-tool-kicker), .innovation-result-hero p:not(.innovation-tool-kicker), .innovation-detail-card p, .innovation-intro-actions > p, .innovation-intro-note p, .innovation-result-summary-card p { margin: 0; color: var(--slate); font-size: 15px; line-height: 1.75; }
+.innovation-intro-hero { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(280px, .92fr); gap: clamp(26px, 4vw, 44px); align-items: start; }
+.innovation-intro-facts { display: grid; gap: 14px; }
+.innovation-intro-facts article, .innovation-detail-card, .innovation-intro-note { padding: 24px; border: 1px solid var(--rule); background: var(--ivory); }
+.innovation-intro-facts span, .innovation-highlight-grid span, .innovation-intro-overview > div > span, .innovation-intro-note span, .innovation-result-section-heading span, .innovation-result-summary-card > span { display: block; margin-bottom: 10px; color: var(--crimson); font-size: 9px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+.innovation-intro-facts strong, .innovation-highlight-grid strong, .innovation-intro-note strong, .innovation-result-section-heading strong, .innovation-detail-card h4, .innovation-result-summary-card strong { color: var(--navy); font: 500 clamp(21px, 2.3vw, 30px)/1.18 var(--font-space-grotesk), sans-serif; letter-spacing: -.03em; }
+.innovation-intro-overview { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(280px, .92fr); gap: clamp(22px, 3.8vw, 40px); align-items: start; }
 .innovation-highlight-grid, .innovation-card-grid { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.innovation-highlight-grid article, .innovation-detail-card, .innovation-intro-meta > div { padding: 22px; border: 1px solid var(--rule); background: var(--ivory); }
-.innovation-highlight-grid span, .innovation-intro-meta span, .innovation-result-section-heading span { display: block; margin-bottom: 10px; color: var(--crimson); font-size: 9px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
-.innovation-highlight-grid strong, .innovation-intro-meta strong, .innovation-result-section-heading strong, .innovation-detail-card h4 { color: var(--navy); font: 500 clamp(21px, 2.3vw, 30px)/1.18 var(--font-space-grotesk), sans-serif; letter-spacing: -.03em; }
-.innovation-intro-meta { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.innovation-intro-actions { display: grid; gap: 16px; align-items: start; }
+.innovation-highlight-grid article { padding: 22px; border: 1px solid var(--rule); background: var(--ivory); min-height: 110px; display: grid; align-content: end; }
+.innovation-intro-note { display: grid; gap: 14px; align-content: start; min-height: 100%; }
+.innovation-intro-actions { display: flex; justify-content: flex-start; }
 .innovation-intro-actions .button-solid { width: fit-content; }
 .innovation-progress-meta { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 12px; color: var(--crimson); font-size: 10px; font-weight: 850; letter-spacing: .14em; }
 .innovation-progress-track { height: 6px; margin-bottom: 26px; background: rgba(6,28,39,.08); }
@@ -248,21 +252,23 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .innovation-option-grid button > span { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid currentcolor; color: var(--crimson); font-size: 10px; font-weight: 850; letter-spacing: .1em; }
 .innovation-option-grid strong { display: block; color: var(--navy); font-size: 17px; line-height: 1.35; }
 .innovation-option-grid small { display: block; margin-top: 10px; color: var(--slate); font-size: 13px; line-height: 1.65; }
-.innovation-question-actions, .innovation-result-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.innovation-question-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .innovation-question-actions .button-quiet { min-height: 48px; border-color: rgba(6,28,39,.18); color: var(--navy); }
 .innovation-question-actions .button-quiet:disabled { opacity: .45; cursor: not-allowed; }
-.innovation-result-card { display: grid; gap: 28px; }
-.innovation-result-hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(240px, .85fr); gap: 28px; align-items: end; }
+.innovation-result-card { display: grid; gap: 34px; }
+.innovation-result-hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr); gap: clamp(28px, 4vw, 44px); align-items: start; }
 .innovation-result-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
 .innovation-result-tier, .innovation-result-confidence { display: inline-flex; align-items: center; min-height: 38px; padding: 0 14px; border: 1px solid var(--rule); color: var(--navy); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
 .innovation-result-tier { border-color: var(--crimson); background: #fff4f4; color: var(--crimson-dark); }
-.innovation-result-section { display: grid; gap: 18px; padding-top: 6px; }
+.innovation-result-summary-card { display: grid; gap: 14px; padding: 24px; border: 1px solid var(--rule); background: var(--ivory); align-content: start; }
+.innovation-result-section { display: grid; gap: 18px; padding-top: 4px; }
 .innovation-driver-list { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
 .innovation-driver-list li { display: grid; grid-template-columns: 18px 1fr; gap: 12px; align-items: start; color: var(--slate); font-size: 14px; line-height: 1.7; }
 .innovation-driver-list svg { width: 18px; color: var(--crimson); }
-.innovation-result-columns { display: grid; gap: 26px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.innovation-result-columns { display: grid; gap: 32px; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
 .innovation-card-grid-compact { grid-template-columns: 1fr; }
 .innovation-detail-card h4 { margin-bottom: 12px; font-size: 24px; }
+.innovation-result-actions { display: grid; gap: 12px; margin-top: 4px; }
 .innovation-result-actions .button-quiet { min-height: 48px; border-color: rgba(6,28,39,.16); color: var(--navy); }
 .innovation-result-actions .button-solid { min-height: 48px; }
 
@@ -568,11 +574,11 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .industries-approach-layout { grid-template-columns: minmax(0, 1.02fr) minmax(300px, .98fr); gap: 34px; }
   .industries-approach-copy h2 { max-width: 9.4ch; }
   .industries-proof-intro-simple { margin-bottom: 28px; }
-  .tools-hero-grid, .tools-live-toolbar, .innovation-result-hero, .innovation-result-columns { grid-template-columns: 1fr; }
+  .tools-hero-grid, .tools-live-toolbar, .innovation-result-hero, .innovation-result-columns, .innovation-intro-hero, .innovation-intro-overview { grid-template-columns: 1fr; }
   .tools-hero-feature { max-width: 520px; }
   .innovation-assessment-shell { grid-template-columns: 1fr; }
   .innovation-assessment-rail { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); }
-  .innovation-card-grid, .innovation-highlight-grid, .innovation-intro-meta { grid-template-columns: 1fr 1fr; }
+  .innovation-card-grid, .innovation-highlight-grid { grid-template-columns: 1fr 1fr; }
   .services-stage-grid { grid-template-columns: repeat(3, 1fr); }
   .services-stage-grid article { border-bottom: 1px solid var(--rule); }
 }
@@ -610,7 +616,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .about-verification-qr { width: 220px; }
   .about-perspective-grid, .about-multidisciplinary-grid, .about-team-heading { gap: 44px; }
   .about-purpose article + article { border-top: 0; border-left: 1px solid rgba(255,255,255,.22); }
-  .tools-featured-panel, .tools-overview-grid, .innovation-highlight-grid, .innovation-card-grid, .innovation-intro-meta { grid-template-columns: 1fr; }
+  .tools-featured-panel, .tools-overview-grid, .innovation-highlight-grid, .innovation-card-grid, .innovation-intro-facts { grid-template-columns: 1fr; }
   .tools-pathway { grid-template-columns: 1fr 1fr 1fr; }
   .tools-pathway-step { border-bottom: 0; border-right: 1px solid var(--rule-light); }
   .tools-pathway-step:last-child { border-right: 0; }

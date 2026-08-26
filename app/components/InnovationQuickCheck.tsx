@@ -13,10 +13,15 @@ import {
 
 const stageLabels = ["Organisation", "Processing", "Risk indicators", "Result"] as const;
 const introHighlights = [
-  "Organisation-type rules",
-  "Volume thresholds",
-  "Risk-factor weighting",
-  "Conditional ICT path",
+  "Organisation profile",
+  "Processing volume",
+  "Risk indicators",
+  "Technology considerations",
+] as const;
+const introFacts = [
+  { label: "Estimated time", value: "2–3 minutes" },
+  { label: "Question set", value: "Usually 9 questions, with one additional technology question where relevant." },
+  { label: "What you receive", value: "An indicative NDPA level with practical next-step guidance." },
 ] as const;
 
 function ArrowIcon() {
@@ -65,7 +70,7 @@ function AssessmentRail({ activeStage, questionCount, answeredCount }: { activeS
           </span>
         ))}
       </div>
-      <p className="innovation-rail-note">Built from a full inspection of the current question flow, rule precedence and result logic.</p>
+      <p className="innovation-rail-note">Answer a short guided sequence about your organisation, processing activity and key privacy risk factors.</p>
       <dl className="innovation-rail-stats">
         <div>
           <dt>Questions</dt>
@@ -142,40 +147,48 @@ export function InnovationQuickCheck() {
 
       {!started ? (
         <section className="innovation-assessment-stage innovation-assessment-intro" aria-labelledby="innovation-assessment-title">
-          <div>
-            <p className="innovation-tool-kicker">NATIVE GPM PRODUCT</p>
-            <h3 id="innovation-assessment-title">Recreated from an inspected NDPA Quick Check engine.</h3>
-            <p>
-              This website experience is rebuilt natively to fit GPM’s own design and branding language, while preserving the inspected organisation-type rules, volume thresholds, conditional technology path and result logic.
-            </p>
-          </div>
-
-          <div className="innovation-highlight-grid" aria-label="Quick check coverage highlights">
-            {introHighlights.map((item) => (
-              <article key={item}>
-                <span>CAPABILITY</span>
-                <strong>{item}</strong>
-              </article>
-            ))}
-          </div>
-
-          <div className="innovation-intro-meta">
+          <div className="innovation-intro-hero">
             <div>
-              <span>Assessment length</span>
-              <strong>9 base questions, with a conditional 10th technology-services check where relevant.</strong>
+              <p className="innovation-tool-kicker">NDPA QUICK CHECK</p>
+              <h3 id="innovation-assessment-title">Understand your likely NDPA classification before a formal review.</h3>
+              <p>
+                Answer a short set of guided questions to understand your likely processing level, the factors influencing it and the next steps worth considering.
+              </p>
             </div>
+
+            <div className="innovation-intro-facts" aria-label="Quick check facts">
+              {introFacts.map((fact) => (
+                <article key={fact.label}>
+                  <span>{fact.label}</span>
+                  <strong>{fact.value}</strong>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="innovation-intro-overview">
             <div>
-              <span>Output</span>
-              <strong>Likely UHL, EHL, OHL, Further Review Recommended or no clear level, plus next-step guidance.</strong>
+              <span>What this assessment considers</span>
+              <div className="innovation-highlight-grid" aria-label="Quick check coverage highlights">
+                {introHighlights.map((item) => (
+                  <article key={item}>
+                    <strong>{item}</strong>
+                  </article>
+                ))}
+              </div>
+            </div>
+            <div className="innovation-intro-note">
+              <span>Before you begin</span>
+              <strong>This result is indicative and based only on the answers you provide. It does not replace a professional classification review.</strong>
+              <p>If you need a formal interpretation, validation of obligations or implementation support, GPM can advise on the appropriate next step.</p>
             </div>
           </div>
 
           <div className="innovation-intro-actions">
             <button className="button-solid" type="button" onClick={() => setStarted(true)}>
-              Start native quick check
+              Start quick check
               <ArrowIcon />
             </button>
-            <p>The result is indicative and based only on the answers you provide. It does not replace a professional classification review.</p>
           </div>
         </section>
       ) : result ? (
@@ -190,24 +203,29 @@ export function InnovationQuickCheck() {
               <h3 id="innovation-result-title">{result.label}</h3>
               <p>{result.summary}</p>
             </div>
-            <div className="innovation-result-actions">
-              <button className="button-quiet" type="button" onClick={reviewAnswers}>
-                Review answers
-              </button>
-              <button className="button-quiet" type="button" onClick={resetAssessment}>
-                Restart assessment
-              </button>
-              <a className="button-solid" href="/contact">
-                Speak with an advisor
-                <ArrowIcon />
-              </a>
+            <div className="innovation-result-summary-card">
+              <span>Recommended next move</span>
+              <strong>Use this result to frame a proportionate compliance conversation.</strong>
+              <p>Review the main drivers below, then decide whether you need a formal classification review, targeted remediation support or a broader compliance programme.</p>
+              <div className="innovation-result-actions">
+                <button className="button-quiet" type="button" onClick={reviewAnswers}>
+                  Review answers
+                </button>
+                <button className="button-quiet" type="button" onClick={resetAssessment}>
+                  Restart assessment
+                </button>
+                <a className="button-solid" href="/contact">
+                  Speak with an advisor
+                  <ArrowIcon />
+                </a>
+              </div>
             </div>
           </div>
 
           <div className="innovation-result-section">
             <div className="innovation-result-section-heading">
               <span>Why this result appeared</span>
-              <strong>Drivers from the inspected rule set</strong>
+              <strong>Key factors in your answers</strong>
             </div>
             <ul className="innovation-driver-list">
               {result.drivers.map((driver) => (

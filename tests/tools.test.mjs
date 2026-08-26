@@ -17,15 +17,15 @@ const source = [page, component, engine, styles].join("\n");
 
 const exact = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
 
-test("tools route ships review-only metadata and native quick-check framing", () => {
+test("tools route ships review-only metadata and production-ready quick-check framing", () => {
   for (const copy of [
     'title: "Innovation | GPM Associates"',
-    'Interactive privacy and governance tools from GPM Associates, including a natively rebuilt NDPA Quick Check assessment.',
+    'Interactive privacy and governance tools from GPM Associates, including a production-ready NDPA Quick Check assessment.',
     'robots: { index: false, follow: false }',
     'GPM Innovation Lab',
     'GPM NDPA Quick Check',
     'Find your likely processing level',
-    'The assessment now runs as a first-party GPM website experience rather than as an embedded mockup',
+    'Work through a concise question flow to receive an indicative NDPA level, the main reasons behind it and practical next-step guidance.',
   ]) {
     assert.match(page, exact(copy));
   }
@@ -39,16 +39,17 @@ test("tools route avoids the old embedded implementation and uses a native compo
   assert.equal(component.includes("externalMedia"), false);
 });
 
-test("native quick check preserves the inspected assessment stages and first-party controls", () => {
+test("native quick check preserves the assessment stages and first-party controls", () => {
   for (const copy of [
     'const stageLabels = ["Organisation", "Processing", "Risk indicators", "Result"] as const;',
-    'Recreated from an inspected NDPA Quick Check engine.',
-    'Start native quick check',
+    'Understand your likely NDPA classification before a formal review.',
+    'Start quick check',
     'QUESTION {currentQuestionIndex + 1} OF {visibleQuestions.length}',
     'Review answers',
     'Restart assessment',
     'Speak with an advisor',
-    '9 base questions, with a conditional 10th technology-services check where relevant.',
+    'Usually 9 questions, with one additional technology question where relevant.',
+    'Key factors in your answers',
   ]) {
     assert.match(component, exact(copy));
   }

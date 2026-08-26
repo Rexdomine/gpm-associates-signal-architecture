@@ -6,28 +6,28 @@ import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
 const quickCheckBenefits = [
-  "ORGANISATION-TYPE RULES",
+  "ORGANISATION PROFILE",
   "INDICATIVE CLASSIFICATION",
-  "DPO, POLICIES & TRAINING",
+  "PRACTICAL NEXT STEPS",
 ] as const;
 
 const beforeYouBegin = [
-  "This native tool is informational. It does not constitute a formal audit, regulatory determination or confirmation of compliance.",
-  "Approximately 90 seconds",
+  "This quick check provides an indicative outcome and does not replace formal legal or regulatory advice.",
+  "Usually takes 2–3 minutes",
   "No sign-up required",
-  "Result logic inspected and rebuilt inside the website",
+  "Covers organisation type, processing activity and key risk indicators",
 ] as const;
 
 const pathwaySteps = [
-  { number: "01", label: "INSPECT" },
-  { number: "02", label: "RECREATE" },
-  { number: "03", label: "GUIDE" },
+  { number: "01", label: "ASSESS" },
+  { number: "02", label: "INTERPRET" },
+  { number: "03", label: "ACT" },
 ] as const;
 
 export const metadata: Metadata = {
   title: "Innovation | GPM Associates",
   description:
-    "Interactive privacy and governance tools from GPM Associates, including a natively rebuilt NDPA Quick Check assessment.",
+    "Interactive privacy and governance tools from GPM Associates, including a production-ready NDPA Quick Check assessment.",
   robots: { index: false, follow: false },
 };
 
@@ -121,8 +121,8 @@ export default function ToolsPage() {
               <div className="tools-featured-visual">
                 <InnovationFeatureArtwork />
                 <div className="tools-featured-copy">
-                  <p className="eyebrow">DECISION INTELLIGENCE</p>
-                  <h2 id="featured-innovation-title">From inspected rules to proportionate action.</h2>
+                  <p className="eyebrow">DECISION SUPPORT</p>
+                  <h2 id="featured-innovation-title">Guided assessment with proportionate next steps.</h2>
                 </div>
               </div>
               <div className="tools-pathway" aria-label="Innovation Lab pathway">
@@ -143,8 +143,8 @@ export default function ToolsPage() {
               <p className="eyebrow">FEATURED TOOL</p>
               <h2 id="featured-tool-title">GPM NDPA Quick Check</h2>
               <p>
-                Complete a short, rules-led assessment rebuilt natively from a full inspection of the current quick-check workflow,
-                including organisation-type rules, processing volumes, risk indicators and conditional technology-service logic.
+                Complete a short guided assessment covering organisation type, processing activity, material risk indicators and any
+                relevant technology-service considerations to understand your likely NDPA level and what to review next.
               </p>
               <div className="tools-benefits" aria-label="Quick check benefit areas">
                 {quickCheckBenefits.map((benefit) => (
@@ -166,8 +166,8 @@ export default function ToolsPage() {
         <section className="tools-live dark-plane section-pad" aria-labelledby="tools-live-title">
           <div className="shell">
             <div className="tools-live-head" data-reveal>
-              <p>NATIVE GPM PRODUCT</p>
-              <span>RECREATED FROM INSPECTED DECISION LOGIC</span>
+              <p>LIVE ASSESSMENT</p>
+              <span>GUIDED NDPA SCREENING</span>
             </div>
             <div className="tools-live-toolbar" data-reveal>
               <div>
@@ -175,8 +175,7 @@ export default function ToolsPage() {
                 <h2 id="tools-live-title">Find your likely processing level</h2>
               </div>
               <p className="tools-live-summary">
-                The assessment now runs as a first-party GPM website experience rather than as an embedded mockup, while preserving
-                the inspected outcome logic and next-step guidance.
+                Work through a concise question flow to receive an indicative NDPA level, the main reasons behind it and practical next-step guidance.
               </p>
             </div>
             <InnovationQuickCheck />
