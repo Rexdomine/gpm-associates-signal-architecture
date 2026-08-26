@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { InnovationQuickCheckEmbed } from "../components/InnovationQuickCheckEmbed";
+import { InnovationQuickCheck } from "../components/InnovationQuickCheck";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
@@ -12,32 +12,24 @@ const quickCheckBenefits = [
 ] as const;
 
 const beforeYouBegin = [
-  "This tool is informational. It does not constitute a formal audit, regulatory determination or confirmation of compliance.",
+  "This native tool is informational. It does not constitute a formal audit, regulatory determination or confirmation of compliance.",
   "Approximately 90 seconds",
   "No sign-up required",
-  "Results and next steps shown instantly",
+  "Result logic inspected and rebuilt inside the website",
 ] as const;
 
 const pathwaySteps = [
-  { number: "01", label: "ASSESS" },
-  { number: "02", label: "CLASSIFY" },
-  { number: "03", label: "ACT" },
+  { number: "01", label: "INSPECT" },
+  { number: "02", label: "RECREATE" },
+  { number: "03", label: "GUIDE" },
 ] as const;
 
 export const metadata: Metadata = {
   title: "Innovation | GPM Associates",
   description:
-    "Interactive privacy and governance tools from GPM Associates, including the live NDPA Quick Check assessment.",
+    "Interactive privacy and governance tools from GPM Associates, including a natively rebuilt NDPA Quick Check assessment.",
   robots: { index: false, follow: false },
 };
-
-function ArrowIcon() {
-  return (
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 18 18">
-      <path d="M4 14 14 4M7 4h7v7" fill="none" stroke="currentColor" strokeLinecap="square" strokeWidth="1.5" />
-    </svg>
-  );
-}
 
 function InnovationFeatureArtwork() {
   return (
@@ -99,7 +91,9 @@ function InnovationFeatureArtwork() {
 export default function ToolsPage() {
   return (
     <>
-      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
       <SiteHeader />
 
       <main id="main-content">
@@ -128,7 +122,7 @@ export default function ToolsPage() {
                 <InnovationFeatureArtwork />
                 <div className="tools-featured-copy">
                   <p className="eyebrow">DECISION INTELLIGENCE</p>
-                  <h2 id="featured-innovation-title">From uncertainty to proportionate action.</h2>
+                  <h2 id="featured-innovation-title">From inspected rules to proportionate action.</h2>
                 </div>
               </div>
               <div className="tools-pathway" aria-label="Innovation Lab pathway">
@@ -149,7 +143,8 @@ export default function ToolsPage() {
               <p className="eyebrow">FEATURED TOOL</p>
               <h2 id="featured-tool-title">GPM NDPA Quick Check</h2>
               <p>
-                Complete a short, rules-led assessment to identify your organisation’s likely UHL, EHL or OHL processing level and understand the practical compliance steps that may follow.
+                Complete a short, rules-led assessment rebuilt natively from a full inspection of the current quick-check workflow,
+                including organisation-type rules, processing volumes, risk indicators and conditional technology-service logic.
               </p>
               <div className="tools-benefits" aria-label="Quick check benefit areas">
                 {quickCheckBenefits.map((benefit) => (
@@ -171,27 +166,20 @@ export default function ToolsPage() {
         <section className="tools-live dark-plane section-pad" aria-labelledby="tools-live-title">
           <div className="shell">
             <div className="tools-live-head" data-reveal>
-              <p>LIVE GPM PRODUCT</p>
-              <span>CONNECTED TO THE CURRENT QUICK CHECK</span>
+              <p>NATIVE GPM PRODUCT</p>
+              <span>RECREATED FROM INSPECTED DECISION LOGIC</span>
             </div>
-            <div className="tools-live-frame" data-reveal>
-              <div className="tools-live-toolbar">
-                <div>
-                  <p className="feature-kicker">NDPA QUICK CHECK</p>
-                  <h2 id="tools-live-title">Find your likely processing level</h2>
-                </div>
-                <a
-                  className="text-link light"
-                  href="https://gpm-ndpa-quick-check.dataprotectiongpm.chatgpt.site"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  OPEN FULL TOOL
-                  <ArrowIcon />
-                </a>
+            <div className="tools-live-toolbar" data-reveal>
+              <div>
+                <p className="feature-kicker">NDPA QUICK CHECK</p>
+                <h2 id="tools-live-title">Find your likely processing level</h2>
               </div>
-              <InnovationQuickCheckEmbed />
+              <p className="tools-live-summary">
+                The assessment now runs as a first-party GPM website experience rather than as an embedded mockup, while preserving
+                the inspected outcome logic and next-step guidance.
+              </p>
             </div>
+            <InnovationQuickCheck />
           </div>
         </section>
 
@@ -203,12 +191,11 @@ export default function ToolsPage() {
             </div>
             <div>
               <p>
-                Request a professional assessment to validate your classification and define the appropriate DPO,
-                policy, training and assurance requirements.
+                Request a professional assessment to validate your classification and define the appropriate DPO, policy, training
+                and assurance requirements.
               </p>
               <a className="contact-action" href="/contact">
                 Speak with an advisor
-                <ArrowIcon />
               </a>
             </div>
           </div>

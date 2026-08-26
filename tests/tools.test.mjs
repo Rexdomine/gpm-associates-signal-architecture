@@ -8,116 +8,109 @@ const read = (path) => {
   return existsSync(url) ? readFileSync(url, "utf8") : "";
 };
 
-const toolsPage = read("app/tools/page.tsx");
-const embed = read("app/components/InnovationQuickCheckEmbed.tsx");
+const page = read("app/tools/page.tsx");
+const component = read("app/components/InnovationQuickCheck.tsx");
+const engine = read("app/lib/innovationQuickCheck.ts");
 const styles = read("app/globals.css");
-const nextConfig = read("next.config.ts");
 const readme = read("README.md");
+const source = [page, component, engine, styles].join("\n");
 
-function assertIncludesAll(source, values) {
-  for (const value of values) {
-    assert.ok(source.includes(value), `missing exact contract text: ${value}`);
+const exact = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
+test("tools route ships review-only metadata and native quick-check framing", () => {
+  for (const copy of [
+    'title: "Innovation | GPM Associates"',
+    'Interactive privacy and governance tools from GPM Associates, including a natively rebuilt NDPA Quick Check assessment.',
+    'robots: { index: false, follow: false }',
+    'GPM Innovation Lab',
+    'GPM NDPA Quick Check',
+    'Find your likely processing level',
+    'The assessment now runs as a first-party GPM website experience rather than as an embedded mockup',
+  ]) {
+    assert.match(page, exact(copy));
   }
-}
+});
 
-function assertInOrder(source, markers) {
-  let cursor = -1;
-  for (const marker of markers) {
-    const next = source.indexOf(marker, cursor + 1);
-    assert.ok(next > cursor, `missing or out of order: ${marker}`);
-    cursor = next;
+test("tools route avoids the old embedded implementation and uses a native component instead", () => {
+  assert.match(page, /<InnovationQuickCheck\s*\/>/);
+  for (const removed of ["iframe", "gpm-ndpa-quick-check.dataprotectiongpm.chatgpt.site", "ENABLE TOOL", "OPEN FULL TOOL"]) {
+    assert.equal(source.includes(removed), false, `old embed artifact remains: ${removed}`);
   }
-}
-
-test("Innovation route exists with route metadata and noindex, nofollow", () => {
-  assert.ok(toolsPage.length > 0, "app/tools/page.tsx missing");
-  assert.match(toolsPage, /export const metadata: Metadata = \{/);
-  assert.match(toolsPage, /title:\s*"Innovation \| GPM Associates"/);
-  assert.match(toolsPage, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/);
+  assert.equal(component.includes("externalMedia"), false);
 });
 
-test("Innovation page matches the approved section order", () => {
-  assertInOrder(toolsPage, [
-    'tools-hero dark-plane',
-    'tools-featured dark-plane',
-    'tools-overview section-pad',
-    'tools-live dark-plane section-pad',
-    'contact-cta',
-    '<SiteFooter />',
-  ]);
+test("native quick check preserves the inspected assessment stages and first-party controls", () => {
+  for (const copy of [
+    'const stageLabels = ["Organisation", "Processing", "Risk indicators", "Result"] as const;',
+    'Recreated from an inspected NDPA Quick Check engine.',
+    'Start native quick check',
+    'QUESTION {currentQuestionIndex + 1} OF {visibleQuestions.length}',
+    'Review answers',
+    'Restart assessment',
+    'Speak with an advisor',
+    '9 base questions, with a conditional 10th technology-services check where relevant.',
+  ]) {
+    assert.match(component, exact(copy));
+  }
+  assert.match(component, /role="radiogroup"/);
+  assert.match(component, /role="radio"/);
+  assert.match(component, /aria-checked=\{selected\}/);
+  assert.match(component, /goBack/);
+  assert.match(component, /evaluateQuickCheck\(nextAnswers\)/);
 });
 
-test("Innovation page preserves the mockup-aligned intro, feature, and CTA copy", () => {
-  assertIncludesAll(toolsPage, [
-    "INNOVATION",
-    "GPM Innovation Lab",
-    "Interactive tools and assessments designed to support clearer privacy, compliance and governance decisions.",
-    "FEATURED INNOVATION",
-    "DECISION INTELLIGENCE",
-    "From uncertainty to proportionate action.",
-    "FEATURED TOOL",
-    "Complete a short, rules-led assessment to identify your organisation’s likely UHL, EHL or OHL processing level and understand the practical compliance steps that may follow.",
-    "ORGANISATION-TYPE RULES",
-    "INDICATIVE CLASSIFICATION",
-    "DPO, POLICIES & TRAINING",
-    "BEFORE YOU BEGIN",
-    "This tool is informational. It does not constitute a formal audit, regulatory determination or confirmation of compliance.",
-    "Approximately 90 seconds",
-    "No sign-up required",
-    "Results and next steps shown instantly",
-    "LIVE GPM PRODUCT",
-    "CONNECTED TO THE CURRENT QUICK CHECK",
-    "NDPA QUICK CHECK",
-    "Find your likely processing level",
-    "OPEN FULL TOOL",
-    "BEGIN A CONVERSATION",
-    "Turn your indicative level into an accountable compliance programme.",
-    "Request a professional assessment to validate your classification and define the appropriate DPO,",
-    "Speak with an advisor",
-  ]);
+test("inspected rule set includes the conditional technology path and explicit organisation overrides", () => {
+  for (const copy of [
+    'id: "commercial_ict"',
+    'Do your services involve accessing personal data stored on devices or systems belonging to other people?',
+    'answers.sector === "technology" || answers.subtype === "commercial_ict"',
+    'commercial_bank_national_regional: "UHL"',
+    'telecom: "UHL"',
+    'multinational: "UHL"',
+    'microfinance: "EHL"',
+    'government_mda: "EHL"',
+    'hospital_secondary_tertiary: "EHL"',
+    'primary_secondary_school: "OHL"',
+    'primary_health: "OHL"',
+    'sensitive_processor_200_plus: "OHL"',
+    'answers.commercial_ict === "yes"',
+  ]) {
+    assert.match(engine, exact(copy));
+  }
 });
 
-test("Innovation featured pathway remains a three-step assess-classify-act sequence", () => {
-  assertInOrder(toolsPage, ["01", "ASSESS", "02", "CLASSIFY", "03", "ACT"]);
-  assert.match(toolsPage, /InnovationFeatureArtwork/);
-  assert.match(toolsPage, /className="tools-pathway"/);
+test("inspected rule set keeps the volume, uncertainty and risk-factor thresholds", () => {
+  for (const copy of [
+    'answers.volume === "over_5000"',
+    'answers.volume === "1001_4999"',
+    'answers.volume === "201_999"',
+    'const boundaryVolume = answers.volume === "exact_1000" || answers.volume === "exact_5000";',
+    'const unsureAnswers = Object.values(answers).filter((value) => value === "unsure").length;',
+    'if (!impliedTier && principalRiskFlags.length >= 4)',
+    'else if (!impliedTier && extraHighSignal >= 4)',
+    'More than one answer was uncertain, so a reliable automated classification is not appropriate.',
+    'No clear level',
+  ]) {
+    assert.match(engine, exact(copy));
+  }
+  assert.ok(
+    engine.includes("boundaryVolume || affirmedFlags.length >= 3 || answers.commercial_ict === \"yes\" || unsureAnswers >= 2"),
+    "review threshold must combine boundary volume, risk flags, commercial ICT and uncertainty",
+  );
 });
 
-test("Innovation page embeds the live quick check behind explicit consent controls", () => {
-  assert.ok(embed.length > 0, "InnovationQuickCheckEmbed component missing");
-  assertIncludesAll(embed, [
-    'const QUICK_CHECK_URL = "https://gpm-ndpa-quick-check.dataprotectiongpm.chatgpt.site/?source=gpm-website"',
-    'title="GPM NDPA Quick Check"',
-    'Enable quick check',
-    'Manage preferences',
-    'The live quick check is treated as external media.',
-    'gpm-open-cookie-settings',
-    'loading="lazy"',
-    'referrerPolicy="strict-origin-when-cross-origin"',
-  ]);
-  assert.match(embed, /<iframe[\s\S]*className="innovation-tool-frame"/);
-});
-
-test("Innovation route CSP explicitly allows the quick-check frame origin", () => {
-  assert.match(nextConfig, /frame-src 'self' https:\/\/gpm-ndpa-quick-check\.dataprotectiongpm\.chatgpt\.site/);
-});
-
-test("Innovation styles include dedicated route layout, artwork, and embedded assessment treatment", () => {
-  assertIncludesAll(styles, [
-    ".tools-hero",
-    ".tools-featured-panel",
-    ".tools-pathway-step",
-    ".innovation-feature-svg",
-    ".innovation-orbit",
-    ".tools-benefits",
-    ".tools-live-frame",
-    ".innovation-tool-frame",
-    ".innovation-tool-consent",
-  ]);
-  assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*innovation-orbit/s);
-});
-
-test("README now includes Innovation in the implemented route set", () => {
-  assert.match(readme, /Homepage \+ About \+ Services \+ Industries \+ Innovation/);
-  assert.match(readme, /production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience and Innovation routes/i);
+test("native tools experience is documented and styled as a first-party route", () => {
+  for (const copy of [
+    '`app/tools/page.tsx` is the semantic, server-rendered `/tools` Innovation route and hosts the natively rebuilt NDPA Quick Check experience.',
+    '`app/components/InnovationQuickCheck.tsx` provides the first-party assessment flow, progress states, result summaries and advisor conversion path for `/tools`.',
+    'The `/about`, `/services`, `/industries` and `/tools` destinations are implemented on this branch.',
+    'The `/tools` quick check is implemented natively and does not depend on an external embed or iframe.',
+  ]) {
+    assert.match(readme, exact(copy));
+  }
+  for (const token of [".tools-live", ".innovation-assessment-shell", ".innovation-option-grid", ".innovation-result-card", ".innovation-orbit"]) {
+    assert.ok(styles.includes(token), `missing innovation style token: ${token}`);
+  }
+  assert.equal(source.includes("↗"), false);
+  assert.match(component, /<svg aria-hidden="true" focusable="false" viewBox="0 0 18 18">/);
 });
