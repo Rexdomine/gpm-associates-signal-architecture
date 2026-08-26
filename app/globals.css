@@ -309,37 +309,6 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .innovation-result-next-step-card h5 { position: relative; z-index: 1; margin: 0; color: white; }
 .innovation-result-next-step-card p { position: relative; z-index: 1; color: #d3dee2; }
 
-@media print {
-  body[data-print-target="innovation-result"] > * {
-    visibility: hidden;
-  }
-
-  body[data-print-target="innovation-result"] .innovation-result-screen,
-  body[data-print-target="innovation-result"] .innovation-result-screen * {
-    visibility: visible;
-  }
-
-  body[data-print-target="innovation-result"] .innovation-result-screen {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    padding: 0;
-    gap: 24px;
-  }
-
-  body[data-print-target="innovation-result"] .innovation-result-panel-actions,
-  body[data-print-target="innovation-result"] .innovation-result-why-actions,
-  body[data-print-target="innovation-result"] .innovation-result-reset {
-    display: none;
-  }
-
-  body[data-print-target="innovation-result"] .innovation-result-panel,
-  body[data-print-target="innovation-result"] .innovation-result-next-step-card {
-    break-inside: avoid;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-  }
-}
 
 .innovation-assessment-stage { padding: clamp(30px, 4.5vw, 46px); background: white; color: var(--navy); }
 .innovation-progress-meta { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 12px; color: var(--crimson); font-size: 10px; font-weight: 850; letter-spacing: .14em; }

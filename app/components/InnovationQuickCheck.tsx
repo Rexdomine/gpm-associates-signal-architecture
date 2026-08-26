@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import {
   evaluateQuickCheck,
@@ -123,12 +123,7 @@ export function InnovationQuickCheck() {
   const [answers, setAnswers] = useState<QuickCheckAnswers>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [result, setResult] = useState<QuickCheckResult | null>(null);
-
-  useEffect(() => {
-    return () => {
-      document.body.removeAttribute("data-print-target");
-    };
-  }, []);
+  const resultScreenRef = useRef<HTMLElement | null>(null);
 
   const visibleQuestions = useMemo(() => getVisibleQuickCheckQuestions(answers), [answers]);
   const currentQuestion = visibleQuestions[currentQuestionIndex];
@@ -181,14 +176,116 @@ export function InnovationQuickCheck() {
   }
 
   function printResult() {
-    const clearPrintTarget = () => {
-      document.body.removeAttribute("data-print-target");
-      window.removeEventListener("afterprint", clearPrintTarget);
+    if (!resultScreenRef.current) return;
+
+    const iframe = document.createElement("iframe");
+    iframe.setAttribute("aria-hidden", "true");
+    iframe.style.position = "fixed";
+    iframe.style.right = "0";
+    iframe.style.bottom = "0";
+    iframe.style.width = "0";
+    iframe.style.height = "0";
+    iframe.style.border = "0";
+
+    const sourceHead = Array.from(document.head.querySelectorAll('style, link[rel="stylesheet"]'))
+      .map((node) => node.outerHTML)
+      .join("\n");
+
+    const printableMarkup = resultScreenRef.current.outerHTML;
+
+    document.body.appendChild(iframe);
+
+    const printDocument = iframe.contentDocument;
+    const printWindow = iframe.contentWindow;
+
+    if (!printDocument || !printWindow) {
+      iframe.remove();
+      return;
+    }
+
+    const cleanup = () => {
+      iframe.remove();
     };
 
-    document.body.dataset.printTarget = "innovation-result";
-    window.addEventListener("afterprint", clearPrintTarget, { once: true });
-    window.print();
+    printDocument.open();
+    printDocument.write(`
+      <!doctype html>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <base href="${window.location.origin}" />
+          ${sourceHead}
+          <style>
+            html, body {
+              margin: 0;
+              padding: 0;
+              background: #ffffff;
+            }
+
+            body {
+              padding: 24px;
+            }
+
+            .innovation-result-screen {
+              width: 100%;
+              max-width: none;
+            }
+
+            .innovation-result-panel-actions,
+            .innovation-result-why-actions,
+            .innovation-result-reset {
+              display: none !important;
+            }
+
+            .innovation-result-panel,
+            .innovation-result-why,
+            .innovation-result-snapshot-card,
+            .innovation-result-next-step-card,
+            .innovation-result-important {
+              break-inside: avoid;
+              page-break-inside: avoid;
+              print-color-adjust: exact;
+              -webkit-print-color-adjust: exact;
+            }
+
+            @page {
+              margin: 16mm;
+            }
+
+            @media print {
+              body {
+                padding: 0;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          ${printableMarkup}
+        </body>
+      </html>
+    `);
+    printDocument.close();
+
+    let printStarted = false;
+
+    const startPrint = () => {
+      if (printStarted) return;
+      printStarted = true;
+      printWindow.focus();
+      printWindow.addEventListener("afterprint", cleanup, { once: true });
+      printWindow.print();
+      window.setTimeout(cleanup, 1500);
+    };
+
+    iframe.addEventListener("load", startPrint, { once: true });
+
+    if ("fonts" in printDocument) {
+      void printDocument.fonts.ready.then(startPrint).catch(startPrint);
+      return;
+    }
+
+    startPrint();
   }
 
   if (!started) {
@@ -247,7 +344,7 @@ export function InnovationQuickCheck() {
 
   if (result) {
     return (
-      <section className="innovation-result-screen" aria-labelledby="innovation-result-title">
+      <section className="innovation-result-screen" aria-labelledby="innovation-result-title" ref={resultScreenRef}>
         <div className="innovation-result-topbar">
           <div>
             <p className="innovation-intro-kicker">

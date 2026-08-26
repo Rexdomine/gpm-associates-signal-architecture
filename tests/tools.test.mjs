@@ -33,7 +33,8 @@ test("tools route ships review-only metadata and production-ready quick-check fr
 
 test("tools route avoids the old embedded implementation and uses a native component instead", () => {
   assert.match(page, /<InnovationQuickCheck\s*\/>/);
-  for (const removed of ["iframe", "gpm-ndpa-quick-check.dataprotectiongpm.chatgpt.site", "ENABLE TOOL", "OPEN FULL TOOL"]) {
+  assert.equal(page.includes("iframe"), false, "tools route should not render an embedded iframe");
+  for (const removed of ["gpm-ndpa-quick-check.dataprotectiongpm.chatgpt.site", "ENABLE TOOL", "OPEN FULL TOOL"]) {
     assert.equal(source.includes(removed), false, `old embed artifact remains: ${removed}`);
   }
   assert.equal(component.includes("externalMedia"), false);
@@ -51,8 +52,12 @@ test("native quick check preserves the assessment stages and first-party control
     'About 90 seconds',
     'YOUR INDICATIVE RESULT',
     'Recommended next steps',
-    'document.body.dataset.printTarget = "innovation-result"',
-    'window.addEventListener("afterprint", clearPrintTarget, { once: true });',
+    'const iframe = document.createElement("iframe");',
+    'const printableMarkup = resultScreenRef.current.outerHTML;',
+    `const sourceHead = Array.from(document.head.querySelectorAll('style, link[rel="stylesheet"]'))`,
+    'printDocument.write(`',
+    'iframe.addEventListener("load", startPrint, { once: true });',
+    'void printDocument.fonts.ready.then(startPrint).catch(startPrint);',
   ]) {
     assert.match(component, exact(copy));
   }
@@ -61,6 +66,7 @@ test("native quick check preserves the assessment stages and first-party control
   assert.match(component, /aria-checked=\{selected\}/);
   assert.match(component, /goBack/);
   assert.match(component, /evaluateQuickCheck\(nextAnswers\)/);
+  assert.doesNotMatch(component, /data-print-target/);
   assert.doesNotMatch(component, /innovation-intro-screen" data-reveal/);
   assert.doesNotMatch(component, /innovation-result-screen" data-reveal/);
   assert.doesNotMatch(component, /innovation-assessment-shell" data-reveal/);
@@ -121,10 +127,23 @@ test("native tools experience is documented and styled as a first-party route", 
     ".innovation-option-grid",
     ".innovation-result-panel",
     ".innovation-intro-orbit",
-    'body[data-print-target="innovation-result"] .innovation-result-screen',
   ]) {
     assert.ok(styles.includes(token), `missing innovation style token: ${token}`);
   }
   assert.equal(source.includes("↗"), false);
   assert.match(component, /<svg aria-hidden="true" focusable="false" viewBox="0 0 18 18">/);
+});
+
+test("result printing isolates the result surface and removes print-only controls from the rendered document", () => {
+  for (const copy of [
+    '.innovation-result-panel-actions,',
+    '.innovation-result-why-actions,',
+    '.innovation-result-reset {',
+    'display: none !important;',
+    'page-break-inside: avoid;',
+    '@page {',
+    'margin: 16mm;',
+  ]) {
+    assert.match(component, exact(copy));
+  }
 });
