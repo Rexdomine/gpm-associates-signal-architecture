@@ -43,9 +43,12 @@ test("tools route avoids the old embedded implementation and uses a native compo
 test("native quick check preserves the assessment stages and first-party controls", () => {
   for (const copy of [
     'const stageLabels = ["Organisation", "Processing", "Risk indicators", "Result"] as const;',
+    'function getDisplayedQuestionCount(answers: QuickCheckAnswers, visibleQuestionCount: number)',
+    'return { count: 9, label: "9–10" };',
+    'QUESTION {currentQuestionIndex + 1} OF {displayQuestionCount.label}',
+    'questionCountLabel={displayQuestionCount.label}',
     'NDPA PROCESSING LEVEL CHECKER',
     'Start quick check',
-    'QUESTION {currentQuestionIndex + 1} OF {visibleQuestions.length}',
     'Review answers',
     'Start again',
     'Request full NDPA assessment',
@@ -67,6 +70,7 @@ test("native quick check preserves the assessment stages and first-party control
   assert.match(component, /goBack/);
   assert.match(component, /evaluateQuickCheck\(nextAnswers\)/);
   assert.doesNotMatch(component, /data-print-target/);
+  assert.doesNotMatch(component, /QUESTION \{currentQuestionIndex \+ 1\} OF \{visibleQuestions.length\}/);
   assert.doesNotMatch(component, /innovation-intro-screen" data-reveal/);
   assert.doesNotMatch(component, /innovation-result-screen" data-reveal/);
   assert.doesNotMatch(component, /innovation-assessment-shell" data-reveal/);

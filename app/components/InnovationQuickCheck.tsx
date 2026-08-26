@@ -57,7 +57,19 @@ function getStageIndex(questionId?: QuickCheckQuestion["id"]) {
   return 2;
 }
 
-function AssessmentRail({ activeStage, questionCount, answeredCount }: { activeStage: number; questionCount: number; answeredCount: number }) {
+function getDisplayedQuestionCount(answers: QuickCheckAnswers, visibleQuestionCount: number) {
+  if (!answers.sector) {
+    return { count: 9, label: "9–10" };
+  }
+
+  if (answers.sector === "technology" || answers.subtype === "commercial_ict") {
+    return { count: 10, label: "10" };
+  }
+
+  return { count: Math.max(visibleQuestionCount, 9), label: String(Math.max(visibleQuestionCount, 9)) };
+}
+
+function AssessmentRail({ activeStage, questionCountLabel, answeredCount }: { activeStage: number; questionCountLabel: string; answeredCount: number }) {
   return (
     <aside className="innovation-assessment-rail" aria-label="Assessment stages">
       <div>
@@ -75,7 +87,7 @@ function AssessmentRail({ activeStage, questionCount, answeredCount }: { activeS
       <dl className="innovation-rail-stats">
         <div>
           <dt>Questions</dt>
-          <dd>{questionCount}</dd>
+          <dd>{questionCountLabel}</dd>
         </div>
         <div>
           <dt>Answered</dt>
@@ -128,10 +140,11 @@ export function InnovationQuickCheck() {
   const visibleQuestions = useMemo(() => getVisibleQuickCheckQuestions(answers), [answers]);
   const currentQuestion = visibleQuestions[currentQuestionIndex];
   const answeredCount = visibleQuestions.filter((question) => Boolean(answers[question.id])).length;
-  const progress = visibleQuestions.length
+  const displayQuestionCount = getDisplayedQuestionCount(answers, visibleQuestions.length);
+  const progress = displayQuestionCount.count
     ? result
       ? 100
-      : Math.round(((currentQuestionIndex + 1) / visibleQuestions.length) * 100)
+      : Math.round(((currentQuestionIndex + 1) / displayQuestionCount.count) * 100)
     : 0;
   const activeStage = result ? 3 : getStageIndex(currentQuestion?.id);
 
@@ -448,11 +461,11 @@ export function InnovationQuickCheck() {
 
   return currentQuestion ? (
     <div className="innovation-assessment-shell">
-      <AssessmentRail activeStage={activeStage} answeredCount={answeredCount} questionCount={visibleQuestions.length} />
+      <AssessmentRail activeStage={activeStage} answeredCount={answeredCount} questionCountLabel={displayQuestionCount.label} />
       <section className="innovation-assessment-stage" aria-labelledby="innovation-question-title">
         <div className="innovation-progress-meta">
           <span>
-            QUESTION {currentQuestionIndex + 1} OF {visibleQuestions.length}
+            QUESTION {currentQuestionIndex + 1} OF {displayQuestionCount.label}
           </span>
           <span>{progress}% complete</span>
         </div>
