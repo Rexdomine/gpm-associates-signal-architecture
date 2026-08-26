@@ -40,11 +40,16 @@ test("tools route avoids the old embedded implementation and uses a native compo
   assert.equal(component.includes("externalMedia"), false);
 });
 
-test("native quick check preserves the assessment stages and first-party controls", () => {
+test("native quick check preserves the assessment stages, navigation history and first-party controls", () => {
   for (const copy of [
     'const stageLabels = ["Organisation", "Processing", "Risk indicators", "Result"] as const;',
     'function getDisplayedQuestionCount(answers: QuickCheckAnswers, visibleQuestionCount: number)',
     'return { count: 9, label: "9–10" };',
+    'const [questionHistory, setQuestionHistory] = useState<QuickCheckQuestionId[]>([]);',
+    'setQuestionHistory([]);',
+    'const previousQuestionId = questionHistory[questionHistory.length - 1];',
+    'setQuestionHistory((history) => history.slice(0, -1));',
+    'pruneAnswersAfterQuestion(question.id, answers)',
     'QUESTION {currentQuestionIndex + 1} OF {displayQuestionCount.label}',
     'questionCountLabel={displayQuestionCount.label}',
     'NDPA PROCESSING LEVEL CHECKER',
@@ -76,11 +81,16 @@ test("native quick check preserves the assessment stages and first-party control
   assert.doesNotMatch(component, /innovation-assessment-shell" data-reveal/);
 });
 
-test("inspected rule set includes the conditional technology path and explicit organisation overrides", () => {
+test("inspected rule set includes the conditional technology path, explicit organisation overrides and answer-pruning for reordered flows", () => {
   for (const copy of [
+    'export const quickCheckQuestionOrder: QuickCheckQuestionId[] = [',
     'id: "commercial_ict"',
     'Do your services involve accessing personal data stored on devices or systems belonging to other people?',
     'answers.sector === "technology" || answers.subtype === "commercial_ict"',
+    'export function pruneAnswersAfterQuestion(questionId: QuickCheckQuestionId, nextAnswers: QuickCheckAnswers) {',
+    'const questionIndex = quickCheckQuestionOrder.indexOf(questionId);',
+    'quickCheckQuestionOrder.slice(questionIndex + 1).forEach((id) => {',
+    'delete pruned[id];',
     'commercial_bank_national_regional: "UHL"',
     'telecom: "UHL"',
     'multinational: "UHL"',

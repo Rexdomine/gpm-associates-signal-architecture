@@ -29,6 +29,19 @@ export type QuickCheckQuestion = {
   visible?: (answers: QuickCheckAnswers) => boolean;
 };
 
+export const quickCheckQuestionOrder: QuickCheckQuestionId[] = [
+  "sector",
+  "subtype",
+  "volume",
+  "sensitive",
+  "financial",
+  "cloud",
+  "cross_border",
+  "vulnerable",
+  "automated",
+  "commercial_ict",
+];
+
 export type QuickCheckCard = {
   title: string;
   detail: string;
@@ -510,6 +523,23 @@ export function normalizeQuickCheckAnswers(nextAnswers: QuickCheckAnswers) {
   }
 
   return normalized;
+}
+
+export function pruneAnswersAfterQuestion(questionId: QuickCheckQuestionId, nextAnswers: QuickCheckAnswers) {
+  const normalized = normalizeQuickCheckAnswers(nextAnswers);
+  const questionIndex = quickCheckQuestionOrder.indexOf(questionId);
+
+  if (questionIndex === -1) {
+    return normalized;
+  }
+
+  const pruned: QuickCheckAnswers = { ...normalized };
+
+  quickCheckQuestionOrder.slice(questionIndex + 1).forEach((id) => {
+    delete pruned[id];
+  });
+
+  return normalizeQuickCheckAnswers(pruned);
 }
 
 export function evaluateQuickCheck(answers: QuickCheckAnswers): QuickCheckResult {

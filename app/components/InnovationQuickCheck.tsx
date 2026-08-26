@@ -6,8 +6,10 @@ import {
   evaluateQuickCheck,
   getVisibleQuickCheckQuestions,
   normalizeQuickCheckAnswers,
+  pruneAnswersAfterQuestion,
   type QuickCheckAnswers,
   type QuickCheckQuestion,
+  type QuickCheckQuestionId,
   type QuickCheckResult,
 } from "../lib/innovationQuickCheck";
 
@@ -134,6 +136,7 @@ export function InnovationQuickCheck() {
   const [started, setStarted] = useState(false);
   const [answers, setAnswers] = useState<QuickCheckAnswers>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [questionHistory, setQuestionHistory] = useState<QuickCheckQuestionId[]>([]);
   const [result, setResult] = useState<QuickCheckResult | null>(null);
   const resultScreenRef = useRef<HTMLElement | null>(null);
 
@@ -152,17 +155,21 @@ export function InnovationQuickCheck() {
     setStarted(false);
     setAnswers({});
     setCurrentQuestionIndex(0);
+    setQuestionHistory([]);
     setResult(null);
   }
 
   function reviewAnswers() {
     setResult(null);
+    setQuestionHistory(visibleQuestions.slice(0, Math.max(visibleQuestions.length - 1, 0)).map((question) => question.id));
     setCurrentQuestionIndex(Math.max(visibleQuestions.length - 1, 0));
   }
 
   function answerQuestion(question: QuickCheckQuestion, value: string) {
+    const existingValue = answers[question.id];
+    const baseAnswers = existingValue && existingValue !== value ? pruneAnswersAfterQuestion(question.id, answers) : answers;
     const nextAnswers = normalizeQuickCheckAnswers({
-      ...answers,
+      ...baseAnswers,
       [question.id]: value,
     });
 
@@ -172,10 +179,12 @@ export function InnovationQuickCheck() {
     setAnswers(nextAnswers);
 
     if (nextIndex === nextQuestions.length - 1) {
+      setQuestionHistory(nextQuestions.slice(0, nextIndex + 1).map((item) => item.id));
       setResult(evaluateQuickCheck(nextAnswers));
       return;
     }
 
+    setQuestionHistory(nextQuestions.slice(0, nextIndex + 1).map((item) => item.id));
     setCurrentQuestionIndex(nextIndex + 1);
   }
 
@@ -185,7 +194,17 @@ export function InnovationQuickCheck() {
       return;
     }
 
-    setCurrentQuestionIndex((index) => Math.max(index - 1, 0));
+    const previousQuestionId = questionHistory[questionHistory.length - 1];
+
+    if (!previousQuestionId) {
+      setCurrentQuestionIndex(0);
+      return;
+    }
+
+    const previousQuestionIndex = visibleQuestions.findIndex((question) => question.id === previousQuestionId);
+
+    setQuestionHistory((history) => history.slice(0, -1));
+    setCurrentQuestionIndex(previousQuestionIndex >= 0 ? previousQuestionIndex : Math.max(currentQuestionIndex - 1, 0));
   }
 
   function printResult() {
