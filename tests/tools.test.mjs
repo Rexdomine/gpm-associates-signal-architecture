@@ -42,14 +42,15 @@ test("tools route avoids the old embedded implementation and uses a native compo
 test("native quick check preserves the assessment stages and first-party controls", () => {
   for (const copy of [
     'const stageLabels = ["Organisation", "Processing", "Risk indicators", "Result"] as const;',
-    'Understand your likely NDPA classification before a formal review.',
+    'NDPA PROCESSING LEVEL CHECKER',
     'Start quick check',
     'QUESTION {currentQuestionIndex + 1} OF {visibleQuestions.length}',
     'Review answers',
-    'Restart assessment',
-    'Speak with an advisor',
-    'Usually 9 questions, with one additional technology question where relevant.',
-    'Key factors in your answers',
+    'Start again',
+    'Request full NDPA assessment',
+    'About 90 seconds',
+    'YOUR INDICATIVE RESULT',
+    'Recommended next steps',
   ]) {
     assert.match(component, exact(copy));
   }
@@ -109,7 +110,7 @@ test("native tools experience is documented and styled as a first-party route", 
   ]) {
     assert.match(readme, exact(copy));
   }
-  for (const token of [".tools-live", ".innovation-assessment-shell", ".innovation-option-grid", ".innovation-result-card", ".innovation-orbit"]) {
+  for (const token of [".tools-live", ".innovation-assessment-shell", ".innovation-option-grid", ".innovation-result-panel", ".innovation-intro-orbit"]) {
     assert.ok(styles.includes(token), `missing innovation style token: ${token}`);
   }
   assert.equal(source.includes("↗"), false);

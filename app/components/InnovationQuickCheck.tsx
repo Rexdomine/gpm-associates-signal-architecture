@@ -13,16 +13,17 @@ import {
 
 const stageLabels = ["Organisation", "Processing", "Risk indicators", "Result"] as const;
 const introHighlights = [
-  "Organisation profile",
-  "Processing volume",
-  "Risk indicators",
-  "Technology considerations",
+  { number: "01", title: "Simple", detail: "Plain-language prompts" },
+  { number: "02", title: "Indicative", detail: "Rules-led result" },
+  { number: "03", title: "Actionable", detail: "Clear next steps" },
 ] as const;
-const introFacts = [
-  { label: "Estimated time", value: "2–3 minutes" },
-  { label: "Question set", value: "Usually 9 questions, with one additional technology question where relevant." },
-  { label: "What you receive", value: "An indicative NDPA level with practical next-step guidance." },
-] as const;
+const resultSectionTitles: Record<QuickCheckResult["tier"], string> = {
+  UHL: "What this level usually triggers",
+  EHL: "What this level usually triggers",
+  OHL: "What this level usually triggers",
+  REVIEW: "High-level considerations associated with this result",
+  NONE: "High-level considerations associated with this result",
+};
 
 function ArrowIcon() {
   return (
@@ -40,19 +41,19 @@ function CheckIcon() {
   );
 }
 
+function RestartIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 18 18">
+      <path d="M4.5 7.5a5 5 0 1 1-.5 4.2" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+      <path d="M4.5 3.8v4h4" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 function getStageIndex(questionId?: QuickCheckQuestion["id"]) {
-  if (!questionId) {
-    return 0;
-  }
-
-  if (questionId === "sector" || questionId === "subtype") {
-    return 0;
-  }
-
-  if (questionId === "volume") {
-    return 1;
-  }
-
+  if (!questionId) return 0;
+  if (questionId === "sector" || questionId === "subtype") return 0;
+  if (questionId === "volume") return 1;
   return 2;
 }
 
@@ -60,7 +61,7 @@ function AssessmentRail({ activeStage, questionCount, answeredCount }: { activeS
   return (
     <aside className="innovation-assessment-rail" aria-label="Assessment stages">
       <div>
-        <p className="innovation-rail-kicker">NATIVE ASSESSMENT</p>
+        <p className="innovation-rail-kicker">Quick check</p>
         <strong>GPM NDPA Quick Check</strong>
       </div>
       <div className="innovation-rail-steps">
@@ -82,6 +83,38 @@ function AssessmentRail({ activeStage, questionCount, answeredCount }: { activeS
         </div>
       </dl>
     </aside>
+  );
+}
+
+function IntroOrbit() {
+  return (
+    <div className="innovation-intro-orbit" aria-hidden="true">
+      <div className="innovation-intro-ring innovation-intro-ring-a" />
+      <div className="innovation-intro-ring innovation-intro-ring-b" />
+      <div className="innovation-intro-ring innovation-intro-ring-c" />
+      <div className="innovation-intro-ring innovation-intro-ring-d" />
+      <span className="innovation-intro-node innovation-intro-node-a" />
+      <span className="innovation-intro-node innovation-intro-node-b" />
+      <span className="innovation-intro-node innovation-intro-node-c" />
+      <article className="innovation-intro-level innovation-intro-level-uhl">
+        <strong>UHL</strong>
+        <span>Ultra-High</span>
+      </article>
+      <article className="innovation-intro-level innovation-intro-level-ehl">
+        <strong>EHL</strong>
+        <span>Extra-High</span>
+      </article>
+      <article className="innovation-intro-level innovation-intro-level-ohl">
+        <strong>OHL</strong>
+        <span>Ordinary-High</span>
+      </article>
+      <div className="innovation-intro-core">
+        <span>Quick check</span>
+        <strong>9–10 guided questions</strong>
+        <small>Rules-first assessment</small>
+      </div>
+      <p>Organisation → Assessment → Guidance</p>
+    </div>
   );
 }
 
@@ -141,92 +174,105 @@ export function InnovationQuickCheck() {
     setCurrentQuestionIndex((index) => Math.max(index - 1, 0));
   }
 
-  return (
-    <div className="innovation-assessment-shell" data-reveal>
-      <AssessmentRail activeStage={activeStage} answeredCount={answeredCount} questionCount={visibleQuestions.length} />
-
-      {!started ? (
-        <section className="innovation-assessment-stage innovation-assessment-intro" aria-labelledby="innovation-assessment-title">
-          <div className="innovation-intro-hero">
-            <div>
-              <p className="innovation-tool-kicker">NDPA QUICK CHECK</p>
-              <h3 id="innovation-assessment-title">Understand your likely NDPA classification before a formal review.</h3>
-              <p>
-                Answer a short set of guided questions to understand your likely processing level, the factors influencing it and the next steps worth considering.
-              </p>
+  if (!started) {
+    return (
+      <section className="innovation-intro-screen" data-reveal aria-labelledby="innovation-assessment-title">
+        <div className="innovation-intro-layout">
+          <div className="innovation-intro-copy">
+            <p className="innovation-intro-kicker">
+              <span />
+              NDPA PROCESSING LEVEL CHECKER
+            </p>
+            <h3 id="innovation-assessment-title">
+              Find your likely <em>processing level.</em>
+            </h3>
+            <p className="innovation-intro-summary">
+              Answer a few plain-language questions to see whether your organisation is likely to fall within UHL, EHL or OHL under Nigeria’s data-protection framework.
+            </p>
+            <div className="innovation-intro-cta-row">
+              <button className="button-solid" type="button" onClick={() => setStarted(true)}>
+                Start quick check
+                <ArrowIcon />
+              </button>
+              <span className="innovation-intro-duration">
+                <b />
+                About 90 seconds
+              </span>
             </div>
-
-            <div className="innovation-intro-facts" aria-label="Quick check facts">
-              {introFacts.map((fact) => (
-                <article key={fact.label}>
-                  <span>{fact.label}</span>
-                  <strong>{fact.value}</strong>
-                </article>
-              ))}
-            </div>
+            <p className="innovation-intro-reassurance">
+              <CheckIcon />
+              <span>No sign-up required. Your answers stay private within this assessment session.</span>
+            </p>
           </div>
 
-          <div className="innovation-intro-overview">
-            <div>
-              <span>What this assessment considers</span>
-              <div className="innovation-highlight-grid" aria-label="Quick check coverage highlights">
-                {introHighlights.map((item) => (
-                  <article key={item}>
-                    <strong>{item}</strong>
-                  </article>
-                ))}
-              </div>
-            </div>
-            <div className="innovation-intro-note">
-              <span>Before you begin</span>
-              <strong>This result is indicative and based only on the answers you provide. It does not replace a professional classification review.</strong>
-              <p>If you need a formal interpretation, validation of obligations or implementation support, GPM can advise on the appropriate next step.</p>
-            </div>
-          </div>
+          <IntroOrbit />
+        </div>
 
-          <div className="innovation-intro-actions">
-            <button className="button-solid" type="button" onClick={() => setStarted(true)}>
-              Start quick check
-              <ArrowIcon />
-            </button>
-          </div>
-        </section>
-      ) : result ? (
-        <section className="innovation-assessment-stage innovation-result-card" aria-labelledby="innovation-result-title">
-          <div className="innovation-result-hero">
-            <div>
-              <p className="innovation-tool-kicker">RESULT</p>
-              <div className="innovation-result-badges">
-                <span className="innovation-result-tier">{result.shortLabel}</span>
-                <span className="innovation-result-confidence">Confidence: {result.confidence}</span>
-              </div>
-              <h3 id="innovation-result-title">{result.label}</h3>
-              <p>{result.summary}</p>
-            </div>
-            <div className="innovation-result-summary-card">
-              <span>Recommended next move</span>
-              <strong>Use this result to frame a proportionate compliance conversation.</strong>
-              <p>Review the main drivers below, then decide whether you need a formal classification review, targeted remediation support or a broader compliance programme.</p>
-              <div className="innovation-result-actions">
-                <button className="button-quiet" type="button" onClick={reviewAnswers}>
-                  Review answers
-                </button>
-                <button className="button-quiet" type="button" onClick={resetAssessment}>
-                  Restart assessment
-                </button>
-                <a className="button-solid" href="/contact">
-                  Speak with an advisor
-                  <ArrowIcon />
-                </a>
-              </div>
-            </div>
-          </div>
+        <div className="innovation-intro-highlights" aria-label="Quick check features">
+          {introHighlights.map((item) => (
+            <article key={item.number}>
+              <span>{item.number}</span>
+              <strong>{item.title}</strong>
+              <p>{item.detail}</p>
+            </article>
+          ))}
+        </div>
 
-          <div className="innovation-result-section">
-            <div className="innovation-result-section-heading">
-              <span>Why this result appeared</span>
-              <strong>Key factors in your answers</strong>
+        <div className="innovation-intro-important" role="note" aria-label="Important to know">
+          <strong>Important to know</strong>
+          <p>
+            This tool provides preliminary guidance—not a determination by the Nigeria Data Protection Commission, legal advice or a full compliance assessment.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  if (result) {
+    return (
+      <section className="innovation-result-screen" data-reveal aria-labelledby="innovation-result-title">
+        <div className="innovation-result-topbar">
+          <div>
+            <p className="innovation-intro-kicker">
+              <span />
+              YOUR INDICATIVE RESULT
+            </p>
+            <strong>GPM NDPA Quick Check</strong>
+          </div>
+          <button className="innovation-result-reset" type="button" onClick={resetAssessment}>
+            <RestartIcon />
+            Start again
+          </button>
+        </div>
+
+        <h3 id="innovation-result-title">Here’s what your answers indicate.</h3>
+
+        <div className="innovation-result-primary">
+          <article className="innovation-result-panel">
+            <div className="innovation-result-panel-top">
+              <span>Likely processing level</span>
+              <b>
+                <i />
+                Indicative confidence: {result.confidence}
+              </b>
             </div>
+            <p className="innovation-result-panel-tier">{result.shortLabel}</p>
+            <strong>{result.label}</strong>
+            <p>{result.summary}</p>
+            <div className="innovation-result-panel-actions">
+              <a className="button-solid" href="/contact">
+                Request full NDPA assessment
+                <ArrowIcon />
+              </a>
+              <button className="button-quiet" type="button" onClick={() => window.print()}>
+                Print result
+              </button>
+            </div>
+          </article>
+
+          <aside className="innovation-result-why">
+            <span>01</span>
+            <h4>Why this result</h4>
             <ul className="innovation-driver-list">
               {result.drivers.map((driver) => (
                 <li key={driver}>
@@ -235,91 +281,109 @@ export function InnovationQuickCheck() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="innovation-result-columns">
-            <div>
-              <div className="innovation-result-section-heading">
-                <span>Indicative obligations</span>
-                <strong>What this level usually triggers</strong>
-              </div>
-              <div className="innovation-card-grid innovation-card-grid-compact">
-                {result.obligations.map((card) => (
-                  <article key={card.title} className="innovation-detail-card">
-                    <h4>{card.title}</h4>
-                    <p>{card.detail}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <div className="innovation-result-section-heading">
-                <span>Recommended next steps</span>
-                <strong>How to act proportionately</strong>
-              </div>
-              <div className="innovation-card-grid">
-                {result.nextSteps.map((card) => (
-                  <article key={card.title} className="innovation-detail-card">
-                    <h4>{card.title}</h4>
-                    <p>{card.detail}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      ) : currentQuestion ? (
-        <section className="innovation-assessment-stage" aria-labelledby="innovation-question-title">
-          <div className="innovation-progress-meta">
-            <span>
-              QUESTION {currentQuestionIndex + 1} OF {visibleQuestions.length}
-            </span>
-            <span>{progress}% complete</span>
-          </div>
-          <div className="innovation-progress-track" aria-hidden="true">
-            <span style={{ width: `${progress}%` }} />
-          </div>
-
-          <article className="innovation-question-card">
-            <p className="innovation-tool-kicker">{currentQuestion.eyebrow}</p>
-            <h3 id="innovation-question-title">{currentQuestion.title}</h3>
-            <p>{currentQuestion.help}</p>
-
-            <div className={`innovation-option-grid ${currentQuestion.options.length > 5 ? "dense" : ""}`} role="radiogroup" aria-label={currentQuestion.title}>
-              {currentQuestion.options.map((option, index) => {
-                const selected = answers[currentQuestion.id] === option.value;
-
-                return (
-                  <button
-                    key={option.value}
-                    className={selected ? "selected" : undefined}
-                    type="button"
-                    role="radio"
-                    aria-checked={selected}
-                    onClick={() => answerQuestion(currentQuestion, option.value)}
-                  >
-                    <span>{index + 1}</span>
-                    <div>
-                      <strong>{option.label}</strong>
-                      {option.detail ? <small>{option.detail}</small> : null}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="innovation-question-actions">
-              <button className="button-quiet" type="button" onClick={goBack} disabled={currentQuestionIndex === 0}>
-                Back
-              </button>
-              <button className="button-quiet" type="button" onClick={resetAssessment}>
-                Exit assessment
+            <div className="innovation-result-why-actions">
+              <button className="button-quiet" type="button" onClick={reviewAnswers}>
+                Review answers
               </button>
             </div>
-          </article>
+          </aside>
+        </div>
+
+        <section className="innovation-result-snapshot" aria-labelledby="innovation-snapshot-title">
+          <span>02</span>
+          <h4 id="innovation-snapshot-title">Regulatory snapshot</h4>
+          <p>{resultSectionTitles[result.tier]}</p>
+          <div className="innovation-result-snapshot-grid">
+            {result.obligations.map((card, index) => (
+              <article key={card.title} className="innovation-result-snapshot-card">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h5>{card.title}</h5>
+                <p>{card.detail}</p>
+              </article>
+            ))}
+          </div>
         </section>
-      ) : null}
+
+        <section className="innovation-result-next-steps" aria-labelledby="innovation-next-steps-title">
+          <div className="innovation-result-next-steps-head">
+            <span>03</span>
+            <h4 id="innovation-next-steps-title">Recommended next steps</h4>
+            <p>Practical actions to move from classification to accountable implementation.</p>
+          </div>
+          <div className="innovation-result-next-steps-grid">
+            {result.nextSteps.map((card, index) => (
+              <article key={card.title} className="innovation-result-next-step-card">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <small>GPM NDPA Quick Check</small>
+                <h5>{card.title}</h5>
+                <p>{card.detail}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <div className="innovation-result-important" role="note" aria-label="Important">
+          <strong>Important</strong>
+          <p>
+            This Quick Check provides an indicative classification based solely on the information you provided and GPM Associates’ interpretation of the current Nigeria Data Protection Act, GAID and applicable NDPC guidance. It is not a determination by the Nigeria Data Protection Commission, legal advice or a full compliance assessment.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  return currentQuestion ? (
+    <div className="innovation-assessment-shell" data-reveal>
+      <AssessmentRail activeStage={activeStage} answeredCount={answeredCount} questionCount={visibleQuestions.length} />
+      <section className="innovation-assessment-stage" aria-labelledby="innovation-question-title">
+        <div className="innovation-progress-meta">
+          <span>
+            QUESTION {currentQuestionIndex + 1} OF {visibleQuestions.length}
+          </span>
+          <span>{progress}% complete</span>
+        </div>
+        <div className="innovation-progress-track" aria-hidden="true">
+          <span style={{ width: `${progress}%` }} />
+        </div>
+
+        <article className="innovation-question-card">
+          <p className="innovation-tool-kicker">{currentQuestion.eyebrow}</p>
+          <h3 id="innovation-question-title">{currentQuestion.title}</h3>
+          <p>{currentQuestion.help}</p>
+
+          <div className={`innovation-option-grid ${currentQuestion.options.length > 5 ? "dense" : ""}`} role="radiogroup" aria-label={currentQuestion.title}>
+            {currentQuestion.options.map((option, index) => {
+              const selected = answers[currentQuestion.id] === option.value;
+
+              return (
+                <button
+                  key={option.value}
+                  className={selected ? "selected" : undefined}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  onClick={() => answerQuestion(currentQuestion, option.value)}
+                >
+                  <span>{index + 1}</span>
+                  <div>
+                    <strong>{option.label}</strong>
+                    {option.detail ? <small>{option.detail}</small> : null}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="innovation-question-actions">
+            <button className="button-quiet" type="button" onClick={goBack} disabled={currentQuestionIndex === 0}>
+              Back
+            </button>
+            <button className="button-quiet" type="button" onClick={resetAssessment}>
+              Exit assessment
+            </button>
+          </div>
+        </article>
+      </section>
     </div>
-  );
+  ) : null;
 }
