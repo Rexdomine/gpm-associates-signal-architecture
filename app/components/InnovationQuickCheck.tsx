@@ -176,7 +176,7 @@ export function InnovationQuickCheck() {
 
   if (!started) {
     return (
-      <section className="innovation-intro-screen" data-reveal aria-labelledby="innovation-assessment-title">
+      <section className="innovation-intro-screen" aria-labelledby="innovation-assessment-title">
         <div className="innovation-intro-layout">
           <div className="innovation-intro-copy">
             <p className="innovation-intro-kicker">
@@ -230,7 +230,7 @@ export function InnovationQuickCheck() {
 
   if (result) {
     return (
-      <section className="innovation-result-screen" data-reveal aria-labelledby="innovation-result-title">
+      <section className="innovation-result-screen" aria-labelledby="innovation-result-title">
         <div className="innovation-result-topbar">
           <div>
             <p className="innovation-intro-kicker">
@@ -333,7 +333,7 @@ export function InnovationQuickCheck() {
   }
 
   return currentQuestion ? (
-    <div className="innovation-assessment-shell" data-reveal>
+    <div className="innovation-assessment-shell">
       <AssessmentRail activeStage={activeStage} answeredCount={answeredCount} questionCount={visibleQuestions.length} />
       <section className="innovation-assessment-stage" aria-labelledby="innovation-question-title">
         <div className="innovation-progress-meta">

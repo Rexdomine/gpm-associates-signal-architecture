@@ -59,6 +59,9 @@ test("native quick check preserves the assessment stages and first-party control
   assert.match(component, /aria-checked=\{selected\}/);
   assert.match(component, /goBack/);
   assert.match(component, /evaluateQuickCheck\(nextAnswers\)/);
+  assert.doesNotMatch(component, /innovation-intro-screen" data-reveal/);
+  assert.doesNotMatch(component, /innovation-result-screen" data-reveal/);
+  assert.doesNotMatch(component, /innovation-assessment-shell" data-reveal/);
 });
 
 test("inspected rule set includes the conditional technology path and explicit organisation overrides", () => {
