@@ -228,7 +228,12 @@ export function InnovationQuickCheck() {
       return;
     }
 
+    let cleanedUp = false;
     const cleanup = () => {
+      if (cleanedUp) return;
+      cleanedUp = true;
+      window.removeEventListener("focus", cleanup);
+      printWindow.removeEventListener("focus", cleanup);
       iframe.remove();
     };
 
@@ -299,8 +304,9 @@ export function InnovationQuickCheck() {
       printStarted = true;
       printWindow.focus();
       printWindow.addEventListener("afterprint", cleanup, { once: true });
+      printWindow.addEventListener("focus", cleanup, { once: true });
+      window.addEventListener("focus", cleanup, { once: true });
       printWindow.print();
-      window.setTimeout(cleanup, 1500);
     };
 
     iframe.addEventListener("load", startPrint, { once: true });
@@ -490,7 +496,7 @@ export function InnovationQuickCheck() {
           <h3 id="innovation-question-title">{currentQuestion.title}</h3>
           <p>{currentQuestion.help}</p>
 
-          <div className={`innovation-option-grid ${currentQuestion.options.length > 5 ? "dense" : ""}`} role="radiogroup" aria-label={currentQuestion.title}>
+          <div className={`innovation-option-grid ${currentQuestion.options.length > 5 ? "dense" : ""}`} aria-label={currentQuestion.title}>
             {currentQuestion.options.map((option, index) => {
               const selected = answers[currentQuestion.id] === option.value;
 
@@ -499,8 +505,6 @@ export function InnovationQuickCheck() {
                   key={option.value}
                   className={selected ? "selected" : undefined}
                   type="button"
-                  role="radio"
-                  aria-checked={selected}
                   onClick={() => answerQuestion(currentQuestion, option.value)}
                 >
                   <span>{index + 1}</span>

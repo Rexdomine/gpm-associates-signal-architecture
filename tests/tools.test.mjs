@@ -13,6 +13,7 @@ const component = read("app/components/InnovationQuickCheck.tsx");
 const engine = read("app/lib/innovationQuickCheck.ts");
 const styles = read("app/globals.css");
 const readme = read("README.md");
+const nextConfig = read("next.config.ts");
 const source = [page, component, engine, styles].join("\n");
 
 const exact = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
@@ -34,10 +35,13 @@ test("tools route ships review-only metadata and production-ready quick-check fr
 test("tools route avoids the old embedded implementation and uses a native component instead", () => {
   assert.match(page, /<InnovationQuickCheck\s*\/>/);
   assert.equal(page.includes("iframe"), false, "tools route should not render an embedded iframe");
-  for (const removed of ["gpm-ndpa-quick-check.dataprotectiongpm.chatgpt.site", "ENABLE TOOL", "OPEN FULL TOOL"]) {
+  for (const removed of ["gpm-ndpa-quick-check.dataprotectiongpm.chatgpt.site", "ENABLE TOOL", "OPEN FULL TOOL", "InnovationQuickCheckEmbed"]) {
     assert.equal(source.includes(removed), false, `old embed artifact remains: ${removed}`);
   }
+  assert.equal(existsSync(new URL("app/components/InnovationQuickCheckEmbed.tsx", root)), false, "embed component should be removed");
   assert.equal(component.includes("externalMedia"), false);
+  assert.equal(nextConfig.includes("gpm-ndpa-quick-check.dataprotectiongpm.chatgpt.site"), false, "CSP should not allow the old external quick-check origin");
+  assert.match(nextConfig, exact('"frame-src \'self\'"'));
 });
 
 test("native quick check preserves the assessment stages, navigation history and first-party controls", () => {
@@ -70,11 +74,11 @@ test("native quick check preserves the assessment stages, navigation history and
   ]) {
     assert.match(component, exact(copy));
   }
-  assert.match(component, /role="radiogroup"/);
-  assert.match(component, /role="radio"/);
-  assert.match(component, /aria-checked=\{selected\}/);
   assert.match(component, /goBack/);
   assert.match(component, /evaluateQuickCheck\(nextAnswers\)/);
+  assert.doesNotMatch(component, /role="radiogroup"/);
+  assert.doesNotMatch(component, /role="radio"/);
+  assert.doesNotMatch(component, /aria-checked=\{selected\}/);
   assert.doesNotMatch(component, /data-print-target/);
   assert.doesNotMatch(component, /QUESTION \{currentQuestionIndex \+ 1\} OF \{visibleQuestions.length\}/);
   assert.doesNotMatch(component, /innovation-intro-screen" data-reveal/);
@@ -161,7 +165,11 @@ test("result printing isolates the result surface and removes print-only control
     'page-break-inside: avoid;',
     '@page {',
     'margin: 16mm;',
+    'printWindow.addEventListener("afterprint", cleanup, { once: true });',
+    'printWindow.addEventListener("focus", cleanup, { once: true });',
+    'window.addEventListener("focus", cleanup, { once: true });',
   ]) {
     assert.match(component, exact(copy));
   }
+  assert.doesNotMatch(component, /window\.setTimeout\(cleanup, 1500\);/);
 });

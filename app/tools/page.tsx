@@ -13,7 +13,7 @@ const quickCheckBenefits = [
 
 const beforeYouBegin = [
   "This quick check provides an indicative outcome and does not replace formal legal or regulatory advice.",
-  "Usually takes 2–3 minutes",
+  "About 90 seconds",
   "No sign-up required",
   "Covers organisation type, processing activity and key risk indicators",
 ] as const;
