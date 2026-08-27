@@ -11,7 +11,7 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 - `app/industries/page.tsx` is the semantic, server-rendered `/industries` route aligned to the approved Industries & Experience mockup, including the exact section sequence, sector cards, anonymised engagement framing and review-only CTA.
 - `app/tools/page.tsx` is the semantic, server-rendered `/tools` Innovation route and hosts the natively rebuilt NDPA Quick Check experience.
 - `app/insights/page.tsx` is the semantic, server-rendered `/insights` route aligned to the approved Insights mockup, including the editorial hero, filterable intelligence explorer, client-advantage panel, FAQ disclosures and review-only CTA.
-- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries without adding route-specific sections elsewhere.
+- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries + Innovation + Insights without adding route-specific sections elsewhere.
 - `app/components/InnovationQuickCheck.tsx` provides the first-party assessment flow, progress states, result summaries and advisor conversion path for `/tools`.
 - `app/components/InsightsExplorer.tsx` provides the first-party topic filters, visible resource count and featured-card treatment for `/insights`.
 - `app/lib/innovationQuickCheck.ts` defines the inspected question set, conditional visibility, rule precedence and indicative result engine used by the native assessment.

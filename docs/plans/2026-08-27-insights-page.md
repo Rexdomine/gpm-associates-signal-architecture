@@ -10,7 +10,7 @@
 
 ---
 
-### Task 1: Lock the contract and asset provenance
+## Task 1: Lock the contract and asset provenance
 
 **Objective:** Capture the exact approved `/insights` content, structure, and image source before implementation.
 
@@ -23,7 +23,7 @@
 - Exact visible copy, filter labels, resource-card titles/descriptions, FAQ questions/answers, CTA labels, and image alt text match the approved mockup.
 - Approved image is stored locally for first-party delivery.
 
-### Task 2: Implement the route and focused interactivity
+## Task 2: Implement the route and focused interactivity
 
 **Objective:** Add the new `/insights` page with faithful layout and minimal scoped interactivity.
 
@@ -39,7 +39,7 @@
 - No placeholder copy, invented claims, or external image dependency remain.
 - Desktop/mobile layouts follow the existing site language and avoid overflow.
 
-### Task 3: Add regression tests and docs
+## Task 3: Add regression tests and docs
 
 **Objective:** Lock the new route into the repo’s deterministic verification boundary.
 
@@ -51,7 +51,7 @@
 - Tests assert route metadata, exact section order, exact approved copy, filter/topic behaviour contract in source, FAQ content, local asset reference, and asset checksum.
 - README now documents `/insights`, the new component, and editorial image provenance.
 
-### Task 4: Verify, review, and checkpoint
+## Task 4: Verify, review, and checkpoint
 
 **Objective:** Prove the candidate is safe and ready for handoff.
 
