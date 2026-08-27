@@ -162,6 +162,10 @@ test("contact styles lock the route structures and keep the enquiry form usable 
     '.contact-enquiry-form',
     '.contact-location-grid',
     '.contact-theme-stack',
+    '.contact-topic-menu',
+    'max-height: min(46vh, 360px)',
+    'overflow-y: auto',
+    'overscroll-behavior: contain',
     '@media (max-width: 1100px)',
     '@media (max-width: 800px)',
   ]) {

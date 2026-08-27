@@ -818,6 +818,13 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .operating-grid, .section-intro { gap: 18px; }
   .contact-direct-grid, .contact-enquiry-form { grid-template-columns: 1fr; }
   .contact-form-field-wide { grid-column: auto; }
+  .contact-topic-menu-shell { top: calc(100% + 6px); }
+  .contact-topic-menu {
+    max-height: min(46vh, 360px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
   .operating-copy { margin-top: 18px; }
   .industries-sector-grid, .industries-priority-grid, .industries-sector-grid-mockup, .industries-engagement-grid { grid-template-columns: 1fr; }
   .industries-sector-card, .industries-sector-card-mockup, .industries-engagement-card { min-height: 0; }
