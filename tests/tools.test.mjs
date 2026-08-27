@@ -43,8 +43,8 @@ test("tools route avoids the old embedded implementation and uses a native compo
 test("native quick check preserves the assessment stages, navigation history and first-party controls", () => {
   for (const copy of [
     'const stageLabels = ["Organisation", "Processing", "Risk indicators", "Result"] as const;',
-    'function getDisplayedQuestionCount(answers: QuickCheckAnswers, visibleQuestionCount: number)',
-    'return { count: 9, label: "9–10" };',
+    'function getDisplayedQuestionCount()',
+    'return { count: quickCheckQuestionOrder.length, label: String(quickCheckQuestionOrder.length) };',
     'const [questionHistory, setQuestionHistory] = useState<QuickCheckQuestionId[]>([]);',
     'setQuestionHistory([]);',
     'const previousQuestionId = questionHistory[questionHistory.length - 1];',
@@ -58,6 +58,7 @@ test("native quick check preserves the assessment stages, navigation history and
     'Start again',
     'Request full NDPA assessment',
     'About 90 seconds',
+    '10 guided questions',
     'YOUR INDICATIVE RESULT',
     'Recommended next steps',
     'const iframe = document.createElement("iframe");',
@@ -86,7 +87,8 @@ test("inspected rule set includes the conditional technology path, explicit orga
     'export const quickCheckQuestionOrder: QuickCheckQuestionId[] = [',
     'id: "commercial_ict"',
     'Do your services involve accessing personal data stored on devices or systems belonging to other people?',
-    'answers.sector === "technology" || answers.subtype === "commercial_ict"',
+    'If this is not part of your organisation’s services, choose No.',
+    '((answers.sector === "technology" || answers.subtype === "commercial_ict") && answers.commercial_ict === "yes")',
     'export function pruneAnswersAfterQuestion(questionId: QuickCheckQuestionId, nextAnswers: QuickCheckAnswers) {',
     'const questionIndex = quickCheckQuestionOrder.indexOf(questionId);',
     'quickCheckQuestionOrder.slice(questionIndex + 1).forEach((id) => {',
@@ -121,7 +123,7 @@ test("inspected rule set keeps the volume, uncertainty and risk-factor threshold
     assert.match(engine, exact(copy));
   }
   assert.ok(
-    engine.includes("boundaryVolume || affirmedFlags.length >= 3 || answers.commercial_ict === \"yes\" || unsureAnswers >= 2"),
+    engine.includes("boundaryVolume || affirmedFlags.length >= 3 || ((answers.sector === \"technology\" || answers.subtype === \"commercial_ict\") && answers.commercial_ict === \"yes\") || unsureAnswers >= 2"),
     "review threshold must combine boundary volume, risk flags, commercial ICT and uncertainty",
   );
 });

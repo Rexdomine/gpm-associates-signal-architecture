@@ -7,6 +7,7 @@ import {
   getVisibleQuickCheckQuestions,
   normalizeQuickCheckAnswers,
   pruneAnswersAfterQuestion,
+  quickCheckQuestionOrder,
   type QuickCheckAnswers,
   type QuickCheckQuestion,
   type QuickCheckQuestionId,
@@ -59,16 +60,8 @@ function getStageIndex(questionId?: QuickCheckQuestion["id"]) {
   return 2;
 }
 
-function getDisplayedQuestionCount(answers: QuickCheckAnswers, visibleQuestionCount: number) {
-  if (!answers.sector) {
-    return { count: 9, label: "9–10" };
-  }
-
-  if (answers.sector === "technology" || answers.subtype === "commercial_ict") {
-    return { count: 10, label: "10" };
-  }
-
-  return { count: Math.max(visibleQuestionCount, 9), label: String(Math.max(visibleQuestionCount, 9)) };
+function getDisplayedQuestionCount() {
+  return { count: quickCheckQuestionOrder.length, label: String(quickCheckQuestionOrder.length) };
 }
 
 function AssessmentRail({ activeStage, questionCountLabel, answeredCount }: { activeStage: number; questionCountLabel: string; answeredCount: number }) {
@@ -124,7 +117,7 @@ function IntroOrbit() {
       </article>
       <div className="innovation-intro-core">
         <span>Quick check</span>
-        <strong>9–10 guided questions</strong>
+        <strong>10 guided questions</strong>
         <small>Rules-first assessment</small>
       </div>
       <p>Organisation → Assessment → Guidance</p>
@@ -143,7 +136,7 @@ export function InnovationQuickCheck() {
   const visibleQuestions = useMemo(() => getVisibleQuickCheckQuestions(answers), [answers]);
   const currentQuestion = visibleQuestions[currentQuestionIndex];
   const answeredCount = visibleQuestions.filter((question) => Boolean(answers[question.id])).length;
-  const displayQuestionCount = getDisplayedQuestionCount(answers, visibleQuestions.length);
+  const displayQuestionCount = getDisplayedQuestionCount();
   const progress = displayQuestionCount.count
     ? result
       ? 100

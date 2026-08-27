@@ -266,9 +266,8 @@ export const quickCheckQuestions: QuickCheckQuestion[] = [
     id: "commercial_ict",
     eyebrow: "Technology services",
     title: "Do your services involve accessing personal data stored on devices or systems belonging to other people?",
-    help: "This applies to commercial technology services that access, repair, manage or process data on another person’s device or system.",
+    help: "If this is not part of your organisation’s services, choose No. This mainly captures commercial technology services that access, repair, manage or process data on another person’s device or system.",
     options: yesNoUnsureOptions,
-    visible: (answers) => answers.sector === "technology" || answers.subtype === "commercial_ict",
   },
 ];
 
@@ -572,7 +571,7 @@ export function evaluateQuickCheck(answers: QuickCheckAnswers): QuickCheckResult
   } else if (!impliedTier && extraHighSignal >= 4) {
     tier = "EHL";
     confidence = "Moderate";
-  } else if (!impliedTier && (boundaryVolume || affirmedFlags.length >= 3 || answers.commercial_ict === "yes" || unsureAnswers >= 2)) {
+  } else if (!impliedTier && (boundaryVolume || affirmedFlags.length >= 3 || ((answers.sector === "technology" || answers.subtype === "commercial_ict") && answers.commercial_ict === "yes") || unsureAnswers >= 2)) {
     tier = "REVIEW";
     confidence = "Indicative";
   }
@@ -606,7 +605,7 @@ export function evaluateQuickCheck(answers: QuickCheckAnswers): QuickCheckResult
     }
   });
 
-  if (tier === "REVIEW" && answers.commercial_ict === "yes") {
+  if (tier === "REVIEW" && (answers.sector === "technology" || answers.subtype === "commercial_ict") && answers.commercial_ict === "yes") {
     drivers.unshift("Your commercial technology services may create a separate major-importance designation route.");
   }
 
