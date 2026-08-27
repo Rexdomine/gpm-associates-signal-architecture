@@ -127,11 +127,11 @@ test("faq contract remains exact and semantic", () => {
 
 test("insights route is documented with asset provenance and implemented scope", () => {
   for (const copy of [
-    '# GPM Associates — Approved Homepage + About + Services + Industries + Innovation + Insights',
-    'A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience, Innovation and Insights routes',
+    '# GPM Associates — Approved Homepage + About + Services + Industries + Innovation + Insights + Governance Library',
+    'A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience, Innovation, Insights and Governance Library routes',
     '`app/insights/page.tsx` is the semantic, server-rendered `/insights` route aligned to the approved Insights mockup, including the editorial hero, filterable intelligence explorer, client-advantage panel, FAQ disclosures and review-only CTA.',
     '`app/components/InsightsExplorer.tsx` provides the first-party topic filters, visible resource count and featured-card treatment for `/insights`.',
-    'The `/about`, `/services`, `/industries`, `/tools` and `/insights` destinations are implemented on this branch.',
+    'The `/about`, `/services`, `/industries`, `/tools`, `/insights` and `/governance-library` destinations are implemented on this branch.',
     '### Insights editorial image (approved mockup asset)',
     '- Source: `https://gpm-phase1-mockup.dataprotectiongpm.chatgpt.site/insights-editorial.webp`',
     '- Production file: `public/images/gpm-insights-editorial-approved.webp`',

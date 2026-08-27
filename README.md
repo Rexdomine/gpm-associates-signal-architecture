@@ -1,6 +1,6 @@
-# GPM Associates — Approved Homepage + About + Services + Industries + Innovation + Insights
+# GPM Associates — Approved Homepage + About + Services + Industries + Innovation + Insights + Governance Library
 
-A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience, Innovation and Insights routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The Innovation route’s NDPA Quick Check was rebuilt natively after inspecting the existing quick-check workflow and recreating its decision logic inside the website.
+A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience, Innovation, Insights and Governance Library routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The Innovation route’s NDPA Quick Check was rebuilt natively after inspecting the existing quick-check workflow and recreating its decision logic inside the website.
 
 ## Architecture
 
@@ -11,9 +11,11 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 - `app/industries/page.tsx` is the semantic, server-rendered `/industries` route aligned to the approved Industries & Experience mockup, including the exact section sequence, sector cards, anonymised engagement framing and review-only CTA.
 - `app/tools/page.tsx` is the semantic, server-rendered `/tools` Innovation route and hosts the natively rebuilt NDPA Quick Check experience.
 - `app/insights/page.tsx` is the semantic, server-rendered `/insights` route aligned to the approved Insights mockup, including the editorial hero, filterable intelligence explorer, client-advantage panel, FAQ disclosures and review-only CTA.
-- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries + Innovation + Insights without adding route-specific sections elsewhere.
+- `app/governance-library/page.tsx` is the semantic, server-rendered `/governance-library` route with the Governance Library editorial hero, curated resource catalog, guided package-selection workflow, FAQ disclosures and review-only CTA.
+- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries + Innovation + Insights + Governance Library without adding route-specific sections elsewhere.
 - `app/components/InnovationQuickCheck.tsx` provides the first-party assessment flow, progress states, result summaries and advisor conversion path for `/tools`.
 - `app/components/InsightsExplorer.tsx` provides the first-party topic filters, visible resource count and featured-card treatment for `/insights`.
+- `app/components/GovernanceLibraryCatalog.tsx` provides the first-party topic filters, visible resource count and curated package cards for `/governance-library`.
 - `app/lib/innovationQuickCheck.ts` defines the inspected question set, conditional visibility, rule precedence and indicative result engine used by the native assessment.
 - `app/components/ServicesLifecycle.tsx` progressively enhances the server-rendered lifecycle illustration with continuous automatic motion while remaining static for reduced-motion and no-JavaScript users.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
@@ -38,7 +40,7 @@ npm audit --audit-level=high
 
 Use Node.js 20.9 or newer (CI uses Node.js 22). `npm run verify` runs ESLint with zero warnings, strict TypeScript and the deterministic test suite.
 
-## Homepage + About + Services + Industries + Innovation + Insights scope and extension points
+## Homepage + About + Services + Industries + Innovation + Insights + Governance Library scope and extension points
 
 The approved global navigation already uses the final internal destinations:
 
@@ -50,7 +52,7 @@ The approved global navigation already uses the final internal destinations:
 - `/governance-library`
 - `/contact`
 
-The `/about`, `/services`, `/industries`, `/tools` and `/insights` destinations are implemented on this branch. The remaining destination pages will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
+The `/about`, `/services`, `/industries`, `/tools`, `/insights` and `/governance-library` destinations are implemented on this branch. The remaining destination pages will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
 
 ## Asset provenance
 
@@ -151,6 +153,17 @@ The image was copied from the approved mockup to keep the Industries route align
 - File size: `131066` bytes
 
 This asset was freshly generated for the Industries route to follow the agreed imagery workflow rather than reusing a prior workflow image. It is used in the sector-aware section as a larger left-column editorial image with the explanatory write-up on the right.
+
+### Governance Library editorial image (fresh GPT Image 2 asset)
+
+- Source provider/model: OpenAI GPT Image 2, `gpt-image-2-medium`
+- Generated master: `/opt/data/cache/images/openai_codex_gpt-image-2-medium_20260827_074908_9927a1be.png`
+- Production file: `public/images/gpm-governance-library-editorial-20260827.webp`
+- SHA-256: `72f0733a9ffd509adb669edefae895759259d85f1eb1bf1691a136bac2f50d01`
+- Dimensions: `1536 × 1024`
+- File size: `274038` bytes
+
+This asset was freshly generated for the Governance Library route to show implementation-ready governance resources in active professional use rather than reusing an older GPM image. The scene presents two African professionals reviewing policy materials, structured binders and a clean governance checklist in a premium office environment. The people shown are illustrative generated subjects, not GPM personnel, clients, or participants in a real engagement.
 
 ## Consent and external services
 
