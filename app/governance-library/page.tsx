@@ -104,7 +104,7 @@ export default function GovernanceLibraryPage() {
           <div className="shell governance-library-hero-grid">
             <div className="governance-library-hero-copy" data-reveal>
               <p className="eyebrow eyebrow-light">Governance Library</p>
-              <h1 id="governance-library-title">Implementation-ready governance resources for accountable teams.</h1>
+              <h1 id="governance-library-title">Discover implementation-ready governance resources.</h1>
               <p className="governance-library-hero-intro">
                 Review selected policy resources, governance toolkits and operational packs, then request the right package for your
                 organisation through a guided enquiry.
@@ -130,7 +130,7 @@ export default function GovernanceLibraryPage() {
                   height={1024}
                   className="governance-library-hero-image"
                   priority
-                  sizes="(max-width: 760px) 100vw, 50vw"
+                  sizes="(max-width: 1100px) 100vw, 50vw"
                 />
                 <div className="governance-library-hero-image-shade" aria-hidden="true" />
               </div>

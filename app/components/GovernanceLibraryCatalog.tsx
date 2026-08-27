@@ -121,7 +121,7 @@ export function GovernanceLibraryCatalog() {
             })}
           </div>
           <p className="filter-count" aria-live="polite">
-            Showing {filteredResources.length} resources
+            Showing {filteredResources.length} {filteredResources.length === 1 ? "resource" : "resources"}
           </p>
         </div>
       </div>
