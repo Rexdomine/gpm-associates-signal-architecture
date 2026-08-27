@@ -136,7 +136,7 @@ test("native tools experience is documented and styled as a first-party route", 
   for (const copy of [
     '`app/tools/page.tsx` is the semantic, server-rendered `/tools` Innovation route and hosts the natively rebuilt NDPA Quick Check experience.',
     '`app/components/InnovationQuickCheck.tsx` provides the first-party assessment flow, progress states, result summaries and advisor conversion path for `/tools`.',
-    'The `/about`, `/services`, `/industries`, `/tools` and `/insights` destinations are implemented on this branch.',
+    'The `/about`, `/services`, `/industries`, `/tools`, `/insights` and `/governance-library` destinations are implemented on this branch.',
     'The `/tools` quick check is implemented natively and does not depend on an external embed or iframe.',
   ]) {
     assert.match(readme, exact(copy));
