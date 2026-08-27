@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, KeyboardEvent, useEffect, useId, useRef, useState } from "react";
 
 const advisoryTopics = [
   "Regulatory compliance and audit readiness",
@@ -44,14 +44,117 @@ function toMailtoBody(state: FormState) {
   ].join("\n");
 }
 
+function TopicPickerIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 18 18">
+      <path d="M4.5 6.75 9 11.25l4.5-4.5" fill="none" stroke="currentColor" strokeLinecap="square" strokeLinejoin="miter" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 export function ContactEnquiryPanel() {
   const [form, setForm] = useState<FormState>(defaultState);
   const [status, setStatus] = useState("This drafts an email to GPM using your default mail app.");
+  const [topicMenuOpen, setTopicMenuOpen] = useState(false);
+  const topicFieldRef = useRef<HTMLDivElement>(null);
+  const topicButtonRef = useRef<HTMLButtonElement>(null);
+  const topicListId = useId();
+  const topicLabelId = useId();
 
   const mailtoHref = `mailto:dataprotection@gpm-associates.ng?subject=${encodeURIComponent(`Advisory enquiry — ${form.topic}`)}&body=${encodeURIComponent(toMailtoBody(form))}`;
 
   const updateField = (field: keyof FormState, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
+  };
+
+  useEffect(() => {
+    if (!topicMenuOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!topicFieldRef.current?.contains(event.target as Node)) {
+        setTopicMenuOpen(false);
+      }
+    };
+
+    const handleEscape = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setTopicMenuOpen(false);
+        topicButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [topicMenuOpen]);
+
+  const focusTopicOption = (index: number) => {
+    const options = topicFieldRef.current?.querySelectorAll<HTMLButtonElement>("[data-topic-option]");
+    options?.[index]?.focus();
+  };
+
+  const openTopicMenu = (focusIndex = advisoryTopics.indexOf(form.topic as (typeof advisoryTopics)[number])) => {
+    setTopicMenuOpen(true);
+    window.requestAnimationFrame(() => {
+      focusTopicOption(Math.max(focusIndex, 0));
+    });
+  };
+
+  const handleTopicTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      openTopicMenu();
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      openTopicMenu(advisoryTopics.length - 1);
+    }
+  };
+
+  const handleTopicOptionKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      focusTopicOption((index + 1) % advisoryTopics.length);
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      focusTopicOption((index - 1 + advisoryTopics.length) % advisoryTopics.length);
+      return;
+    }
+
+    if (event.key === "Home") {
+      event.preventDefault();
+      focusTopicOption(0);
+      return;
+    }
+
+    if (event.key === "End") {
+      event.preventDefault();
+      focusTopicOption(advisoryTopics.length - 1);
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setTopicMenuOpen(false);
+      topicButtonRef.current?.focus();
+    }
+  };
+
+  const chooseTopic = (topic: string) => {
+    updateField("topic", topic);
+    setTopicMenuOpen(false);
+    topicButtonRef.current?.focus();
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -71,11 +174,11 @@ export function ContactEnquiryPanel() {
       </div>
 
       <form className="contact-enquiry-form" aria-labelledby="contact-enquiry-title" onSubmit={handleSubmit}>
-        <label>
+        <label className="contact-form-field">
           <span>Name</span>
           <input type="text" name="name" autoComplete="name" value={form.name} onChange={(event) => updateField("name", event.target.value)} required />
         </label>
-        <label>
+        <label className="contact-form-field">
           <span>Organisation</span>
           <input
             type="text"
@@ -86,25 +189,66 @@ export function ContactEnquiryPanel() {
             required
           />
         </label>
-        <label>
+        <label className="contact-form-field">
           <span>Email</span>
           <input type="email" name="email" autoComplete="email" value={form.email} onChange={(event) => updateField("email", event.target.value)} required />
         </label>
-        <label>
+        <label className="contact-form-field">
           <span>Phone (optional)</span>
           <input type="tel" name="phone" autoComplete="tel" value={form.phone} onChange={(event) => updateField("phone", event.target.value)} />
         </label>
-        <label>
-          <span>Advisory topic</span>
-          <select name="topic" value={form.topic} onChange={(event) => updateField("topic", event.target.value)}>
-            {advisoryTopics.map((topic) => (
-              <option key={topic} value={topic}>
-                {topic}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
+        <div className="contact-form-field contact-form-field-wide">
+          <span id={topicLabelId}>Advisory topic</span>
+          <div className="contact-topic-field" ref={topicFieldRef}>
+            <input type="hidden" name="topic" value={form.topic} readOnly />
+            <button
+              ref={topicButtonRef}
+              type="button"
+              className="contact-topic-trigger"
+              aria-expanded={topicMenuOpen}
+              aria-haspopup="listbox"
+              aria-controls={topicListId}
+              aria-labelledby={topicLabelId}
+              onClick={() => {
+                if (topicMenuOpen) {
+                  setTopicMenuOpen(false);
+                  return;
+                }
+                openTopicMenu();
+              }}
+              onKeyDown={handleTopicTriggerKeyDown}
+            >
+              <span className="contact-topic-trigger-value">{form.topic}</span>
+              <span className="contact-topic-trigger-icon">
+                <TopicPickerIcon />
+              </span>
+            </button>
+            <div className="contact-topic-menu-shell" hidden={!topicMenuOpen}>
+              <div id={topicListId} className="contact-topic-menu" role="listbox" aria-labelledby={topicLabelId}>
+                {advisoryTopics.map((topic, index) => {
+                  const isSelected = topic === form.topic;
+
+                  return (
+                    <button
+                      key={topic}
+                      type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      className={`contact-topic-option${isSelected ? " selected" : ""}`}
+                      data-topic-option
+                      onClick={() => chooseTopic(topic)}
+                      onKeyDown={(event) => handleTopicOptionKeyDown(event, index)}
+                    >
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                      <strong>{topic}</strong>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+        <label className="contact-form-field contact-form-field-wide">
           <span>What do you need help with?</span>
           <textarea
             name="message"

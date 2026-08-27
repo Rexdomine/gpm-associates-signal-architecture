@@ -106,10 +106,18 @@ test("contact enquiry panel stays first-party, accessible and mailto-based", () 
     'onSubmit={handleSubmit}',
     'aria-live="polite"',
     'window.location.href = mailtoHref;',
+    'aria-haspopup="listbox"',
+    'role="listbox"',
+    'role="option"',
+    'contact-topic-trigger',
+    'contact-topic-menu',
+    'contact-topic-option',
+    'contact-topic-trigger-value',
   ]) {
     assert.match(panel, exact(copy));
   }
 
+  assert.equal(panel.includes('<select name="topic"'), false);
   assert.equal(/fetch\(|axios|api\/|action=\"https?:/i.test(panel), false);
 });
 
