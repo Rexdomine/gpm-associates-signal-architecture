@@ -1,6 +1,6 @@
-# GPM Associates — Approved Homepage + About + Services + Industries + Innovation + Insights + Governance Library
+# GPM Associates — Approved Homepage + About + Services + Industries + Innovation + Insights + Governance Library + Contact
 
-A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience, Innovation, Insights and Governance Library routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The Innovation route’s NDPA Quick Check was rebuilt natively after inspecting the existing quick-check workflow and recreating its decision logic inside the website.
+A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience, Innovation, Insights, Governance Library and Contact routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The Innovation route’s NDPA Quick Check was rebuilt natively after inspecting the existing quick-check workflow and recreating its decision logic inside the website.
 
 ## Architecture
 
@@ -12,10 +12,12 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 - `app/tools/page.tsx` is the semantic, server-rendered `/tools` Innovation route and hosts the natively rebuilt NDPA Quick Check experience.
 - `app/insights/page.tsx` is the semantic, server-rendered `/insights` route aligned to the approved Insights mockup, including the editorial hero, filterable intelligence explorer, client-advantage panel, FAQ disclosures and review-only CTA.
 - `app/governance-library/page.tsx` is the semantic, server-rendered `/governance-library` route with the Governance Library editorial hero, curated resource catalog, guided package-selection workflow, FAQ disclosures and review-only CTA.
-- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries + Innovation + Insights + Governance Library without adding route-specific sections elsewhere.
+- `app/contact/page.tsx` is the semantic, server-rendered `/contact` route with the advisory hero, direct contact pathways, first-party guided enquiry composer, consent-aware location panel, FAQ disclosures and final urgency CTA.
+- `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries + Innovation + Insights + Governance Library + Contact without adding route-specific sections elsewhere.
 - `app/components/InnovationQuickCheck.tsx` provides the first-party assessment flow, progress states, result summaries and advisor conversion path for `/tools`.
 - `app/components/InsightsExplorer.tsx` provides the first-party topic filters, visible resource count and featured-card treatment for `/insights`.
 - `app/components/GovernanceLibraryCatalog.tsx` provides the first-party topic filters, visible resource count and curated package cards for `/governance-library`.
+- `app/components/ContactEnquiryPanel.tsx` provides the first-party guided enquiry composer for `/contact`, drafting a structured `mailto:` message without inventing a backend submit path.
 - `app/lib/innovationQuickCheck.ts` defines the inspected question set, conditional visibility, rule precedence and indicative result engine used by the native assessment.
 - `app/components/ServicesLifecycle.tsx` progressively enhances the server-rendered lifecycle illustration with continuous automatic motion while remaining static for reduced-motion and no-JavaScript users.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
@@ -40,7 +42,7 @@ npm audit --audit-level=high
 
 Use Node.js 20.9 or newer (CI uses Node.js 22). `npm run verify` runs ESLint with zero warnings, strict TypeScript and the deterministic test suite.
 
-## Homepage + About + Services + Industries + Innovation + Insights + Governance Library scope and extension points
+## Homepage + About + Services + Industries + Innovation + Insights + Governance Library + Contact scope and extension points
 
 The approved global navigation already uses the final internal destinations:
 
@@ -52,7 +54,7 @@ The approved global navigation already uses the final internal destinations:
 - `/governance-library`
 - `/contact`
 
-The `/about`, `/services`, `/industries`, `/tools`, `/insights` and `/governance-library` destinations are implemented on this branch. The remaining destination pages will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
+The `/about`, `/services`, `/industries`, `/tools`, `/insights`, `/governance-library` and `/contact` destinations are implemented on this branch. No placeholder page copy or invented route content is included.
 
 ## Asset provenance
 
@@ -175,6 +177,18 @@ This asset was freshly generated for the Governance Library route to show implem
 - File size: `88104` bytes
 
 This second Governance Library asset was generated to give the “What the library is for” section a distinct, more operational editorial moment instead of reusing the hero image. It shows two African professionals reviewing folders, working papers and implementation documents in a refined office setting, reinforcing practical governance use without making the section feel repetitive.
+
+### Contact page editorial image (fresh GPT Image 2 asset)
+
+- The `/contact` route is now implemented on this branch.
+- Source provider/model: OpenAI GPT Image 2, `gpt-image-2-medium`
+- Generated master: `/opt/data/cache/images/openai_codex_gpt-image-2-medium_20260827_182608_b3ba6a66.png`
+- Production file: `public/images/gpm-contact-advisor-consultation-20260827.webp`
+- Production SHA-256: `9b1c507789c63ee44f345e312c1503c58391a448854d2122f71fa125ddf50831`
+- Dimensions: `1536 × 1024`
+- File size: `57932` bytes
+
+This asset was freshly generated for the Contact route to support the “Speak with an advisor” journey with a premium one-to-one advisory consultation scene. It shows African senior professionals in a private office discussion with governance papers, policy materials and a restrained privacy-governance working context. The people shown are illustrative generated subjects, not GPM personnel, clients, or participants in a real engagement.
 
 ## Consent and external services
 
