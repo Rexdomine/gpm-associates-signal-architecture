@@ -1,6 +1,6 @@
-# GPM Associates — Approved Homepage + About + Services + Industries + Innovation
+# GPM Associates — Approved Homepage + About + Services + Industries + Innovation + Insights
 
-A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience and Innovation routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The Innovation route’s NDPA Quick Check was rebuilt natively after inspecting the existing quick-check workflow and recreating its decision logic inside the website.
+A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience, Innovation and Insights routes, built with Next.js App Router, React and TypeScript. The approved mockups are the source of truth for copy, section order, layout intent, image role, contact details, CTAs and user flow. The Innovation route’s NDPA Quick Check was rebuilt natively after inspecting the existing quick-check workflow and recreating its decision logic inside the website.
 
 ## Architecture
 
@@ -10,8 +10,10 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 - `app/services/page.tsx` is the six-section, semantic, server-rendered `/services` route with route-specific metadata.
 - `app/industries/page.tsx` is the semantic, server-rendered `/industries` route aligned to the approved Industries & Experience mockup, including the exact section sequence, sector cards, anonymised engagement framing and review-only CTA.
 - `app/tools/page.tsx` is the semantic, server-rendered `/tools` Innovation route and hosts the natively rebuilt NDPA Quick Check experience.
+- `app/insights/page.tsx` is the semantic, server-rendered `/insights` route aligned to the approved Insights mockup, including the editorial hero, filterable intelligence explorer, client-advantage panel, FAQ disclosures and review-only CTA.
 - `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries without adding route-specific sections elsewhere.
 - `app/components/InnovationQuickCheck.tsx` provides the first-party assessment flow, progress states, result summaries and advisor conversion path for `/tools`.
+- `app/components/InsightsExplorer.tsx` provides the first-party topic filters, visible resource count and featured-card treatment for `/insights`.
 - `app/lib/innovationQuickCheck.ts` defines the inspected question set, conditional visibility, rule precedence and indicative result engine used by the native assessment.
 - `app/components/ServicesLifecycle.tsx` progressively enhances the server-rendered lifecycle illustration with continuous automatic motion while remaining static for reduced-motion and no-JavaScript users.
 - `app/components/HomepageExperience.tsx` provides automatic, reduced-motion-safe hero movement and keyboard-accessible live-feature tabs.
@@ -36,7 +38,7 @@ npm audit --audit-level=high
 
 Use Node.js 20.9 or newer (CI uses Node.js 22). `npm run verify` runs ESLint with zero warnings, strict TypeScript and the deterministic test suite.
 
-## Homepage + About + Services + Industries + Innovation scope and extension points
+## Homepage + About + Services + Industries + Innovation + Insights scope and extension points
 
 The approved global navigation already uses the final internal destinations:
 
@@ -48,7 +50,7 @@ The approved global navigation already uses the final internal destinations:
 - `/governance-library`
 - `/contact`
 
-The `/about`, `/services`, `/industries` and `/tools` destinations are implemented on this branch. The remaining destination pages will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
+The `/about`, `/services`, `/industries`, `/tools` and `/insights` destinations are implemented on this branch. The remaining destination pages will be added only after their approved page contracts are available. No placeholder page copy or invented route content is included.
 
 ## Asset provenance
 
@@ -118,6 +120,16 @@ Two genuinely new text-to-image production masters were generated with OpenAI GP
 - Acceptance/regeneration: the prior inclusive image was rejected because its strings, grids and symbolic props made the work feel abstract. The first grounded candidate was rejected for lower-right caption intrusion and legible generated text; one clean regeneration produced the accepted 1536 × 1024 image.
 
 These two assets replace only the previous hero (`gpm-privacy-impact-assessment-v2.webp`) and integrated (`gpm-privacy-capability-workshop-v3.webp`) references on the Services route; the old binary files remain in the repository if referenced by other routes, and removal would be unsafe.
+
+### Insights editorial image (approved mockup asset)
+
+- Source: `https://gpm-phase1-mockup.dataprotectiongpm.chatgpt.site/insights-editorial.webp`
+- Production file: `public/images/gpm-insights-editorial-approved.webp`
+- SHA-256: `ee2e9d31787e21da814cb287bcc30a063e68676bd033322a23634c3c215a3763`
+- Dimensions: `1536 × 1024`
+- File size: `63846` bytes
+
+The image was copied from the approved Insights mockup to keep the route aligned with the review reference. It is an editorial environment image used to communicate practical privacy intelligence rather than evidence of a specific client engagement.
 
 ### Industries editorial image (approved mockup asset)
 
