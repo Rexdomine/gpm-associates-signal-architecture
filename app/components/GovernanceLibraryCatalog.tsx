@@ -94,7 +94,7 @@ export function GovernanceLibraryCatalog() {
   const filteredResources = useMemo(() => getGovernanceLibraryResources(activeFilter), [activeFilter]);
 
   return (
-    <section className="section shell governance-library-catalog" aria-labelledby="governance-library-catalog-title">
+    <section id="governance-library-catalog" className="section shell governance-library-catalog" aria-labelledby="governance-library-catalog-title">
       <div className="insight-toolbar">
         <div className="section-intro compact" data-reveal>
           <p className="eyebrow">Governance library catalog</p>

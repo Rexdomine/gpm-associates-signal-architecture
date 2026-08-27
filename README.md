@@ -165,6 +165,17 @@ This asset was freshly generated for the Industries route to follow the agreed i
 
 This asset was freshly generated for the Governance Library route to show implementation-ready governance resources in active professional use rather than reusing an older GPM image. The scene presents two African professionals reviewing policy materials, structured binders and a clean governance checklist in a premium office environment. The people shown are illustrative generated subjects, not GPM personnel, clients, or participants in a real engagement.
 
+### Governance Library section image (fresh GPT Image 2 asset)
+
+- Source provider/model: OpenAI GPT Image 2, `gpt-image-2-medium`
+- Generated master: `/opt/data/cache/images/openai_codex_gpt-image-2-medium_20260827_100330_8ae7c680.png`
+- Production file: `public/images/gpm-governance-library-section-editorial-20260827.webp`
+- SHA-256: `42277f15d292332dc3e66b57af20711486d388ec002cb6067d930c4586f24802`
+- Dimensions: `1536 × 1024`
+- File size: `88104` bytes
+
+This second Governance Library asset was generated to give the “What the library is for” section a distinct, more operational editorial moment instead of reusing the hero image. It shows two African professionals reviewing folders, working papers and implementation documents in a refined office setting, reinforcing practical governance use without making the section feel repetitive.
+
 ## Consent and external services
 
 Cookie preferences are stored locally in the browser under `gpm-cookie-preferences`. Essential operation does not depend on optional consent. The footer map begins blocked and, after the user explicitly enables external media, exposes a normal link to Google Maps rather than embedding or loading third-party code. Rejecting optional preferences leaves external media blocked. Settings can be reopened from the footer. The `/tools` quick check is implemented natively and does not depend on an external embed or iframe.

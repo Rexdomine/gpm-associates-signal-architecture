@@ -14,11 +14,13 @@ const component = read("app/components/GovernanceLibraryCatalog.tsx");
 const styles = read("app/globals.css");
 const readme = read("README.md");
 const plan = read("docs/plans/2026-08-27-governance-library-page.md");
-const image = read("public/images/gpm-governance-library-editorial-20260827.webp", null);
+const heroImage = read("public/images/gpm-governance-library-editorial-20260827.webp", null);
+const sectionImage = read("public/images/gpm-governance-library-section-editorial-20260827.webp", null);
 const source = [page, component, styles].join("\n");
 
 const exact = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-const imageSha = createHash("sha256").update(image).digest("hex");
+const heroImageSha = createHash("sha256").update(heroImage).digest("hex");
+const sectionImageSha = createHash("sha256").update(sectionImage).digest("hex");
 
 test("governance library route ships review-only metadata and the approved section contract", () => {
   for (const copy of [
@@ -27,6 +29,12 @@ test("governance library route ships review-only metadata and the approved secti
     'robots: { index: false, follow: false }',
     'Governance Library',
     'Implementation-ready governance resources for accountable teams.',
+    'Explore the library',
+    'How it works',
+    'Curated library modules',
+    'Practical and implementation-ready',
+    'Aligned to global best practice',
+    'Supports each stage of the governance journey',
     'What the library is for',
     'Move from policy intention to usable implementation material.',
     'How access works',
@@ -51,6 +59,10 @@ test("governance library visual section uses the approved local image, caption a
   for (const copy of [
     'src="/images/gpm-governance-library-editorial-20260827.webp"',
     'alt="Two African professionals reviewing governance policy materials, binders and a structured compliance checklist in a modern office"',
+    'src="/images/gpm-governance-library-section-editorial-20260827.webp"',
+    'alt="Two African professionals reviewing governance folders, working papers and implementation documents in a refined office setting"',
+    'const heroModules = ["Privacy Governance", "Third-Party Oversight", "AI Governance"] as const;',
+    'aria-label="Featured governance library modules"',
     'Governance resources organised for practical adoption, oversight and follow-through.',
     'const resourceSignals = ["Policy suites", "Toolkits", "Operational packs", "Leadership briefs"] as const;',
   ]) {
@@ -58,7 +70,9 @@ test("governance library visual section uses the approved local image, caption a
   }
 
   assert.equal(existsSync(new URL('public/images/gpm-governance-library-editorial-20260827.webp', root)), true);
-  assert.equal(imageSha, '72f0733a9ffd509adb669edefae895759259d85f1eb1bf1691a136bac2f50d01');
+  assert.equal(existsSync(new URL('public/images/gpm-governance-library-section-editorial-20260827.webp', root)), true);
+  assert.equal(heroImageSha, '72f0733a9ffd509adb669edefae895759259d85f1eb1bf1691a136bac2f50d01');
+  assert.equal(sectionImageSha, '42277f15d292332dc3e66b57af20711486d388ec002cb6067d930c4586f24802');
 });
 
 test("governance library catalog locks filter labels, package mapping and request CTA", () => {
@@ -135,6 +149,9 @@ test("governance library route is documented with asset provenance and implement
     '- Source provider/model: OpenAI GPT Image 2, `gpt-image-2-medium`',
     '- Production file: `public/images/gpm-governance-library-editorial-20260827.webp`',
     '- SHA-256: `72f0733a9ffd509adb669edefae895759259d85f1eb1bf1691a136bac2f50d01`',
+    '### Governance Library section image (fresh GPT Image 2 asset)',
+    '- Production file: `public/images/gpm-governance-library-section-editorial-20260827.webp`',
+    '- SHA-256: `42277f15d292332dc3e66b57af20711486d388ec002cb6067d930c4586f24802`',
   ]) {
     assert.match(readme, exact(copy));
   }
@@ -144,6 +161,11 @@ test("governance library route is documented with asset provenance and implement
 
 test("governance library styles lock the major page structures and avoid raw unicode arrow glyphs", () => {
   for (const token of [
+    '.governance-library-hero',
+    '.governance-library-hero-layer',
+    '.governance-library-hero-grid',
+    '.governance-library-module-stack',
+    '.governance-library-proof-strip',
     '.governance-library-visual',
     '.governance-library-catalog',
     '.governance-resource-grid',

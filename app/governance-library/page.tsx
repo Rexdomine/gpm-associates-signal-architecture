@@ -7,6 +7,21 @@ import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
 const resourceSignals = ["Policy suites", "Toolkits", "Operational packs", "Leadership briefs"] as const;
+const heroModules = ["Privacy Governance", "Third-Party Oversight", "AI Governance"] as const;
+const heroProofPoints = [
+  {
+    title: "Practical and implementation-ready",
+    body: "Built to move from policy intent into usable governance material.",
+  },
+  {
+    title: "Aligned to global best practice",
+    body: "Structured around accountable privacy and data-governance expectations.",
+  },
+  {
+    title: "Supports each stage of the governance journey",
+    body: "Useful for baseline control design, oversight and programme strengthening.",
+  },
+] as const;
 
 const workflowSteps = [
   {
@@ -66,6 +81,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+function ArrowIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 18 18">
+      <path d="M4 14 14 4M7 4h7v7" fill="none" stroke="currentColor" strokeLinecap="square" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 export default function GovernanceLibraryPage() {
   return (
     <>
@@ -76,15 +99,61 @@ export default function GovernanceLibraryPage() {
       <ScrollReveal />
 
       <main id="main-content">
-        <section className="page-hero dark-plane" aria-labelledby="governance-library-title">
-          <div className="shell page-hero-grid page-hero-single">
-            <div data-reveal>
+        <section className="governance-library-hero dark-plane" aria-labelledby="governance-library-title">
+          <div className="governance-library-hero-layer" aria-hidden="true" />
+          <div className="shell governance-library-hero-grid">
+            <div className="governance-library-hero-copy" data-reveal>
               <p className="eyebrow eyebrow-light">Governance Library</p>
               <h1 id="governance-library-title">Implementation-ready governance resources for accountable teams.</h1>
-              <p>
+              <p className="governance-library-hero-intro">
                 Review selected policy resources, governance toolkits and operational packs, then request the right package for your
                 organisation through a guided enquiry.
               </p>
+              <div className="hero-actions governance-library-hero-actions">
+                <a className="primary-action" href="#governance-library-catalog">
+                  Explore the library
+                  <ArrowIcon />
+                </a>
+                <a className="text-action light" href="#governance-library-workflow-title">
+                  How it works
+                  <ArrowIcon />
+                </a>
+              </div>
+            </div>
+
+            <figure className="governance-library-hero-media reveal-delay-1" data-reveal>
+              <div className="governance-library-hero-image-wrap">
+                <Image
+                  src="/images/gpm-governance-library-editorial-20260827.webp"
+                  alt="Two African professionals reviewing governance policy materials, binders and a structured compliance checklist in a modern office"
+                  width={1536}
+                  height={1024}
+                  className="governance-library-hero-image"
+                  priority
+                  sizes="(max-width: 760px) 100vw, 50vw"
+                />
+                <div className="governance-library-hero-image-shade" aria-hidden="true" />
+              </div>
+              <figcaption>
+                <span>Curated library modules</span>
+                <div className="governance-library-module-stack" aria-label="Featured governance library modules">
+                  {heroModules.map((module) => (
+                    <b key={module}>{module}</b>
+                  ))}
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div className="shell governance-library-proof-shell">
+            <div className="governance-library-proof-strip" aria-label="Governance library proof points">
+              {heroProofPoints.map((point, index) => (
+                <article key={point.title} className={index ? "reveal-delay-1" : undefined} data-reveal>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{point.title}</strong>
+                  <p>{point.body}</p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
@@ -93,8 +162,8 @@ export default function GovernanceLibraryPage() {
           <div className="shell insights-visual-grid governance-library-visual-grid">
             <figure data-reveal>
               <Image
-                src="/images/gpm-governance-library-editorial-20260827.webp"
-                alt="Two African professionals reviewing governance policy materials, binders and a structured compliance checklist in a modern office"
+                src="/images/gpm-governance-library-section-editorial-20260827.webp"
+                alt="Two African professionals reviewing governance folders, working papers and implementation documents in a refined office setting"
                 width={1536}
                 height={1024}
                 className="insights-visual-image"
