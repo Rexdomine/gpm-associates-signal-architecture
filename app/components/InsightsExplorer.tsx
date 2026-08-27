@@ -114,7 +114,7 @@ export function InsightsExplorer() {
 
       <div className="resource-grid">
         {filteredResources.map((resource, index) => (
-          <article key={resource.title} className={index === 0 ? "resource-card resource-featured" : "resource-card"} data-reveal>
+          <article key={resource.title} className={index === 0 ? "resource-card resource-featured" : "resource-card"}>
             <div>
               <span>{resource.topic}</span>
               <b>{resource.type}</b>

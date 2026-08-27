@@ -99,6 +99,7 @@ test("featured intelligence explorer locks filter labels, category mapping and a
   assert.match(component, /aria-pressed=\{active\}/);
   assert.match(component, /className=\{active \? "is-active" : undefined\}/);
   assert.match(component, /className=\{index === 0 \? "resource-card resource-featured" : "resource-card"\}/);
+  assert.equal(component.includes('className={index === 0 ? "resource-card resource-featured" : "resource-card"} data-reveal'), false, "stateful filtered resource cards must not depend on one-shot reveal registration");
 });
 
 test("faq contract remains exact and semantic", () => {
