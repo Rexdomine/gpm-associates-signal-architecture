@@ -3,11 +3,11 @@
   --navy-deep: #041923;
   --crimson: #a80f1a;
   --crimson-dark: #850a12;
-  --ivory: #f6f2e9;
-  --paper: #fffdf8;
+  --ivory: #ffffff;
+  --paper: #ffffff;
   --ink: #132833;
   --slate: #53656f;
-  --mist: #e6ecec;
+  --mist: #ffffff;
   --rule: rgba(8, 36, 51, 0.18);
   --rule-light: rgba(255, 255, 255, 0.22);
   --shell: min(100% - 48px, 1320px);
@@ -29,7 +29,7 @@ p, h1, h2, h3, h4, figure { margin-top: 0; }
 .skip-link:focus { transform: none; }
 :focus-visible { outline: 3px solid #e0525b; outline-offset: 4px; }
 
-.site-header { position: sticky; z-index: 80; top: 0; border-bottom: 1px solid var(--rule); background: rgba(255, 253, 248, 0.96); backdrop-filter: blur(16px); }
+.site-header { position: sticky; z-index: 80; top: 0; border-bottom: 1px solid var(--rule); background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(16px); }
 .header-inner { min-height: 96px; display: grid; grid-template-columns: 148px minmax(0, 1fr) auto; align-items: center; gap: clamp(18px, 2vw, 32px); }
 .brand { width: 132px; height: 80px; display: grid; place-items: center; overflow: hidden; }
 .brand img { width: 126px; height: auto; }
