@@ -20,8 +20,9 @@ const consent = read("app/components/CookieConsent.tsx");
 const reveal = read("app/components/ScrollReveal.tsx");
 const header = read("app/components/SiteHeader.tsx");
 const footer = read("app/components/SiteFooter.tsx");
+const contact = read("app/contact/page.tsx");
 const readme = read("README.md");
-const source = [page, layout, styles, mobileMenu, experience, consent, reveal, header, footer].join("\n");
+const source = [page, layout, styles, mobileMenu, experience, consent, reveal, header, footer, contact].join("\n");
 
 const exact = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
 
@@ -169,6 +170,7 @@ test("approved external links are exact and safely isolated", () => {
   const links = [
     "https://services.ndpc.gov.ng/portal/?page=verify-c&d=4384CC9A-B06F-4FD3-B19B-8C6B3CF86&id=20892&sn=9c73c00bb8c85b96db03b097e4d043ff&t=eosic_business_registration&tp=nwp_eosic",
     "https://services.ndpc.gov.ng/breach/",
+    "https://forms.gle/iXFZM1o6rxmPAXcw7",
     "https://www.linkedin.com/company/gpm-associates-data-protection-consultants/",
     "https://www.facebook.com/GPM-Associates-Data-Protection-Consultants/",
     "https://x.com/GPM_DataProtect",
@@ -176,8 +178,8 @@ test("approved external links are exact and safely isolated", () => {
     "https://www.gpm-associates.ng/?p=Privacy-Policy",
     "https://www.gpm-associates.ng/?p=Cookies-Policy",
   ];
-  for (const link of links) assert.ok(footer.includes(link), `missing approved external link: ${link}`);
-  assert.match(footer, /rel="noopener noreferrer"/);
+  for (const link of links) assert.ok(source.includes(link), `missing approved external link: ${link}`);
+  assert.match(source, /rel="noopener noreferrer"/);
 });
 
 test("cookie preferences are accessible, first-party only and gate external media", () => {

@@ -47,7 +47,7 @@ test("contact route exports review-only metadata and exact section contract", ()
     'Common questions before contacting GPM.',
     'Begin a conversation',
     'Need to move quickly?',
-    'Email GPM now',
+    'Open service intake form',
   ]) {
     assert.match(page, exact(copy));
   }
@@ -74,6 +74,7 @@ test("contact route uses the approved local hero image and exact contact details
     'Suites 1008 &amp; 1009, KINGFEM GA247',
     '264 Ahmadu Bello Way, Mabushi, Abuja FCT',
     'Report a Breach to the NDPC',
+    'https://forms.gle/iXFZM1o6rxmPAXcw7',
     'Google Maps is blocked until you allow external media.',
     'External map access is enabled for this browser.',
     'OPEN IN GOOGLE MAPS',

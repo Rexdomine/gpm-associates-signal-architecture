@@ -252,8 +252,8 @@ export default function ContactPage() {
               <h2 id="contact-callout-title">Need to move quickly?</h2>
               <p>Use the advisory line or email GPM directly and include the decision, deadline or risk that now needs attention.</p>
             </div>
-            <a href="mailto:dataprotection@gpm-associates.ng" className="button button-light">
-              Email GPM now
+            <a href="https://forms.gle/iXFZM1o6rxmPAXcw7" className="button button-light" target="_blank" rel="noopener noreferrer">
+              Open service intake form
             </a>
           </div>
         </section>
