@@ -10,11 +10,13 @@ const read = (path) => {
 
 const page = read("app/tools/page.tsx");
 const component = read("app/components/InnovationQuickCheck.tsx");
+const launcher = read("app/components/GlobalQuickCheckLauncher.tsx");
+const layout = read("app/layout.tsx");
 const engine = read("app/lib/innovationQuickCheck.ts");
 const styles = read("app/globals.css");
 const readme = read("README.md");
 const nextConfig = read("next.config.ts");
-const source = [page, component, engine, styles].join("\n");
+const source = [page, component, launcher, layout, engine, styles].join("\n");
 
 const exact = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
 
@@ -46,12 +48,21 @@ test("tools route avoids the old embedded implementation and uses a native compo
 
 test("native quick check preserves the assessment stages, navigation history and first-party controls", () => {
   for (const copy of [
+    'type InnovationQuickCheckProps = {',
+    'variant?: "page" | "modal";',
+    'autoStart?: boolean;',
+    'onRequestClose?: () => void;',
+    'const [started, setStarted] = useState(autoStart);',
+    'const isModal = variant === "modal";',
     'const stageLabels = ["Organisation", "Processing", "Risk indicators", "Result"] as const;',
     'function getDisplayedQuestionCount()',
     'return { count: quickCheckQuestionOrder.length, label: String(quickCheckQuestionOrder.length) };',
     'const [questionHistory, setQuestionHistory] = useState<QuickCheckQuestionId[]>([]);',
     'setQuestionHistory([]);',
+    'setStarted(autoStart);',
     'const previousQuestionId = questionHistory[questionHistory.length - 1];',
+    'if (onRequestClose) {',
+    'onRequestClose();',
     'setQuestionHistory((history) => history.slice(0, -1));',
     'pruneAnswersAfterQuestion(question.id, answers)',
     'QUESTION {currentQuestionIndex + 1} OF {displayQuestionCount.label}',
@@ -61,6 +72,7 @@ test("native quick check preserves the assessment stages, navigation history and
     'Review answers',
     'Start again',
     'Request full NDPA assessment',
+    'Close quick check',
     'About 90 seconds',
     '10 guided questions',
     'YOUR INDICATIVE RESULT',
@@ -85,6 +97,35 @@ test("native quick check preserves the assessment stages, navigation history and
   assert.doesNotMatch(component, /innovation-result-screen" data-reveal/);
   assert.doesNotMatch(component, /innovation-assessment-shell" data-reveal/);
 });
+
+test("global launcher mounts once, opens the native quick check directly, and avoids redirecting to the tools route", () => {
+  for (const copy of [
+    'import { GlobalQuickCheckLauncher } from "./components/GlobalQuickCheckLauncher";',
+    '<GlobalQuickCheckLauncher />',
+    'const isToolsRoute = pathname === "/tools";',
+    'if (isToolsRoute) return null;',
+    'const isOpen = !isToolsRoute && openPath === pathname;',
+    'className="quick-check-launcher"',
+    'Start quick check',
+    'role="dialog"',
+    'aria-labelledby="global-quick-check-title"',
+    'Open the guided assessment instantly from anywhere on the site.',
+    '<InnovationQuickCheck autoStart onRequestClose={() => setOpenPath(null)} variant="modal" />',
+    'document.body.style.overflow = "hidden";',
+  ]) {
+    assert.ok(source.includes(copy), `missing global quick-check launcher marker: ${copy}`);
+  }
+  assert.equal(launcher.includes('href="/tools"'), false, 'launcher must not redirect to /tools');
+  for (const token of [
+    ".quick-check-launcher",
+    ".quick-check-backdrop",
+    ".quick-check-dialog",
+    ".innovation-assessment-shell--modal",
+  ]) {
+    assert.ok(styles.includes(token), `missing quick-check launcher style token: ${token}`);
+  }
+});
+
 
 test("inspected rule set includes the conditional technology path, explicit organisation overrides and answer-pruning for reordered flows", () => {
   for (const copy of [
@@ -136,6 +177,7 @@ test("native tools experience is documented and styled as a first-party route", 
   for (const copy of [
     '`app/tools/page.tsx` is the semantic, server-rendered `/tools` Innovation route and hosts the natively rebuilt NDPA Quick Check experience.',
     '`app/components/InnovationQuickCheck.tsx` provides the first-party assessment flow, progress states, result summaries and advisor conversion path for `/tools`.',
+    '`app/components/GlobalQuickCheckLauncher.tsx` mounts one floating site-wide trigger that opens the same native NDPA Quick Check in-place without redirecting users to `/tools`.',
     'The `/about`, `/services`, `/industries`, `/tools`, `/insights`, `/governance-library` and `/contact` destinations are implemented on this branch.',
     'The `/tools` quick check is implemented natively and does not depend on an external embed or iframe.',
   ]) {
@@ -144,6 +186,7 @@ test("native tools experience is documented and styled as a first-party route", 
   for (const token of [
     ".tools-live",
     ".innovation-assessment-shell",
+    ".quick-check-launcher",
     ".innovation-option-grid",
     ".innovation-option-grid.dense { grid-template-columns: repeat(2, minmax(0, 1fr)); }",
     ".innovation-option-grid.dense button { min-height: 96px; }",
