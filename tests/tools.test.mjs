@@ -126,6 +126,16 @@ test("global launcher mounts once, opens the native quick check directly, and av
     assert.ok(source.includes(copy), `missing global quick-check launcher marker: ${copy}`);
   }
   assert.ok(mobileMenu.includes('className="mobile-quick-check"'), 'mobile menu should expose a dedicated quick check button');
+  for (const token of [
+    'className="mobile-panel-backdrop"',
+    'className="menu-toggle__label"',
+    'className="menu-toggle__icon"',
+    'className="mobile-panel__actions"',
+    'document.body.dataset.mobileNav = open ? "open" : "closed"',
+    'document.body.style.overflow = open ? "hidden" : ""',
+  ]) {
+    assert.ok(mobileMenu.includes(token), `missing mobile menu marker: ${token}`);
+  }
   assert.equal(launcher.includes('href="/tools"'), false, 'launcher must not redirect to /tools');
   for (const token of [
     ".quick-check-launcher",
@@ -133,6 +143,9 @@ test("global launcher mounts once, opens the native quick check directly, and av
     ".quick-check-dialog",
     ".innovation-assessment-shell--modal",
     ".mobile-panel .mobile-quick-check",
+    ".mobile-panel-backdrop",
+    ".menu-toggle__icon",
+    'body[data-mobile-nav="open"] .quick-check-launcher',
     ".quick-check-launcher { display: none; }",
   ]) {
     assert.ok(styles.includes(token), `missing quick-check launcher style token: ${token}`);
