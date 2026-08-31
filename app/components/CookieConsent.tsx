@@ -92,6 +92,15 @@ export function CookieConsent() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [dialogOpen]);
 
+  const showBanner = mounted && preferences === null && !dialogOpen;
+
+  useEffect(() => {
+    document.body.dataset.cookieBanner = showBanner ? "open" : "closed";
+    return () => {
+      delete document.body.dataset.cookieBanner;
+    };
+  }, [showBanner]);
+
   const save = (next: Preferences) => {
     persistPreferences(next);
     setPreferences(next);
@@ -110,7 +119,7 @@ export function CookieConsent() {
 
   return (
     <>
-      {preferences === null && !dialogOpen && (
+      {showBanner && (
         <aside className="cookie-banner" aria-label="Cookie preferences">
           <div>
             <p className="cookie-title">Your privacy choices</p>

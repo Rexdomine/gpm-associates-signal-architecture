@@ -1108,9 +1108,27 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom { align-items: flex-start; flex-direction: column; padding-block: 24px; }
   .footer-bottom > div { align-items: flex-start; flex-wrap: wrap; }
-  .cookie-banner { right: 10px; bottom: 10px; left: 10px; max-height: calc(100vh - 20px); overflow-y: auto; padding: 18px; }
-  .cookie-actions { align-items: stretch; flex-direction: column; }
-  .cookie-actions button { width: 100%; }
+  .cookie-banner {
+    right: 12px;
+    bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+    left: 12px;
+    width: auto;
+    max-width: none;
+    max-height: min(52vh, 420px);
+    overflow-y: auto;
+    gap: 14px;
+    padding: 18px 18px 16px;
+  }
+  .cookie-banner p:not(.cookie-title) { max-width: none; }
+  .cookie-actions { gap: 8px; }
+  .cookie-actions .button-quiet,
+  .cookie-actions .button-solid { min-height: 44px; }
+  body[data-cookie-banner="open"] .quick-check-launcher {
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    justify-content: center;
+  }
   .dialog-actions { align-items: stretch; flex-direction: column; }
   .about-hero { padding-block: 68px; }
   .about-globe { top: -6%; left: 50%; width: 980px; height: 68%; }
