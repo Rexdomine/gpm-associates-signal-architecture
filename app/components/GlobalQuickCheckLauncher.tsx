@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 
 import { InnovationQuickCheck } from "./InnovationQuickCheck";
 
+export const OPEN_GLOBAL_QUICK_CHECK_EVENT = "gpm-open-global-quick-check";
+
 function CloseIcon() {
   return (
     <svg aria-hidden="true" focusable="false" viewBox="0 0 18 18">
@@ -25,6 +27,18 @@ export function GlobalQuickCheckLauncher() {
     setOpenPath(null);
     returnFocusRef.current?.focus();
   };
+
+  useEffect(() => {
+    if (isToolsRoute) return;
+
+    const openQuickCheck = () => {
+      returnFocusRef.current = document.activeElement as HTMLElement | null;
+      setOpenPath(pathname);
+    };
+
+    window.addEventListener(OPEN_GLOBAL_QUICK_CHECK_EVENT, openQuickCheck);
+    return () => window.removeEventListener(OPEN_GLOBAL_QUICK_CHECK_EVENT, openQuickCheck);
+  }, [isToolsRoute, pathname]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -72,10 +86,7 @@ export function GlobalQuickCheckLauncher() {
         aria-expanded={isOpen}
         className="quick-check-launcher"
         type="button"
-        onClick={() => {
-          returnFocusRef.current = document.activeElement as HTMLElement | null;
-          setOpenPath(pathname);
-        }}
+        onClick={() => window.dispatchEvent(new Event(OPEN_GLOBAL_QUICK_CHECK_EVENT))}
       >
         <span className="quick-check-launcher__dot" aria-hidden="true" />
         <span>Start quick check</span>

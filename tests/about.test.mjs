@@ -304,9 +304,31 @@ test("About and Homepage reuse the exact shared shell and preserve Homepage cont
 
 test("desktop and mobile About links are route-aware while mobile focus behavior is preserved", () => {
   assertIncludesAll(header, ["usePathname", "[\"About\", \"/about\"]", "aria-current", "<MobileMenu"]);
-  assertIncludesAll(mobileMenu, ["usePathname", "href: \"/about\"", "aria-current", "Escape", "event.shiftKey", "toggleRef.current?.focus()"]);
-  assert.match(header, /pathname === href \? "page" : undefined/);
-  assert.match(mobileMenu, /pathname === href \? "page" : undefined/);
+  assertIncludesAll(mobileMenu, [
+    "usePathname",
+    'href: "/about"',
+    "aria-current",
+    "Escape",
+    "event.shiftKey",
+    "toggleRef.current?.focus()",
+    'document.body.dataset.mobileNav = open ? "open" : "closed"',
+    'document.body.style.overflow = open ? "hidden" : ""',
+    'className="menu-toggle__icon"',
+    'className="mobile-panel__actions"',
+    'createPortal(',
+  ]);
+  assertIncludesAll(styles, [
+    '.menu-toggle[aria-expanded="true"] .menu-toggle__icon span:first-child',
+    '.menu-toggle {',
+    'border-radius: 0;',
+    '.mobile-panel {',
+    'left: 0;',
+    'max-height: min(62vh, 520px);',
+    'inset: 84px 0 0;',
+    'max-height: calc(100dvh - 84px);',
+    'body[data-mobile-nav="open"] .quick-check-launcher',
+    'body[data-mobile-nav="open"] .cookie-banner',
+  ]);
 });
 
 test("About image asset has exact bytes and dimensions parsed from its WebP container", () => {

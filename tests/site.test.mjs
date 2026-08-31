@@ -186,15 +186,15 @@ test("cookie preferences are accessible, first-party only and gate external medi
   for (const label of ["Manage preferences", "Reject optional", "Accept all", "External media", "Cookie Settings", "Google Maps is blocked until you allow external media.", "ENABLE MAP"]) {
     assert.match(page + consent, exact(label));
   }
-  for (const token of ["localStorage", "externalMedia", "role=\"dialog\"", "aria-modal=\"true\"", "gpm-cookie-preferences"]) {
+  for (const token of ["localStorage", "externalMedia", "role=\"dialog\"", "aria-modal=\"true\"", "gpm-cookie-preferences", 'document.body.dataset.cookieBanner = showBanner ? "open" : "closed"', 'delete document.body.dataset.cookieBanner']) {
     assert.ok(consent.includes(token), `missing consent behavior: ${token}`);
   }
   assert.match(consent, /externalMedia \?/);
   assert.match(consent, /try\s*\{[\s\S]*localStorage\.setItem[\s\S]*\}\s*catch\s*\{[\s\S]*dispatchEvent/);
   assert.match(consent, /addEventListener\(PREFERENCES_EVENT, syncPreferences\)/);
   assert.match(consent, /removeEventListener\(PREFERENCES_EVENT, syncPreferences\)/);
-  for (const token of ["event.key !== \"Tab\"", "event.shiftKey", "event.preventDefault()", "first.focus()", "last.focus()"]) {
-    assert.ok(consent.includes(token), `missing consent focus containment: ${token}`);
+  for (const token of ["event.key !== \"Tab\"", "event.shiftKey", "event.preventDefault()", "first.focus()", "last.focus()", 'body[data-cookie-banner="open"] .quick-check-launcher', 'bottom: calc(78px + env(safe-area-inset-bottom, 0px));']) {
+    assert.ok((consent + styles).includes(token), `missing consent focus containment: ${token}`);
   }
   assert.equal(/google-analytics|googletagmanager|facebook\.net|hotjar/i.test(source), false);
 });

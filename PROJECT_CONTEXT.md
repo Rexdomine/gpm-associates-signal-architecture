@@ -77,3 +77,18 @@ This imagery workflow is the standing project standard. It applies to all future
 - Integrated inclusion and activity direction: exactly three Nigerian professionals in a familiar collaborative work session, including a Muslim woman in a refined hijab and a man in native attire with an understated northern Nigerian embroidered cap. They brainstorm around two ordinary laptops, notebooks, working papers and a simple paper data-flow sketch. Cultural details are contemporary and professional rather than costume-like; the activity is grounded and immediately relatable rather than staged or abstract. The prior inclusive candidate was rejected because strings, grids and symbolic workflow props made the activity too conceptual. A first grounded candidate was then rejected for lower-right caption intrusion and legible generated document text; one clean regeneration produced the accepted image.
 - Disclosure: subjects are AI-generated illustrative people—not GPM personnel, clients, or participants in a real engagement.
 - QA: production derivatives are binary-locked in deterministic tests and must pass browser loading, responsive crop, Axe A/AA, motion, no-JavaScript, performance, and publication-safety checks before release.
+
+## Current status
+
+- Mobile navigation has been restored to the branded square-toggle, top-takeover pattern.
+- Global/mobile quick-check access remains first-party and native.
+- Mobile quick-check overlay now opens beneath the sticky header instead of underneath it, preserving immediate visibility of the title and intro copy on first open.
+
+## Next likely priorities
+
+- Verify the pushed branch on the hosted preview in an iPhone-width viewport after each mobile-shell adjustment.
+- Keep header, consent, mobile navigation, and quick-check overlays from competing for the same viewport zone on first load.
+
+## Handoff log
+
+- 2026-08-31: Corrected the mobile quick-check overlay geometry after stakeholder review. Root cause was the mobile sheet using full viewport height while the sticky header stayed above it in stacking order, causing the quick-check intro to sit under the header. Fix: start the overlay below the header (`84px` tablet/mobile shell, `76px` phone shell), remove the bottom-sheet treatment on mobile, and tighten the mobile quick-check header/body spacing so the intro content remains visible without clutter. Verified with `npm run verify`, `npm run build`, and a Playwright iPhone 12 screenshot/measurement showing header bottom `77px`, overlay top `76px`, title visible at `132.5px`, and intro visible at `167.02px`.
