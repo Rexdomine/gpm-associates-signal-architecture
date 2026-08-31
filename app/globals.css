@@ -933,7 +933,10 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .menu-toggle { min-width: 72px; min-height: 44px; border: 1px solid var(--navy); background: transparent; font-size: 11px; font-weight: 800; }
   .mobile-panel { position: absolute; top: 84px; right: 0; left: 0; display: grid; padding: 18px max(20px, calc((100vw - min(100% - 40px, 900px)) / 2)); border-bottom: 1px solid var(--rule); background: var(--paper); box-shadow: 0 18px 40px rgba(8,36,51,.15); }
   .mobile-panel a { min-height: 48px; display: flex; align-items: center; border-bottom: 1px solid var(--rule); font-size: 13px; font-weight: 700; }
-  .mobile-panel .mobile-contact { justify-content: center; margin-top: 12px; border: 0; background: var(--crimson); color: white; }
+  .mobile-panel .mobile-contact,
+  .mobile-panel .mobile-quick-check { min-height: 50px; justify-content: center; margin-top: 12px; border: 0; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .mobile-panel .mobile-contact { background: var(--crimson); color: white; }
+  .mobile-panel .mobile-quick-check { margin-top: 10px; border: 1px solid var(--navy); background: transparent; color: var(--navy); }
   .hero-grid { grid-template-columns: 1fr; }
   .hero-copy { max-width: 790px; }
   .hero-media { min-height: 510px; }
@@ -1170,6 +1173,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
     right: 12px;
     justify-content: center;
   }
+  .quick-check-launcher { display: none; }
   .quick-check-dialog__header > div > p:not(.eyebrow) {
     font-size: 14px;
   }

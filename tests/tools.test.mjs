@@ -11,12 +11,13 @@ const read = (path) => {
 const page = read("app/tools/page.tsx");
 const component = read("app/components/InnovationQuickCheck.tsx");
 const launcher = read("app/components/GlobalQuickCheckLauncher.tsx");
+const mobileMenu = read("app/components/MobileMenu.tsx");
 const layout = read("app/layout.tsx");
 const engine = read("app/lib/innovationQuickCheck.ts");
 const styles = read("app/globals.css");
 const readme = read("README.md");
 const nextConfig = read("next.config.ts");
-const source = [page, component, launcher, layout, engine, styles].join("\n");
+const source = [page, component, launcher, mobileMenu, layout, engine, styles].join("\n");
 
 const exact = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
 
@@ -102,13 +103,17 @@ test("global launcher mounts once, opens the native quick check directly, and av
   for (const copy of [
     'import { GlobalQuickCheckLauncher } from "./components/GlobalQuickCheckLauncher";',
     '<GlobalQuickCheckLauncher />',
+    'export const OPEN_GLOBAL_QUICK_CHECK_EVENT = "gpm-open-global-quick-check";',
+    'window.addEventListener(OPEN_GLOBAL_QUICK_CHECK_EVENT, openQuickCheck);',
+    'window.removeEventListener(OPEN_GLOBAL_QUICK_CHECK_EVENT, openQuickCheck);',
+    'window.dispatchEvent(new Event(OPEN_GLOBAL_QUICK_CHECK_EVENT))',
+    'Start quick check',
     'const isToolsRoute = pathname === "/tools";',
     'if (isToolsRoute) return null;',
     'const isOpen = !isToolsRoute && openPath === pathname;',
     'const closeDialog = () => {',
     'returnFocusRef.current?.focus();',
     'className="quick-check-launcher"',
-    'Start quick check',
     'role="dialog"',
     'aria-labelledby="global-quick-check-title"',
     'Open the guided assessment instantly from anywhere on the site.',
@@ -120,12 +125,15 @@ test("global launcher mounts once, opens the native quick check directly, and av
   ]) {
     assert.ok(source.includes(copy), `missing global quick-check launcher marker: ${copy}`);
   }
+  assert.ok(mobileMenu.includes('className="mobile-quick-check"'), 'mobile menu should expose a dedicated quick check button');
   assert.equal(launcher.includes('href="/tools"'), false, 'launcher must not redirect to /tools');
   for (const token of [
     ".quick-check-launcher",
     ".quick-check-backdrop",
     ".quick-check-dialog",
     ".innovation-assessment-shell--modal",
+    ".mobile-panel .mobile-quick-check",
+    ".quick-check-launcher { display: none; }",
   ]) {
     assert.ok(styles.includes(token), `missing quick-check launcher style token: ${token}`);
   }

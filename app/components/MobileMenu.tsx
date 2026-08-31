@@ -3,6 +3,8 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
+import { OPEN_GLOBAL_QUICK_CHECK_EVENT } from "./GlobalQuickCheckLauncher";
+
 const links = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
@@ -68,6 +70,16 @@ export function MobileMenu() {
             <a key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={close}>{label}</a>
           ))}
           <a className="mobile-contact" href="/contact" onClick={close}>Speak with an advisor</a>
+          <button
+            className="mobile-quick-check"
+            type="button"
+            onClick={() => {
+              close();
+              window.dispatchEvent(new Event(OPEN_GLOBAL_QUICK_CHECK_EVENT));
+            }}
+          >
+            Start quick check
+          </button>
         </nav>
       )}
     </div>
