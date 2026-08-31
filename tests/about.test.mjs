@@ -313,13 +313,17 @@ test("desktop and mobile About links are route-aware while mobile focus behavior
     "toggleRef.current?.focus()",
     'document.body.dataset.mobileNav = open ? "open" : "closed"',
     'document.body.style.overflow = open ? "hidden" : ""',
-    'className="mobile-panel-backdrop"',
     'className="menu-toggle__icon"',
     'className="mobile-panel__actions"',
+    'createPortal(',
   ]);
   assertIncludesAll(styles, [
     '.menu-toggle[aria-expanded="true"] .menu-toggle__icon span:first-child',
-    '.mobile-panel-backdrop',
+    '.menu-toggle {',
+    'border-radius: 0;',
+    '.mobile-panel {',
+    'left: 0;',
+    'max-height: min(62vh, 520px);',
     'body[data-mobile-nav="open"] .quick-check-launcher',
     'body[data-mobile-nav="open"] .cookie-banner',
   ]);

@@ -73,7 +73,6 @@ export function MobileMenu() {
         aria-label={open ? "Close navigation" : "Open navigation"}
         onClick={() => setOpen((value) => !value)}
       >
-        <span className="menu-toggle__label">Menu</span>
         <span className="menu-toggle__icon" aria-hidden="true">
           <span />
           <span />
@@ -81,28 +80,24 @@ export function MobileMenu() {
         </span>
       </button>
       {open && createPortal(
-        <div className="mobile-panel-shell">
-          <button className="mobile-panel-backdrop" type="button" aria-label="Close navigation" onClick={close} />
-          <nav ref={panelRef} className="mobile-panel" id={menuId} aria-label="Mobile navigation">
-            <div className="mobile-panel__eyebrow">Navigate</div>
-            {links.map(({ label, href }) => (
-              <a key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={close}>{label}</a>
-            ))}
-            <div className="mobile-panel__actions">
-              <a className="mobile-contact" href="/contact" onClick={close}>Speak with an advisor</a>
-              <button
-                className="mobile-quick-check"
-                type="button"
-                onClick={() => {
-                  close();
-                  window.dispatchEvent(new Event(OPEN_GLOBAL_QUICK_CHECK_EVENT));
-                }}
-              >
-                Start quick check
-              </button>
-            </div>
-          </nav>
-        </div>,
+        <nav ref={panelRef} className="mobile-panel" id={menuId} aria-label="Mobile navigation">
+          {links.map(({ label, href }) => (
+            <a key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={close}>{label}</a>
+          ))}
+          <div className="mobile-panel__actions">
+            <a className="mobile-contact" href="/contact" onClick={close}>Speak with an advisor</a>
+            <button
+              className="mobile-quick-check"
+              type="button"
+              onClick={() => {
+                close();
+                window.dispatchEvent(new Event(OPEN_GLOBAL_QUICK_CHECK_EVENT));
+              }}
+            >
+              Start quick check
+            </button>
+          </div>
+        </nav>,
         document.body,
       )}
     </div>
