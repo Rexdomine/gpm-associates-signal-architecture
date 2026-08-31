@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 
 import { OPEN_GLOBAL_QUICK_CHECK_EVENT } from "./GlobalQuickCheckLauncher";
@@ -79,8 +80,8 @@ export function MobileMenu() {
           <span />
         </span>
       </button>
-      {open && (
-        <>
+      {open && createPortal(
+        <div className="mobile-panel-shell">
           <button className="mobile-panel-backdrop" type="button" aria-label="Close navigation" onClick={close} />
           <nav ref={panelRef} className="mobile-panel" id={menuId} aria-label="Mobile navigation">
             <div className="mobile-panel__eyebrow">Navigate</div>
@@ -101,7 +102,8 @@ export function MobileMenu() {
               </button>
             </div>
           </nav>
-        </>
+        </div>,
+        document.body,
       )}
     </div>
   );
