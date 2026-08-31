@@ -105,12 +105,17 @@ test("global launcher mounts once, opens the native quick check directly, and av
     'const isToolsRoute = pathname === "/tools";',
     'if (isToolsRoute) return null;',
     'const isOpen = !isToolsRoute && openPath === pathname;',
+    'const closeDialog = () => {',
+    'returnFocusRef.current?.focus();',
     'className="quick-check-launcher"',
     'Start quick check',
     'role="dialog"',
     'aria-labelledby="global-quick-check-title"',
     'Open the guided assessment instantly from anywhere on the site.',
-    '<InnovationQuickCheck autoStart onRequestClose={() => setOpenPath(null)} variant="modal" />',
+    'className="quick-check-backdrop" role="presentation" onClick={closeDialog}',
+    'className="quick-check-dialog__close"',
+    'onClick={closeDialog}',
+    '<InnovationQuickCheck autoStart onRequestClose={closeDialog} variant="modal" />',
     'document.body.style.overflow = "hidden";',
   ]) {
     assert.ok(source.includes(copy), `missing global quick-check launcher marker: ${copy}`);

@@ -21,6 +21,11 @@ export function GlobalQuickCheckLauncher() {
   const isToolsRoute = pathname === "/tools";
   const isOpen = !isToolsRoute && openPath === pathname;
 
+  const closeDialog = () => {
+    setOpenPath(null);
+    returnFocusRef.current?.focus();
+  };
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -31,11 +36,6 @@ export function GlobalQuickCheckLauncher() {
       "button:not([disabled]), a[href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
     );
     focusable?.[0]?.focus();
-
-    const closeDialog = () => {
-      setOpenPath(null);
-      returnFocusRef.current?.focus();
-    };
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -82,7 +82,7 @@ export function GlobalQuickCheckLauncher() {
       </button>
 
       {isOpen && (
-        <div className="quick-check-backdrop" role="presentation" onClick={() => setOpenPath(null)}>
+        <div className="quick-check-backdrop" role="presentation" onClick={closeDialog}>
           <div
             id="global-quick-check-dialog"
             ref={dialogRef}
@@ -102,14 +102,14 @@ export function GlobalQuickCheckLauncher() {
                 type="button"
                 className="quick-check-dialog__close"
                 aria-label="Close quick check"
-                onClick={() => setOpenPath(null)}
+                onClick={closeDialog}
               >
                 <CloseIcon />
               </button>
             </div>
 
             <div className="quick-check-dialog__body">
-              <InnovationQuickCheck autoStart onRequestClose={() => setOpenPath(null)} variant="modal" />
+              <InnovationQuickCheck autoStart onRequestClose={closeDialog} variant="modal" />
             </div>
           </div>
         </div>
