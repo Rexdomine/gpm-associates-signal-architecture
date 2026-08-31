@@ -766,7 +766,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .contact-topic-option { width: 100%; min-height: 60px; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px; align-items: center; padding: 14px 16px; border: 1px solid transparent; background: #fcfaf8; color: var(--navy); text-align: left; }
 .contact-topic-option:hover, .contact-topic-option:focus-visible { border-color: rgba(130,23,31,.22); background: #f8f2ef; }
 .contact-topic-option.selected { border-color: rgba(130,23,31,.28); background: #fff6f6; }
-.contact-topic-option span { width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid currentColor; color: var(--crimson); font-size: 9px; font-weight: 850; letter-spacing: .08em; }
+.contact-topic-option span { width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid currentcolor; color: var(--crimson); font-size: 9px; font-weight: 850; letter-spacing: .08em; }
 .contact-topic-option strong { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; letter-spacing: -.01em; }
 .contact-enquiry-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 14px; }
 .contact-enquiry-status { grid-column: 1 / -1; margin: 0; color: var(--slate); font-size: 13px; line-height: 1.65; }

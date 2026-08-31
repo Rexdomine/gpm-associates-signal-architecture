@@ -114,6 +114,8 @@ test("contact enquiry panel stays first-party, accessible and mailto-based", () 
     'contact-topic-menu',
     'contact-topic-option',
     'contact-topic-trigger-value',
+    'aria-labelledby={`${topicLabelId} ${topicValueId}`}',
+    '<span id={topicValueId} className="contact-topic-trigger-value">{form.topic}</span>',
   ]) {
     assert.match(panel, exact(copy));
   }

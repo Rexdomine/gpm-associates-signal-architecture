@@ -60,6 +60,7 @@ export function ContactEnquiryPanel() {
   const topicButtonRef = useRef<HTMLButtonElement>(null);
   const topicListId = useId();
   const topicLabelId = useId();
+  const topicValueId = useId();
 
   const mailtoHref = `mailto:dataprotection@gpm-associates.ng?subject=${encodeURIComponent(`Advisory enquiry — ${form.topic}`)}&body=${encodeURIComponent(toMailtoBody(form))}`;
 
@@ -208,7 +209,7 @@ export function ContactEnquiryPanel() {
               aria-expanded={topicMenuOpen}
               aria-haspopup="listbox"
               aria-controls={topicListId}
-              aria-labelledby={topicLabelId}
+              aria-labelledby={`${topicLabelId} ${topicValueId}`}
               onClick={() => {
                 if (topicMenuOpen) {
                   setTopicMenuOpen(false);
@@ -218,7 +219,7 @@ export function ContactEnquiryPanel() {
               }}
               onKeyDown={handleTopicTriggerKeyDown}
             >
-              <span className="contact-topic-trigger-value">{form.topic}</span>
+              <span id={topicValueId} className="contact-topic-trigger-value">{form.topic}</span>
               <span className="contact-topic-trigger-icon">
                 <TopicPickerIcon />
               </span>

@@ -179,7 +179,7 @@ test("approved external links are exact and safely isolated", () => {
     "https://www.gpm-associates.ng/?p=Cookies-Policy",
   ];
   for (const link of links) assert.ok(source.includes(link), `missing approved external link: ${link}`);
-  assert.match(source, /rel="noopener noreferrer"/);
+  assert.match(source, /href="https:\/\/forms\.gle\/iXFZM1o6rxmPAXcw7"[\s\S]*target="_blank"[\s\S]*rel="noopener noreferrer"/);
 });
 
 test("cookie preferences are accessible, first-party only and gate external media", () => {
