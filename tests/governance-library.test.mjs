@@ -140,11 +140,11 @@ test("governance library workflow and faq contract remain exact and semantic", (
 
 test("governance library route is documented with asset provenance and implemented scope", () => {
   for (const copy of [
-    '# GPM Associates — Approved Homepage + About + Services + Industries + Innovation + Insights + Governance Library',
-    'A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience, Innovation, Insights and Governance Library routes',
+    '# GPM Associates — Approved Homepage + About + Services + Industries + Innovation + Insights + Governance Library + Contact',
+    'A production-quality implementation of the client-approved GPM Associates Homepage, About, Services, Industries & Experience, Innovation, Insights, Governance Library and Contact routes',
     '`app/governance-library/page.tsx` is the semantic, server-rendered `/governance-library` route with the Governance Library editorial hero, curated resource catalog, guided package-selection workflow, FAQ disclosures and review-only CTA.',
     '`app/components/GovernanceLibraryCatalog.tsx` provides the first-party topic filters, visible resource count and curated package cards for `/governance-library`.',
-    'The `/about`, `/services`, `/industries`, `/tools`, `/insights` and `/governance-library` destinations are implemented on this branch.',
+    'The `/about`, `/services`, `/industries`, `/tools`, `/insights`, `/governance-library` and `/contact` destinations are implemented on this branch.',
     '### Governance Library editorial image (fresh GPT Image 2 asset)',
     '- Source provider/model: OpenAI GPT Image 2, `gpt-image-2-medium`',
     '- Production file: `public/images/gpm-governance-library-editorial-20260827.webp`',
