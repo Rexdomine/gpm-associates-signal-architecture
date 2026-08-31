@@ -603,12 +603,38 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .industries-proof-marker svg { width: 18px; height: 18px; display: block; }
 .industries-proof-list p { margin: 0; color: var(--ink); font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; }
 
-.cookie-banner { position: fixed; z-index: 120; right: 20px; bottom: 20px; left: 20px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; max-width: 1260px; margin-inline: auto; padding: 22px 24px; border: 1px solid rgba(255,255,255,.25); background: #082433; color: white; box-shadow: 0 24px 70px rgba(0,0,0,.28); }
-.cookie-title { margin-bottom: 7px; font-weight: 800; }
-.cookie-banner p:not(.cookie-title) { max-width: 730px; margin-bottom: 0; color: #c4d0d4; font-size: 12px; line-height: 1.6; }
-.cookie-banner a { text-decoration: underline; }
-.cookie-actions, .dialog-actions { display: flex; gap: 10px; align-items: center; }
+.cookie-banner {
+  position: fixed;
+  z-index: 120;
+  left: clamp(16px, 2vw, 28px);
+  bottom: clamp(16px, 2vw, 28px);
+  display: grid;
+  gap: 18px;
+  width: min(360px, calc(100vw - 32px));
+  padding: 22px 22px 20px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(8,36,51,.96);
+  color: white;
+  box-shadow: 0 24px 70px rgba(0,0,0,.28);
+  backdrop-filter: blur(14px);
+}
+.cookie-title { margin-bottom: 8px; font-weight: 800; font-size: 19px; letter-spacing: -.02em; }
+.cookie-banner p:not(.cookie-title) { max-width: 30ch; margin-bottom: 0; color: #c4d0d4; font-size: 12px; line-height: 1.65; }
+.cookie-banner a { text-decoration: underline; text-underline-offset: 2px; }
+.cookie-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: stretch;
+}
+.dialog-actions { display: flex; gap: 10px; align-items: center; }
 .button-quiet, .button-solid { min-height: 46px; padding: 0 16px; border: 1px solid rgba(255,255,255,.5); background: transparent; color: white; font-size: 10px; font-weight: 800; }
+.cookie-actions .button-quiet,
+.cookie-actions .button-solid {
+  width: 100%;
+  justify-content: center;
+  padding-inline: 14px;
+}
 .button-solid { border-color: var(--crimson); background: var(--crimson); }
 .consent-backdrop { position: fixed; z-index: 130; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(4,25,35,.72); }
 .consent-dialog { width: min(100%, 560px); padding: clamp(28px, 5vw, 48px); background: var(--paper); box-shadow: 0 28px 90px rgba(0,0,0,.3); }
@@ -973,7 +999,15 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .insight-grid article { min-height: auto; padding: 32px 0; border-right: 0; border-bottom: 1px solid var(--rule); }
   .insight-label { min-height: auto; margin-bottom: 20px; }
   .cta-grid { gap: 44px; }
-  .cookie-banner { grid-template-columns: 1fr; gap: 18px; }
+  .cookie-banner {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    width: auto;
+    max-width: none;
+    gap: 16px;
+    padding: 18px;
+  }
   .about-verification-grid, .about-perspective-grid, .about-purpose-grid, .about-multidisciplinary-grid, .about-team-heading { grid-template-columns: 1fr; }
   .about-verification-grid { gap: 48px; }
   .about-verification-qr { width: 220px; }
