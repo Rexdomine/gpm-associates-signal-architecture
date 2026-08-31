@@ -923,6 +923,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 
 @media (max-width: 1100px) {
   :root { --shell: min(100% - 40px, 900px); }
+  .site-header { z-index: 160; }
   .header-inner { min-height: 84px; grid-template-columns: 132px 1fr auto; }
   .contact-page-hero-grid, .contact-enquiry-grid, .contact-location-grid { grid-template-columns: 1fr; }
   .contact-page-hero-media { order: -1; }
