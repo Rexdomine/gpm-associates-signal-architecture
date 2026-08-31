@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { MobileMenu } from "./MobileMenu";
 
 function ArrowIcon() {
@@ -25,7 +25,7 @@ const navItems = [
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressBarRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
     let frame = 0;
@@ -33,7 +33,7 @@ export function SiteHeader() {
     const syncProgress = () => {
       const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
       const nextProgress = scrollRange > 0 ? Math.min(Math.max(window.scrollY / scrollRange, 0), 1) : 0;
-      setScrollProgress(nextProgress);
+      progressBarRef.current?.style.setProperty("--scroll-progress", nextProgress.toString());
       frame = 0;
     };
 
@@ -56,7 +56,7 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="scroll-progress" aria-hidden="true">
-        <span className="scroll-progress-bar" style={{ transform: `scaleX(${scrollProgress})` }} />
+        <span ref={progressBarRef} className="scroll-progress-bar" />
       </div>
       <div className="shell header-inner">
         <Link className="brand" href="/" aria-label="GPM Associates home">

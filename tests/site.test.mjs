@@ -255,16 +255,17 @@ test("scroll progress indicator stays global, lightweight and reduced-motion saf
   assert.match(header, /className="scroll-progress"/);
   assert.match(header, /className="scroll-progress-bar"/);
   assert.match(header, /aria-hidden="true"/);
-  assert.match(header, /useState\(0\)/);
+  assert.match(header, /useRef<HTMLSpanElement \| null>\(null\)/);
   assert.match(header, /requestAnimationFrame\(syncProgress\)/);
   assert.match(header, /window\.addEventListener\("scroll", requestSync, \{ passive: true \}\)/);
   assert.match(header, /window\.addEventListener\("resize", requestSync\)/);
   assert.match(header, /document\.documentElement\.scrollHeight - window\.innerHeight/);
-  assert.match(header, /transform: `scaleX\(\$\{scrollProgress\}\)`/);
+  assert.match(header, /style\.setProperty\("--scroll-progress", nextProgress\.toString\(\)\)/);
+  assert.match(header, /ref=\{progressBarRef\}/);
   assert.match(styles, /\.scroll-progress\s*\{[^}]*position:\s*fixed;[^}]*top:\s*0;[^}]*height:\s*3px;[^}]*background:\s*rgba\(168, 15, 26, 0\.08\);/s);
-  assert.match(styles, /\.scroll-progress-bar\s*\{[^}]*background:\s*var\(--crimson\);[^}]*transform-origin:\s*left center;[^}]*transform:\s*scaleX\(0\);/s);
-  assert.match(styles, /\.scroll-progress-bar\s*\{[^}]*transition:\s*transform 160ms ease-out;/s);
-  assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.scroll-progress-bar\s*\{[^}]*transition:\s*none;/s);
+  assert.match(styles, /\.scroll-progress-bar\s*\{[^}]*background:\s*var\(--crimson\);[^}]*transform-origin:\s*left center;[^}]*transform:\s*scaleX\(var\(--scroll-progress, 0\)\);[^}]*will-change:\s*transform;/s);
+  assert.doesNotMatch(styles, /transition:\s*transform\s+160ms\s+ease-out/);
+  assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.scroll-progress-bar\s*\{[^}]*will-change:\s*auto;/s);
 });
 
 test("scroll reveal remains selective, fail-open and reduced-motion safe", () => {
