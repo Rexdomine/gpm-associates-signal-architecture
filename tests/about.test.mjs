@@ -296,7 +296,8 @@ test("About and Homepage reuse the exact shared shell and preserve Homepage cont
     "Building trusted, accountable and resilient data environments.",
     "Data is now a source of accountability, exposure and strategic value.",
   ]);
-  assert.ok(homepageExperience.includes("/images/gpm-homepage-single-privacy-professional-v3.webp"), "Homepage v3 hero asset reference changed");
+  assert.ok(homepageExperience.includes("/images/gpm-homepage-single-privacy-professional-v3.webp"), "Homepage hero fallback image reference changed");
+  assert.ok(homepageExperience.includes("/videos/gpm-homepage-trusted-data-flow-2026.mp4"), "Homepage hero video reference missing");
   assert.equal(homepage.includes("about-credentials"), false, "About credential strip must not leak into Homepage");
   assertIncludesAll(footer, ["CookieConsent", "ConsentMap", "/images/ndpc-verification-qr-approved.png", officialUrl]);
 });

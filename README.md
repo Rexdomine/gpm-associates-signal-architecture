@@ -58,7 +58,7 @@ The `/about`, `/services`, `/industries`, `/tools`, `/insights`, `/governance-li
 
 ## Asset provenance
 
-The Homepage ships three local, checksum-locked assets through `next/image`; there are no runtime image-generation services, image CDNs or remote image dependencies.
+The Homepage ships one local autoplay hero video plus three checksum-locked local image assets. There are no runtime media-generation services, media CDNs or remote image/video dependencies.
 
 ### GPT Image 2 hero
 
@@ -72,6 +72,19 @@ The Homepage ships three local, checksum-locked assets through `next/image`; the
 The scene was simplified from the locked GPM imagery concept in response to stakeholder review: one African privacy professional interacts directly with a structured data-lifecycle governance screen. The single-subject composition removes the previous secondary professionals, laptop, books, binders and physical records while retaining a recognisable privacy workflow. Controlled crimson/navy lighting and restrained interface depth provide the futuristic layer without generic meetings, cyber-thriller motifs, readable personal information, logos, seals or unsupported institutional evidence. Her face, hand, screen interaction, desktop/mobile crop resilience and publication safety were visually reviewed before a metadata-light WebP derivative was exported.
 
 The person shown is an illustrative generated subject. She is not GPM personnel, a client or a participant in a real engagement.
+
+### Homepage hero motion video
+
+- Production derivative: `public/videos/gpm-homepage-trusted-data-flow-2026.mp4`
+- Production SHA-256: `2f41588777d5f0bd48daa93c31ac2178914ab051a0d5a1f325fb8d3672d14655`
+- Dimensions: `1280 × 720`
+- Duration: `10.0 seconds`
+- File size: `1972007` bytes
+- Source input: `/opt/data/cache/videos/video_96e0b25daa86.mp4`
+- Production treatment: remuxed local MP4 with audio stripped and `+faststart` enabled for muted inline hero playback
+- Runtime behavior: autoplaying, looping, muted, `playsInline`, `preload="metadata"`, with the locked GPT Image 2 hero still used as the reduced-motion fallback poster/image
+
+The motion derivative preserves the approved premium GPM art direction: a single African privacy professional activates a governed data-flow interface with restrained crimson/navy motion, sequential workflow emphasis and no disruptive text, logos, voiceover or novelty effects.
 
 ### Client-approved brand and verification assets
 
