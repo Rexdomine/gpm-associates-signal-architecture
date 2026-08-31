@@ -148,6 +148,8 @@ test("global launcher mounts once, opens the native quick check directly, and av
     'width: 44px;',
     '.mobile-panel {',
     'position: fixed;',
+    'inset: 84px 0 0;',
+    'max-height: calc(100dvh - 84px);',
     '.quick-check-launcher { display: none; }',
   ]) {
     assert.ok(styles.includes(token), `missing quick-check launcher style token: ${token}`);

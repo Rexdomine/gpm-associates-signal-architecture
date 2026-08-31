@@ -1106,13 +1106,17 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
     letter-spacing: .06em;
   }
   .quick-check-backdrop {
+    inset: 84px 0 0;
     padding: 0;
-    align-items: end;
+    align-items: start;
   }
   .quick-check-dialog {
     width: 100%;
-    max-height: 100dvh;
-    border-radius: 24px 24px 0 0;
+    max-height: calc(100dvh - 84px);
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 0;
   }
   .quick-check-dialog__header {
     padding: 18px 18px 16px;
@@ -1121,7 +1125,7 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
     font-size: 30px;
   }
   .quick-check-dialog__body {
-    max-height: calc(100dvh - 120px);
+    max-height: calc(100dvh - 84px - 120px);
     padding: 16px;
   }
   .services-hero-grid, .services-integrated-grid, .services-pillar, .services-engagement-grid { grid-template-columns: 1fr; }
@@ -1139,6 +1143,28 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
   .header-inner { min-height: 76px; }
   .brand { width: 100px; height: 64px; }
   .brand img { width: 98px; }
+  .quick-check-backdrop {
+    inset: 76px 0 0;
+  }
+  .quick-check-dialog {
+    max-height: calc(100dvh - 76px);
+  }
+  .quick-check-dialog__header {
+    gap: 14px;
+    padding: 16px 16px 14px;
+  }
+  .quick-check-dialog__header h2 {
+    margin: 6px 0 8px;
+    font-size: 26px;
+  }
+  .quick-check-dialog__close {
+    width: 42px;
+    height: 42px;
+  }
+  .quick-check-dialog__body {
+    max-height: calc(100dvh - 76px - 110px);
+    padding: 14px;
+  }
   .mobile-panel {
     top: 76px;
     max-height: min(66vh, 500px);

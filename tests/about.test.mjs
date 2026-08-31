@@ -324,6 +324,8 @@ test("desktop and mobile About links are route-aware while mobile focus behavior
     '.mobile-panel {',
     'left: 0;',
     'max-height: min(62vh, 520px);',
+    'inset: 84px 0 0;',
+    'max-height: calc(100dvh - 84px);',
     'body[data-mobile-nav="open"] .quick-check-launcher',
     'body[data-mobile-nav="open"] .cookie-banner',
   ]);
