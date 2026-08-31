@@ -15,6 +15,7 @@ A production-quality implementation of the client-approved GPM Associates Homepa
 - `app/contact/page.tsx` is the semantic, server-rendered `/contact` route with the advisory hero, direct contact pathways, first-party guided enquiry composer, consent-aware location panel, FAQ disclosures and final urgency CTA.
 - `app/components/SiteHeader.tsx` and `app/components/SiteFooter.tsx` provide the shared shell for Homepage + About + Services + Industries + Innovation + Insights + Governance Library + Contact without adding route-specific sections elsewhere.
 - `app/components/InnovationQuickCheck.tsx` provides the first-party assessment flow, progress states, result summaries and advisor conversion path for `/tools`.
+- `app/components/GlobalQuickCheckLauncher.tsx` mounts one floating site-wide trigger that opens the same native NDPA Quick Check in-place without redirecting users to `/tools`.
 - `app/components/InsightsExplorer.tsx` provides the first-party topic filters, visible resource count and featured-card treatment for `/insights`.
 - `app/components/GovernanceLibraryCatalog.tsx` provides the first-party topic filters, visible resource count and curated package cards for `/governance-library`.
 - `app/components/ContactEnquiryPanel.tsx` provides the first-party guided enquiry composer for `/contact`, drafting a structured `mailto:` message without inventing a backend submit path.

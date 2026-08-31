@@ -125,13 +125,20 @@ function IntroOrbit() {
   );
 }
 
-export function InnovationQuickCheck() {
-  const [started, setStarted] = useState(false);
+type InnovationQuickCheckProps = {
+  variant?: "page" | "modal";
+  autoStart?: boolean;
+  onRequestClose?: () => void;
+};
+
+export function InnovationQuickCheck({ variant = "page", autoStart = false, onRequestClose }: InnovationQuickCheckProps = {}) {
+  const [started, setStarted] = useState(autoStart);
   const [answers, setAnswers] = useState<QuickCheckAnswers>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionHistory, setQuestionHistory] = useState<QuickCheckQuestionId[]>([]);
   const [result, setResult] = useState<QuickCheckResult | null>(null);
   const resultScreenRef = useRef<HTMLElement | null>(null);
+  const isModal = variant === "modal";
 
   const visibleQuestions = useMemo(() => getVisibleQuickCheckQuestions(answers), [answers]);
   const currentQuestion = visibleQuestions[currentQuestionIndex];
@@ -145,11 +152,20 @@ export function InnovationQuickCheck() {
   const activeStage = result ? 3 : getStageIndex(currentQuestion?.id);
 
   function resetAssessment() {
-    setStarted(false);
+    setStarted(autoStart);
     setAnswers({});
     setCurrentQuestionIndex(0);
     setQuestionHistory([]);
     setResult(null);
+  }
+
+  function exitAssessment() {
+    if (onRequestClose) {
+      onRequestClose();
+      return;
+    }
+
+    resetAssessment();
   }
 
   function reviewAnswers() {
@@ -321,7 +337,7 @@ export function InnovationQuickCheck() {
 
   if (!started) {
     return (
-      <section className="innovation-intro-screen" aria-labelledby="innovation-assessment-title">
+      <section className={`innovation-intro-screen${isModal ? " innovation-intro-screen--modal" : ""}`} aria-labelledby="innovation-assessment-title">
         <div className="innovation-intro-layout">
           <div className="innovation-intro-copy">
             <p className="innovation-intro-kicker">
@@ -375,7 +391,11 @@ export function InnovationQuickCheck() {
 
   if (result) {
     return (
-      <section className="innovation-result-screen" aria-labelledby="innovation-result-title" ref={resultScreenRef}>
+      <section
+        className={`innovation-result-screen${isModal ? " innovation-result-screen--modal" : ""}`}
+        aria-labelledby="innovation-result-title"
+        ref={resultScreenRef}
+      >
         <div className="innovation-result-topbar">
           <div>
             <p className="innovation-intro-kicker">
@@ -478,7 +498,7 @@ export function InnovationQuickCheck() {
   }
 
   return currentQuestion ? (
-    <div className="innovation-assessment-shell">
+    <div className={`innovation-assessment-shell${isModal ? " innovation-assessment-shell--modal" : ""}`}>
       <AssessmentRail activeStage={activeStage} answeredCount={answeredCount} questionCountLabel={displayQuestionCount.label} />
       <section className="innovation-assessment-stage" aria-labelledby="innovation-question-title">
         <div className="innovation-progress-meta">
@@ -521,8 +541,8 @@ export function InnovationQuickCheck() {
             <button className="button-quiet" type="button" onClick={goBack} disabled={currentQuestionIndex === 0}>
               Back
             </button>
-            <button className="button-quiet" type="button" onClick={resetAssessment}>
-              Exit assessment
+            <button className="button-quiet" type="button" onClick={exitAssessment}>
+              {isModal ? "Close quick check" : "Exit assessment"}
             </button>
           </div>
         </article>
