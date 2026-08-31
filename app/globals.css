@@ -30,6 +30,11 @@ p, h1, h2, h3, h4, figure { margin-top: 0; }
 :focus-visible { outline: 3px solid #e0525b; outline-offset: 4px; }
 
 .site-header { position: sticky; z-index: 80; top: 0; border-bottom: 1px solid var(--rule); background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(16px); }
+.scroll-progress { position: fixed; z-index: 140; top: 0; left: 0; width: 100%; height: 3px; background: rgba(168, 15, 26, 0.08); pointer-events: none; }
+.scroll-progress-bar { display: block; width: 100%; height: 100%; background: var(--crimson); transform-origin: left center; transform: scaleX(0); transition: transform 160ms ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress-bar { transition: none; }
+}
 .header-inner { min-height: 96px; display: grid; grid-template-columns: 148px minmax(0, 1fr) auto; align-items: center; gap: clamp(18px, 2vw, 32px); }
 .brand { width: 132px; height: 80px; display: grid; place-items: center; overflow: hidden; }
 .brand img { width: 126px; height: auto; }
