@@ -63,9 +63,10 @@ h1 { max-width: 720px; margin-bottom: 30px; color: white; font-size: clamp(49px,
 .text-action:hover, .text-link:hover { color: #d83e48; }
 .text-action.light:hover, .text-link.light:hover { color: #ef9095; }
 
-.hero-media { position: relative; min-height: 520px; margin: 0; overflow: hidden; background: var(--navy-deep); isolation: isolate; }
+.hero-media { position: relative; min-height: clamp(540px, 44vw, 600px); margin: 0; overflow: hidden; background: var(--navy-deep); isolation: isolate; }
 .hero-visual { position: absolute; inset: 0; transform: scale(1.025); }
-.hero-visual img { width: 100%; height: 100%; object-fit: cover; object-position: 58% center; }
+.hero-visual img, .hero-visual video { width: 100%; height: 100%; object-fit: cover; object-position: 58% center; display: block; }
+.hero-video { background: #051923; }
 .hero-media.is-playing .hero-visual { animation: hero-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
 .hero-media-shade { position: absolute; z-index: 1; inset: 0; background: linear-gradient(180deg, rgba(4, 25, 35, 0.03) 40%, rgba(4, 25, 35, 0.88) 100%); pointer-events: none; }
 .hero-media-caption { position: absolute; z-index: 2; right: 24px; bottom: 22px; left: 24px; display: grid; gap: 13px; color: white; font-size: 9px; font-weight: 850; letter-spacing: 0.16em; }

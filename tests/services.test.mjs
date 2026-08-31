@@ -275,7 +275,8 @@ test("Homepage and About regression boundaries remain intact", () => {
     "Data is now a source of accountability, exposure and strategic value.",
     "<SiteHeader />", "<SiteFooter />",
   ]);
-  assert.ok(homepageExperience.includes("/images/gpm-homepage-single-privacy-professional-v3.webp"), "Homepage hero asset changed");
+  assert.ok(homepageExperience.includes("/images/gpm-homepage-single-privacy-professional-v3.webp"), "Homepage hero fallback image changed");
+  assert.ok(homepageExperience.includes("/videos/gpm-homepage-trusted-data-flow-2026.mp4"), "Homepage hero video reference missing");
   assertIncludesAll(about, [
     "Specialist expertise for organisations that take data responsibility seriously.",
     "Compliance is strongest when it becomes part of how an organisation operates.",

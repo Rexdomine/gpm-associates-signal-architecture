@@ -13,6 +13,8 @@ function ArrowIcon() {
 
 export function HeroMedia() {
   const [reducedMotion, setReducedMotion] = useState(true);
+  const fallbackImage = "/images/gpm-homepage-single-privacy-professional-v3.webp";
+  const heroVideo = "/videos/gpm-homepage-trusted-data-flow-2026.mp4";
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -25,14 +27,29 @@ export function HeroMedia() {
   return (
     <figure className={`hero-media ${reducedMotion ? "hero-motion-paused" : "is-playing"}`}>
       <div className="hero-visual">
-        <Image
-          src="/images/gpm-homepage-single-privacy-professional-v3.webp"
-          alt="An African privacy professional reviewing a data lifecycle governance workflow"
-          width={1672}
-          height={941}
-          priority
-          sizes="(max-width: 900px) 100vw, 55vw"
-        />
+        {reducedMotion ? (
+          <Image
+            src={fallbackImage}
+            alt="An African privacy professional reviewing a data lifecycle governance workflow"
+            width={1672}
+            height={941}
+            priority
+            sizes="(max-width: 900px) 100vw, 55vw"
+          />
+        ) : (
+          <video
+            className="hero-video"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster={fallbackImage}
+            aria-hidden="true"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+        )}
       </div>
       <div className="hero-media-shade" aria-hidden="true" />
       <figcaption className="hero-media-caption">
